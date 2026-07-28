@@ -1,1050 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AHN-II Master Clinical Hub - Mudassir Khan</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <style>
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-      animation: fadeInUp 0.5s ease-out forwards;
-    }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #475569; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinical OSPE Hub - Mudassir Khan</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatSlow {
+    0%,100% { transform: translateY(0px); }
+    50%     { transform: translateY(-8px); }
+  }
+  @keyframes pulseRing {
+    0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); }
+    100% { box-shadow: 0 0 0 14px rgba(16,185,129,0); }
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  .skill-card:hover .hero-img { transform: scale(1.06); }
+  .hero-img { transition: transform .8s cubic-bezier(.22,1,.36,1); }
+
+  .thumb { transition: transform .35s ease, box-shadow .35s ease; }
+  .thumb:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 12px 24px -8px rgba(0,0,0,.5); }
+
+  .step-item { transition: background .3s ease, transform .2s ease; cursor: pointer; }
+  .step-item:hover { transform: translateX(4px); }
+  .step-item.done { background: rgba(16,185,129,0.08); }
+  .step-item.done .step-check { background: #10b981; border-color: #10b981; }
+  .step-item.done .step-check svg { opacity: 1; transform: scale(1); }
+  .step-item.done .step-text { text-decoration: line-through; text-decoration-color: rgba(148,163,184,.5); color: #94a3b8; }
+
+  .step-check { transition: all .25s ease; }
+  .step-check svg { opacity: 0; transform: scale(.4); transition: all .25s ease; }
+
+  .progress-fill { transition: width .5s cubic-bezier(.22,1,.36,1); }
+
+  .pulse-dot { animation: pulseRing 2s infinite; }
+  .float-badge { animation: floatSlow 4s ease-in-out infinite; }
+
+  .navdot { transition: all .3s ease; }
+  .navdot.active { background: #34d399; width: 22px; border-radius: 9999px; }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+  .vital-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash 2.4s ease-out forwards infinite alternate;
+  }
+</style>
 </head>
 
 <body class="bg-slate-900 text-slate-200 min-h-screen font-sans selection:bg-emerald-500 selection:text-white">
 
-  <!-- Sticky Header -->
-  <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-700 shadow-xl">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-      <div>
-        <h1 class="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Adult Health Nursing-II Master Guide</h1>
-        <p class="text-xs text-slate-400 font-mono">Prepared & Maintained by: <span class="text-emerald-400 font-bold">MUDASSIR KHAN (CR)</span> • Credit Hours: 04 (0+04)</p>
+<!-- Floating side nav dots (desktop only) -->
+<div class="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-3" id="sideNav">
+  <button data-target="proc-1" class="navdot w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-emerald-400"></button>
+  <button data-target="proc-2" class="navdot w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-emerald-400"></button>
+  <button data-target="proc-3" class="navdot w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-emerald-400"></button>
+</div>
+
+<!-- Sticky Header -->
+<nav class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700 shadow-lg">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <span class="absolute inset-0 rounded-full bg-emerald-500/30 pulse-dot"></span>
+        <span class="relative flex h-3 w-3 rounded-full bg-emerald-400"></span>
       </div>
-      <div class="w-full md:w-96 relative">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔍</span>
-        <input type="text" id="searchInput" onkeyup="filterSkills()" placeholder="Search 20 skills (e.g., LP, Traction, Eye)..." 
-          class="w-full bg-slate-800 border border-slate-600 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
+      <div>
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">AHN-II Master Guide</h1>
+        <p class="text-xs text-slate-400 font-mono">Prepared by Mudassir Khan (CR)</p>
       </div>
     </div>
-  </nav>
+    <div class="w-full md:w-96 relative">
+      <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔍</span>
+      <input type="text" id="searchInput" onkeyup="filterSkills()" placeholder="Search procedures (e.g. Tracheostomy, Cast)..."
+        class="w-full bg-slate-800 border border-slate-600 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
+    </div>
+  </div>
+  <!-- overall progress bar -->
+  <div class="h-1 w-full bg-slate-800">
+    <div id="globalProgress" class="h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 progress-fill" style="width:0%"></div>
+  </div>
+</nav>
 
-  <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-14">
 
-    <!-- 1. TRACHEOSTOMY CARE -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-emerald-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&w=1200&q=80" alt="Airway Management" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-blue-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 01</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">1. Tracheostomy Care</h2>
-        </div>
-      </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Cleaning the stoma and inner cannula of a tracheostomy tube.</li>
-              <li>Replacing dressings and ties under aseptic technique.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Maintain airway patency and tissue integrity.</li>
-              <li>Prevent stomal infection and skin breakdown.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Always keep a spare trach tube at the bedside.</li>
-              <li>Hold outer cannula securely while changing ties.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Trach care kit, sterile saline, H₂O₂.</li>
-              <li>Sterile gloves, pre-cut split gauze, trach ties.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Perform hand hygiene, don PPE, and position patient in semi-Fowler’s position.</li>
-            <li>Unlock and remove inner cannula; soak and clean with sterile saline.</li>
-            <li>Clean around the stoma using saline-soaked swabs with single outward strokes.</li>
-            <li>Replace pre-cut split drain dressing and secure ties allowing 1 finger space.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Never cut standard gauze for a trach stoma—frayed threads can be aspirated. Always use pre-cut split drain sponges.
-        </div>
-      </div>
-    </article>
+  <!-- PROCEDURE 1: TRACHEOSTOMY -->
+  <article id="proc-1" class="skill-card reveal bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-emerald-500/50">
 
-    <!-- 2. TRACHEAL SUCTIONING -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-emerald-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80" alt="Suctioning Equipment" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-blue-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 02</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">2. Tracheal Suctioning</h2>
-        </div>
+    <div class="h-48 md:h-64 overflow-hidden relative group">
+      <img src="https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&w=1200&q=80" alt="Respiratory care ward" class="hero-img w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+      <div class="absolute bottom-4 left-6">
+        <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded font-bold uppercase tracking-wider shadow-lg mb-2 inline-block float-badge">Stations 01 & 02</span>
+        <h2 class="text-3xl font-extrabold text-white">Tracheostomy Care & Suctioning</h2>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Mechanical aspiration of pulmonary secretions via an artificial airway.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Clear airway secretions, improve ventilation, and collect sputum samples.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li><strong>Max Time:</strong> Never suction longer than 10–15 seconds per pass.</li>
-              <li>Avoid applying suction during catheter insertion.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Sterile suction catheter kit, suction unit, sterile gloves, normal saline.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Hyperoxygenate the patient with 100% O₂ for 30–60 seconds.</li>
-            <li>Don sterile gloves; insert catheter gently without suction until resistance is met.</li>
-            <li>Apply intermittent suction while rotating and withdrawing the catheter (≤10–15s).</li>
-            <li>Reoxygenate patient and reassess lung sounds and oxygen saturation.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> What suction pressure is used for adults? Standard wall pressure is **80–120 mmHg** (max 150 mmHg).
-        </div>
-      </div>
-    </article>
+    </div>
 
-    <!-- 3. LUMBAR PUNCTURE -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-purple-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=80" alt="Spinal Procedure" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-purple-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 03 & 09</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">3. Assisting in Lumbar Puncture (LP)</h2>
-        </div>
-      </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Needle insertion into the L3–L4 or L4–L5 subarachnoid space to access CSF.</li>
+    <div class="p-6 md:p-8 space-y-6">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-emerald-500">
+            <h3 class="text-emerald-400 font-bold mb-2 flex items-center gap-2">📌 Definition</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Cleansing the stoma and replacing inner cannula.</li>
+              <li>Removing secretions from the artificial airway.</li>
+              <li>Maintaining sterile patency to prevent infection.</li>
             </ul>
           </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Measure CSF opening pressure and collect diagnostic CSF samples.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Contraindications</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Increased Intracranial Pressure (ICP) due to risk of brain herniation.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>LP tray, spinal needle with stylet, manometer, 3–4 numbered tubes, Lidocaine.</li>
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-blue-500">
+            <h3 class="text-blue-400 font-bold mb-2 flex items-center gap-2">🎯 Purpose</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Maintain a clear airway and improve oxygenation.</li>
+              <li>Prevent stoma tissue breakdown and infection.</li>
+              <li>Facilitate the removal of thick pulmonary secretions.</li>
             </ul>
           </div>
         </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Position patient in lateral fetal position (chin to chest, knees to abdomen).</li>
-            <li>Maintain sterile field and support patient position strictly during insertion.</li>
-            <li>Assist provider in collecting CSF into sequentially numbered tubes (1, 2, 3).</li>
-            <li>Apply sterile dressing; instruct patient to lie flat for 4–8 hours post-procedure.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Why lie flat post-LP? It prevents spinal headache caused by CSF leakage from the dural puncture site.
-        </div>
-      </div>
-    </article>
 
-    <!-- 4. THORACENTESIS -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-blue-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80" alt="Pleural Procedure" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-blue-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 04</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">4. Assisting in Thoracentesis</h2>
+        <div class="space-y-4">
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-rose-500">
+            <h3 class="text-rose-400 font-bold mb-2 flex items-center gap-2">⚠️ Contraindications / Precautions</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Severe uncorrected hypoxia or active bronchospasm.</li>
+              <li><strong>Max Suction Time:</strong> Never exceed 10–15 seconds per pass.</li>
+              <li>Avoid aggressive suctioning in bleeding disorders.</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-amber-500">
+            <h3 class="text-amber-400 font-bold mb-2 flex items-center gap-2">🛠️ Equipment</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Sterile suction catheter kit & suction machine.</li>
+              <li>Sterile normal saline & Hydrogen peroxide.</li>
+              <li>Sterile gloves, pre-cut split gauze, & fresh trach ties.</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Surgical perforation of the chest wall and pleural space with a needle.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Aspirate pleural fluid for diagnostic analysis or to relieve dyspnea.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Do not remove >1,000 to 1,500 mL at once to avoid pulmonary edema.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Thoracentesis kit, large-bore needle/catheter, drainage bottle, local anesthetic.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Position patient upright, leaning forward over an overbed table.</li>
-            <li>Monitor vital signs and instruct patient strictly not to cough or move.</li>
-            <li>Assist provider with fluid aspiration into vacuum bottles.</li>
-            <li>Apply occlusive sterile dressing; order post-procedure chest X-ray.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Always watch for pneumothorax signs (sudden dyspnea, tachypnea, diminished breath sounds on affected side).
-        </div>
-      </div>
-    </article>
 
-    <!-- 5. PARACENTESIS -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-emerald-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80" alt="Abdominal Procedure" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-blue-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 05</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">5. Assisting in Paracentesis</h2>
-        </div>
+      <!-- Real equipment photo strip -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700" src="https://images.unsplash.com/photo-1583911860205-72f8ac8ddcbe?auto=format&fit=crop&w=500&q=80" alt="Sterile suction catheter kit">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700" src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=500&q=80" alt="Suction machine in ICU">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700 col-span-2 md:col-span-1" src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=500&q=80" alt="Nurse performing sterile airway care">
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Needle insertion through abdominal wall to drain peritoneal fluid (ascites).</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Relieve abdominal pressure and analyze ascitic fluid.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Patient MUST void before the procedure to avoid bladder puncture!</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Paracentesis kit, trocar, IV tubing, collection bottles, Lidocaine.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Have patient void. Measure weight, BP, and abdominal girth baseline.</li>
-            <li>Position patient in high-Fowler’s position in bed or chair.</li>
-            <li>Assist physician with sterile insertion into lower abdomen.</li>
-            <li>Monitor BP continuously for hypovolemic shock; measure total drained volume.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> IV Albumin is often infused during large-volume paracentesis to prevent severe intravascular fluid shifts and hypotension.
-        </div>
-      </div>
-    </article>
 
-    <!-- 6. CHEST TUBE INSERTION -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-cyan-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200&q=80" alt="Chest Tube Drainage" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-cyan-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 06</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">6. Assisting in Chest Tube Insertion</h2>
-        </div>
+      <!-- Vitals mini animation -->
+      <div class="bg-slate-950/60 rounded-xl border border-slate-700 p-3 flex items-center gap-3">
+        <svg width="90" height="30" viewBox="0 0 90 30" class="shrink-0">
+          <polyline class="vital-line" points="0,15 10,15 15,4 20,26 25,15 40,15 45,8 50,22 55,15 90,15" fill="none" stroke="#34d399" stroke-width="2"/>
+        </svg>
+        <p class="text-xs text-slate-400">Reassess SpO₂ and breath sounds continuously during and after suctioning.</p>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Inserting a thoracic catheter into the pleural space attached to a water seal.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Drain air (pneumothorax) or fluid (hemothorax) to re-expand the lung.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Keep drainage system upright and below chest level at all times.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Chest tube tray, drainage system (Atrium/Pleur-evac), sterile water, petroleum gauze.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Fill water seal chamber with sterile water up to the 2 cm line.</li>
-            <li>Position patient arm raised over head on affected side.</li>
-            <li>Connect tube immediately to drainage unit upon insertion.</li>
-            <li>Secure dressing with airtight petroleum gauze; verify tidaling in water seal.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Continuous vigorous bubbling in the water seal chamber indicates an **air leak** in the system or patient's lung!
-        </div>
-      </div>
-    </article>
 
-    <!-- 7. CT SCAN -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-purple-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80" alt="CT Scanner" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-purple-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 07</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">7. Assisting in C.T. Scan</h2>
+      <!-- Interactive step checklist -->
+      <div class="bg-slate-700/30 p-6 rounded-2xl border border-slate-600" data-progress-card>
+        <div class="flex items-center justify-between mb-4 border-b border-slate-600 pb-2">
+          <h3 class="text-white font-bold text-lg">📋 Step-by-Step Procedure</h3>
+          <span class="text-xs text-slate-400 card-progress-label">0 / 5</span>
         </div>
+        <div class="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden mb-4">
+          <div class="card-progress-fill progress-fill h-full bg-emerald-500" style="width:0%"></div>
+        </div>
+        <ol class="space-y-3 text-sm text-slate-300">
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Preparation:</strong> Perform hand hygiene, verify orders, and explain the procedure to the patient.</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Pre-Oxygenation:</strong> Hyperoxygenate the patient using 100% O₂ for 30–60 seconds prior to suctioning.</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Sterile Suctioning:</strong> Don sterile gloves. Insert catheter gently without suction. Apply intermittent suction while withdrawing and rotating (max 15 sec).</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Stoma Care:</strong> Cleanse stoma area with sterile saline using single outward wiping motions.</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Securement:</strong> Apply new split-drain dressing and secure ties (allow one finger space beneath ties).</span>
+          </li>
+        </ol>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Computerized Tomography creating cross-sectional X-ray images of body tissues.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Detect tumors, infarctions, bone fractures, and internal bleeding.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Check iodine/shellfish allergy and renal function (BUN/Creatinine) for contrast CT.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>IV catheter (18–20G for contrast), contrast media, lead apron shields.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Verify NPO status if contrast is ordered; screen for pregnancy and metal objects.</li>
-            <li>Establish patent IV line; explain flushing/warm sensation during dye injection.</li>
-            <li>Position patient lying flat on scanner bed and instruct to lie completely still.</li>
-            <li>Post-contrast: Encourage fluids to flush contrast dye from kidneys.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Metformin must be held for 48 hours post-contrast CT to prevent acute renal failure and lactic acidosis.
-        </div>
-      </div>
-    </article>
 
-    <!-- 8. CEREBRAL ANGIOGRAPHY -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-indigo-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=1200&q=80" alt="Vascular Imaging" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-indigo-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 08</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">8. Cerebral Angiography</h2>
-        </div>
+      <div class="bg-gradient-to-r from-emerald-900/50 to-slate-900 p-4 rounded-xl border border-emerald-500/30 flex items-start gap-3">
+        <span class="text-2xl">✅</span>
+        <p class="text-sm text-emerald-100"><strong>Conclusion & Viva Point:</strong> Always re-assess breath sounds and SpO₂ immediately after. Document the amount, color, and consistency of secretions.</p>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>X-ray visualization of cerebral blood vessels via femoral artery catheterization.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Detect aneurysms, vascular malformations (AVM), or occlusions.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Risk of puncture site hematoma or embolic stroke during catheterization.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Angiography tray, radiopaque contrast, fluoroscopy unit, pressure dressing.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Keep NPO 6–8 hours prior. Record baseline peripheral pulses and neuro checks.</li>
-            <li>Catheter inserted into femoral artery and advanced to carotid artery.</li>
-            <li>Post-procedure: Apply firm pressure over femoral site for 15–30 minutes.</li>
-            <li>Maintain leg straight and bed rest flat for 6–12 hours. Check pedal pulses hourly.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Always assess **Pedal Pulses** (Dorsalis Pedis) and circulation in the affected leg post-angiogram.
-        </div>
-      </div>
-    </article>
+    </div>
+  </article>
 
-    <!-- 10. MYELOGRAM -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-purple-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80" alt="Spinal Imaging" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-purple-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 10</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">10. Assisting in Myelogram</h2>
-        </div>
-      </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Radiographic study of the spinal cord following subarachnoid contrast injection.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Identify herniated discs, spinal cord tumors, or nerve root compression.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Elevate head of bed 30–45° post-op if water-soluble dye was used to prevent seizures.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>LP equipment, water-soluble intrathecal contrast dye, fluoroscopy table.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Assist provider in performing lumbar puncture and injecting contrast media.</li>
-            <li>Tilt table during fluoroscopy to distribute dye along spinal column.</li>
-            <li>Post-procedure: Keep HOB elevated 30–45 degrees for 8 hours; encourage oral fluids.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Always check if Phenothiazines (antipsychotics) were held—they lower seizure threshold when combined with intrathecal dye.
-        </div>
-      </div>
-    </article>
 
-    <!-- 11. AUDIOMETRIC TESTING -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-teal-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1200&q=80" alt="Hearing Test" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-teal-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 11</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">11. Audiometric Testing</h2>
-        </div>
-      </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Non-invasive measurement of hearing acuity across sound frequencies.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Differentiate conductive vs. sensorineural hearing loss.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Ensure test room is soundproofed to avoid environmental noise errors.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Audiometer, calibrated headphones, signal button, sound-treated booth.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Place headphones over patient's ears (Red = Right ear, Blue = Left ear).</li>
-            <li>Instruct patient to raise hand or press button whenever tone is heard.</li>
-            <li>Deliver pure tones at varying decibels and frequencies; record audiogram.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Red headphone cushion always goes on the **Right** ear (R = Red = Right).
-        </div>
-      </div>
-    </article>
+  <!-- PROCEDURE 2: LUMBAR PUNCTURE -->
+  <article id="proc-2" class="skill-card reveal bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-purple-500/50">
 
-    <!-- 12. THYROID SCANNING -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-emerald-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80" alt="Nuclear Scan" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-emerald-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 12</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">12. Thyroid Scanning</h2>
-        </div>
+    <div class="h-48 md:h-64 overflow-hidden relative group">
+      <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=80" alt="Sterile tray and spinal needles" class="hero-img w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+      <div class="absolute bottom-4 left-6">
+        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded font-bold uppercase tracking-wider shadow-lg mb-2 inline-block float-badge">Stations 03 & 09</span>
+        <h2 class="text-3xl font-extrabold text-white">Assisting in Lumbar Puncture (LP)</h2>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Nuclear medicine scan following administration of Radioactive Iodine (I-123 or Tc-99m).</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Evaluate thyroid nodules ("hot" vs "cold") and diagnose Graves' disease.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Strictly contraindicated in pregnancy and breastfeeding!</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Radioactive isotope (oral or IV), gamma scintillation camera.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Stop thyroid medications and iodine-rich foods 1–2 weeks prior.</li>
-            <li>Administer radiotracer; wait 24 hours for uptake measurement.</li>
-            <li>Position patient supine with neck extended under gamma camera.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> **"Cold" nodules** absorb little isotope and carry a higher risk of thyroid malignancy than "hot" nodules.
-        </div>
-      </div>
-    </article>
+    </div>
 
-    <!-- 13. X-RAY PROCEDURES -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-blue-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80" alt="Radiology" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-blue-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 13</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">13. Assisting in X-Ray Procedures</h2>
-        </div>
-      </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Electromagnetic radiation passing through tissue to capture skeletal/organ shadows.</li>
+    <div class="p-6 md:p-8 space-y-6">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-emerald-500">
+            <h3 class="text-emerald-400 font-bold mb-2 flex items-center gap-2">📌 Definition</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Insertion of a spinal needle into the subarachnoid space.</li>
+              <li>Usually performed at the L3-L4 or L4-L5 vertebral interspace.</li>
             </ul>
           </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Diagnose bone fractures, pneumonia, heart enlargement, or joint pathology.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Verify pregnancy status (LMP); apply lead aprons over reproductive organs.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>X-ray machine, lead aprons/thyroid shields, image cassettes/digital detectors.</li>
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-blue-500">
+            <h3 class="text-blue-400 font-bold mb-2 flex items-center gap-2">🎯 Purpose</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Collect Cerebrospinal Fluid (CSF) for diagnostic testing (e.g., Meningitis).</li>
+              <li>Measure intracranial fluid pressure.</li>
+              <li>Administer intrathecal medications or spinal anesthesia.</li>
             </ul>
           </div>
         </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Remove all metallic objects (jewelry, zippers, snaps) from target body area.</li>
-            <li>Position patient correctly (PA, AP, or Lateral views).</li>
-            <li>Instruct patient to take a deep breath and hold still during exposure.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Always enforce the **ALARA Principle** (As Low As Reasonably Achievable) for radiation exposure safety.
-        </div>
-      </div>
-    </article>
 
-    <!-- 14. SKIN TRACTION -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-cyan-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200&q=80" alt="Skin Traction" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-cyan-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 14</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">14. Application of Skin Traction</h2>
+        <div class="space-y-4">
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-rose-500">
+            <h3 class="text-rose-400 font-bold mb-2 flex items-center gap-2">⚠️ Contraindications</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Increased Intracranial Pressure (ICP) (risk of fatal brain herniation).</li>
+              <li>Skin infections over the lumbar puncture site.</li>
+              <li>Severe coagulopathies or bleeding disorders.</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-amber-500">
+            <h3 class="text-amber-400 font-bold mb-2 flex items-center gap-2">🛠️ Equipment</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Sterile LP tray, manometer, & local anesthetic (Lidocaine).</li>
+              <li>Spinal needle with stylet (20–22 gauge).</li>
+              <li>3 to 4 sequential sterile specimen collection tubes.</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Pulling force applied directly to skin/soft tissues using adhesive or foam boots.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Relieve muscle spasms and realign hip/femur fractures (Buck's Traction).</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li><strong>Weight Limit:</strong> Max weight for skin traction is 5–10 lbs (2.3–4.5 kg).</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Buck's traction boot, pulley frame, rope, hanging weights.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Assess baseline skin integrity and neurovascular status (5 Ps).</li>
-            <li>Wrap leg smoothly in traction boot; attach rope over overhead pulley.</li>
-            <li>Gently lower prescribed weights; ensure weights **hang freely** off the floor.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> NEVER remove traction weights without a specific physician order!
-        </div>
-      </div>
-    </article>
 
-    <!-- 15. PLASTER CAST -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-cyan-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80" alt="Cast Immobilization" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-cyan-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 15</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">15. Application of Plaster Cast</h2>
-        </div>
+      <!-- Real equipment photo strip -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700" src="https://images.unsplash.com/photo-1584367369853-8b966cf0d87e?auto=format&fit=crop&w=500&q=80" alt="Sterile procedure tray setup">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700" src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=500&q=80" alt="Specimen collection tubes">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700 col-span-2 md:col-span-1" src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=500&q=80" alt="Physician preparing sterile field">
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Application of rigid plaster/fiberglass bandages for fracture immobilization.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Hold reduced fractures in anatomical alignment during healing.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Never use fingertips when handling wet plaster—use palms only!</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Stockinette padding, plaster/fiberglass rolls, basin of warm water.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Apply tubular stockinette smoothly over limb; add soft cotton padding.</li>
-            <li>Submerge plaster rolls in warm water until bubbles cease; squeeze gently.</li>
-            <li>Wrap plaster spirally; mold smoothly using **palms of hands**.</li>
-            <li>Leave cast exposed to air until dry; monitor 5 Ps for Compartment Syndrome.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> What are the 5 Ps of Compartment Syndrome? **Pain, Pallor, Pulselessness, Paresthesia, Paralysis**.
-        </div>
-      </div>
-    </article>
 
-    <!-- 16. EYE BANDAGING -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-emerald-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80" alt="Eye Care" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-emerald-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 16</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">16. Application of Eye Bandage</h2>
-        </div>
+      <!-- positioning micro-diagram -->
+      <div class="bg-slate-950/60 rounded-xl border border-slate-700 p-4 flex items-center gap-4">
+        <svg width="70" height="56" viewBox="0 0 70 56">
+          <path d="M8 10 C 20 5, 20 30, 8 46 C 26 50, 40 42, 44 30 C 47 20, 42 10, 30 8 C 22 6, 14 8, 8 10 Z" fill="none" stroke="#a855f7" stroke-width="2"/>
+          <circle cx="12" cy="14" r="4" fill="#a855f7"/>
+        </svg>
+        <p class="text-xs text-slate-400">Fetal / lateral position — chin tucked, knees drawn to abdomen — opens the vertebral interspace.</p>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Application of a protective eye patch or Fox metal shield over the orbit.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Protect eye from light, dust, or trauma post-surgery or injury.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Never apply direct pressure onto an injured eyeball!</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Sterile eye pad, metal shield, paper tape, antiseptic wipes.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Have patient close both eyes gently.</li>
-            <li>Place sterile eye pad over closed eyelid.</li>
-            <li>Apply tape diagonally from cheek to middle of forehead.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> In traumatic eye laceration, use a rigid eye shield—never press down with a soft pad.
-        </div>
-      </div>
-    </article>
 
-    <!-- 17. EYE IRRIGATION -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-emerald-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80" alt="Eye Irrigation" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-emerald-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 17</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">17. Eye Irrigation</h2>
+      <div class="bg-slate-700/30 p-6 rounded-2xl border border-slate-600" data-progress-card>
+        <div class="flex items-center justify-between mb-4 border-b border-slate-600 pb-2">
+          <h3 class="text-white font-bold text-lg">📋 Step-by-Step Procedure</h3>
+          <span class="text-xs text-slate-400 card-progress-label">0 / 4</span>
         </div>
+        <div class="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden mb-4">
+          <div class="card-progress-fill progress-fill h-full bg-purple-500" style="width:0%"></div>
+        </div>
+        <ol class="space-y-3 text-sm text-slate-300">
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Positioning (Crucial Step):</strong> Place patient in a lateral fetal position or sitting bent forward to open vertebral spaces.</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Site Prep:</strong> Assist the physician with sterile skin disinfection using Betadine/Chlorhexidine.</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Collection:</strong> Maintain the patient's position strictly while the provider measures pressure and collects CSF into sequentially numbered tubes.</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Post-Care:</strong> Apply sterile dressing. Instruct the patient to remain lying flat for 4–8 hours to prevent spinal fluid leaks and headaches.</span>
+          </li>
+        </ol>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Flushing the conjunctival sac with fluid solution.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Flush chemical irritants or foreign bodies from the eye.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Always flush from <strong>Inner Canthus to Outer Canthus</strong>!</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Sterile Normal Saline (0.9%), IV tubing/Morgan lens, emesis basin.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Tilt patient's head toward the affected eye side.</li>
-            <li>Hold eyelids open; direct fluid stream gently from inner to outer canthus.</li>
-            <li>Catch fluid runoff with an emesis basin held against the cheek.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Why flush inner to outer? To prevent contaminating the lacrimal duct and the uninjured opposite eye!
-        </div>
-      </div>
-    </article>
 
-    <!-- 18. EAR IRRIGATION -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-teal-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1200&q=80" alt="Ear Care" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-teal-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 18</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">18. Ear Irrigation</h2>
+      <div class="bg-gradient-to-r from-emerald-900/50 to-slate-900 p-4 rounded-xl border border-emerald-500/30 flex items-start gap-3">
+        <span class="text-2xl">✅</span>
+        <p class="text-sm text-emerald-100"><strong>Conclusion & Viva Point:</strong> Always label CSF tubes at the bedside. Monitor the puncture site for hematoma and perform frequent neurological checks post-procedure.</p>
+      </div>
+    </div>
+  </article>
+
+
+  <!-- PROCEDURE 3: SKIN TRACTION & CAST -->
+  <article id="proc-3" class="skill-card reveal bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-cyan-500/50">
+
+    <div class="h-48 md:h-64 overflow-hidden relative group">
+      <img src="https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200&q=80" alt="Orthopedic healing" class="hero-img w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+      <div class="absolute bottom-4 left-6">
+        <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded font-bold uppercase tracking-wider shadow-lg mb-2 inline-block float-badge">Stations 14 & 15</span>
+        <h2 class="text-3xl font-extrabold text-white">Skin Traction & Cast Immobilization</h2>
+      </div>
+    </div>
+
+    <div class="p-6 md:p-8 space-y-6">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-emerald-500">
+            <h3 class="text-emerald-400 font-bold mb-2 flex items-center gap-2">📌 Definition</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li><strong>Traction:</strong> Application of a pulling force to skin/soft tissues (e.g., Buck's traction).</li>
+              <li><strong>Cast:</strong> Rigid dressing (plaster/fiberglass) applied to immobilize fractured bones.</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-blue-500">
+            <h3 class="text-blue-400 font-bold mb-2 flex items-center gap-2">🎯 Purpose</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Relieve severe muscle spasms and pain pre-surgery.</li>
+              <li>Realign bone fragments and maintain anatomical position.</li>
+              <li>Provide stability to injured joints during healing.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-rose-500">
+            <h3 class="text-rose-400 font-bold mb-2 flex items-center gap-2">⚠️ Contraindications</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Severe skin abrasions or infections under the traction site.</li>
+              <li>Active Compartment Syndrome (requires immediate removal).</li>
+              <li>Compromised arterial circulation to the limb.</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900/50 p-4 rounded-xl border-l-4 border-amber-500">
+            <h3 class="text-amber-400 font-bold mb-2 flex items-center gap-2">🛠️ Equipment</h3>
+            <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-300">
+              <li>Traction boots, ropes, and pulley frames.</li>
+              <li>Prescribed weights (typically 5–10 lbs for skin traction).</li>
+              <li>Stockinette padding, fiberglass rolls, & warm water.</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Flushing external auditory canal with warm water or saline.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Remove impacted cerumen (wax) or non-vegetable foreign bodies.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Contraindications</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Perforated tympanic membrane or vegetable foreign bodies (e.g. beans swell!).</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Ear syringe/Waterpik, warm water (~37°C), otoscope, basin.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Inspect ear canal with otoscope to verify intact eardrum.</li>
-            <li>For Adults: Pull pinna <strong>UP and BACK</strong> (Children: Down and Back).</li>
-            <li>Direct fluid flow toward roof of ear canal—never directly at eardrum!</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Point:</strong> Always use body-temperature solution (~37°C). Cold or hot water causes severe vestibular stimulation and vertigo!
-        </div>
+
+      <!-- Real equipment photo strip -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700" src="https://images.unsplash.com/photo-1666214280391-8ff5bd3c0bf0?auto=format&fit=crop&w=500&q=80" alt="Arm cast immobilization">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700" src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=500&q=80" alt="Crutches and mobility aids">
+        <img class="thumb rounded-xl h-28 w-full object-cover border border-slate-700 col-span-2 md:col-span-1" src="https://images.unsplash.com/photo-1631248055158-edec7a3c072b?auto=format&fit=crop&w=500&q=80" alt="Fiberglass cast roll application">
       </div>
-    </article>
 
-    <!-- 19. BLOOD SUGAR MONITORING -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-emerald-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80" alt="Glucometer Test" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-emerald-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 19</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">19. Blood Sugar Monitoring (BSR)</h2>
-        </div>
+      <div class="bg-slate-950/60 rounded-xl border border-slate-700 p-4 flex items-center gap-4">
+        <svg width="70" height="40" viewBox="0 0 70 40">
+          <line x1="4" y1="8" x2="4" y2="34" stroke="#22d3ee" stroke-width="2"/>
+          <line x1="4" y1="8" x2="55" y2="8" stroke="#22d3ee" stroke-width="2"/>
+          <circle cx="55" cy="8" r="3" fill="#22d3ee"/>
+          <line x1="55" y1="11" x2="55" y2="26" stroke="#22d3ee" stroke-width="2"/>
+          <rect x="47" y="26" width="16" height="8" rx="2" fill="#0891b2"/>
+        </svg>
+        <p class="text-xs text-slate-400">Weights must hang freely — never resting on the bed or floor — to maintain constant pulling force.</p>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Capillary blood glucose measurement via fingerstick lancet sample.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Screen and monitor glucose levels to manage diabetes or hypoglycemia.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Wipe away first drop of blood to avoid alcohol/tissue fluid dilution.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Glucometer, test strips, sterile lancet, alcohol swab, cotton ball.</li>
-            </ul>
-          </div>
+
+      <div class="bg-slate-700/30 p-6 rounded-2xl border border-slate-600" data-progress-card>
+        <div class="flex items-center justify-between mb-4 border-b border-slate-600 pb-2">
+          <h3 class="text-white font-bold text-lg">📋 Step-by-Step Procedure</h3>
+          <span class="text-xs text-slate-400 card-progress-label">0 / 4</span>
         </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Clean lateral side of fingertip with alcohol and allow to dry completely.</li>
-            <li>Prick side of fingertip with lancet; wipe away the first drop of blood.</li>
-            <li>Apply second drop to test strip; record glucometer reading.</li>
-          </ol>
+        <div class="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden mb-4">
+          <div class="card-progress-fill progress-fill h-full bg-cyan-500" style="width:0%"></div>
         </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Normal Values:</strong> Fasting BSR = 70–99 mg/dL | Postprandial (2hr) = <140 mg/dL.
-        </div>
+        <ol class="space-y-3 text-sm text-slate-300">
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Assessment:</strong> Perform a baseline neurovascular assessment checking the 5 P's (Pain, Pallor, Pulselessness, Paresthesia, Paralysis).</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Traction Application:</strong> Wrap the limb in the traction boot. Attach the rope over the pulley system and apply prescribed weights gently.</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Weight Verification:</strong> Ensure weights hang completely free and do not rest on the bed or floor.</span>
+          </li>
+          <li class="step-item flex gap-3 items-start p-2 rounded-lg" onclick="toggleStep(this)">
+            <span class="step-check mt-0.5 w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd"/></svg></span>
+            <span class="step-text"><strong class="text-white">Cast Handling:</strong> If assisting with a wet plaster cast, handle it using the palms of the hands only (never fingertips) to prevent pressure ulcers.</span>
+          </li>
+        </ol>
       </div>
-    </article>
 
-    <!-- 20. CARDIAC TELEMETRY -->
-    <article class="skill-card animate-fade-in bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 transition hover:border-rose-500/50">
-      <div class="h-44 md:h-56 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80" alt="ECG Monitor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="bg-rose-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider mb-1 inline-block">Station 20</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white">20. Cardiac Monitoring / Telemetry</h2>
-        </div>
+      <div class="bg-gradient-to-r from-emerald-900/50 to-slate-900 p-4 rounded-xl border border-emerald-500/30 flex items-start gap-3">
+        <span class="text-2xl">✅</span>
+        <p class="text-sm text-emerald-100"><strong>Conclusion & Viva Point:</strong> Continuous neurovascular monitoring is critical. Report unrelenting pain that is out of proportion to the injury immediately to rule out Compartment Syndrome.</p>
       </div>
-      <div class="p-6 space-y-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-emerald-500">
-            <h3 class="text-emerald-400 font-bold mb-2">📌 Definition</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Continuous transmission of cardiac electrical activity via electrode leads.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-blue-500">
-            <h3 class="text-blue-400 font-bold mb-2">🎯 Purpose</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Detect lethal cardiac arrhythmias (VTach, VFib, Asystole) continuously.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-rose-500">
-            <h3 class="text-rose-400 font-bold mb-2">⚠️ Precautions</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Ensure clean skin contact; change electrode pads every 24–48 hours.</li>
-            </ul>
-          </div>
-          <div class="bg-slate-900/60 p-4 rounded-xl border-l-4 border-amber-500">
-            <h3 class="text-amber-400 font-bold mb-2">🛠️ Equipment</h3>
-            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
-              <li>Telemetry transmitter pack, 3-lead or 5-lead cable set, pre-gelled electrodes.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="bg-slate-700/30 p-5 rounded-2xl border border-slate-600">
-          <h3 class="text-white font-bold mb-3 border-b border-slate-600 pb-2">📋 Step-by-Step Procedure</h3>
-          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
-            <li>Prep chest skin (clip hair, clean oil with alcohol swab).</li>
-            <li>Apply 5 leads: <strong>White</strong> (Right Shoulder), <strong>Black</strong> (Left Shoulder), <strong>Brown</strong> (Chest Center), <strong>Green</strong> (Right Lower Abdomen), <strong>Red</strong> (Left Lower Abdomen).</li>
-            <li>Verify clear ECG rhythm baseline on telemetry display monitor.</li>
-          </ol>
-        </div>
-        <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl text-emerald-200 text-sm">
-          <strong>✅ Viva Memory Trick:</strong> "White on right, snow over grass (White top right, Green bottom right). Smoke over fire (Black top left, Red bottom left). Chocolate close to the heart (Brown center)."
-        </div>
-      </div>
-    </article>
+    </div>
+  </article>
 
-  </main>
+</main>
 
-  <footer class="text-center text-xs text-slate-500 pb-12">
-    Adult Health Nursing-II Master Portal • Maintained by Class Representative Mudassir Khan
-  </footer>
+<footer class="text-center text-sm text-slate-500 pb-12">
+  <p>Maintained by Mudassir Khan • Good Luck on your OSPE & Vivas!</p>
+</footer>
 
-  <!-- Live Search Filter Script -->
-  <script>
-    function filterSkills() {
-      let input = document.getElementById('searchInput').value.toLowerCase();
-      let cards = document.getElementsByClassName('skill-card');
+<!-- back to top -->
+<button id="backToTop" class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold w-11 h-11 rounded-full shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center">↑</button>
 
-      for (let i = 0; i < cards.length; i++) {
-        let text = cards[i].innerText.toLowerCase();
-        if (text.includes(input)) {
-          cards[i].style.display = "block";
-        } else {
-          cards[i].style.display = "none";
-        }
-      }
+<script>
+  // Scroll-reveal via IntersectionObserver
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Search filter
+  function filterSkills() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let cards = document.getElementsByClassName('skill-card');
+    for (let i = 0; i < cards.length; i++) {
+      let text = cards[i].innerText.toLowerCase();
+      cards[i].style.display = text.includes(input) ? "block" : "none";
     }
-  </script>
+  }
+
+  // Step checklist toggle + per-card & global progress
+  function updateGlobalProgress() {
+    const all = document.querySelectorAll('.step-item');
+    const done = document.querySelectorAll('.step-item.done');
+    const pct = all.length ? Math.round((done.length / all.length) * 100) : 0;
+    document.getElementById('globalProgress').style.width = pct + '%';
+  }
+
+  function toggleStep(el) {
+    el.classList.toggle('done');
+    const card = el.closest('[data-progress-card]');
+    const items = card.querySelectorAll('.step-item');
+    const doneItems = card.querySelectorAll('.step-item.done');
+    const pct = Math.round((doneItems.length / items.length) * 100);
+    card.querySelector('.card-progress-fill').style.width = pct + '%';
+    card.querySelector('.card-progress-label').textContent = `${doneItems.length} / ${items.length}`;
+    updateGlobalProgress();
+  }
+
+  // Side nav active state + smooth scroll
+  const navDots = document.querySelectorAll('.navdot');
+  const sections = ['proc-1', 'proc-2', 'proc-3'].map(id => document.getElementById(id));
+
+  navDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      document.getElementById(dot.dataset.target).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  const secObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const dot = document.querySelector(`.navdot[data-target="${entry.target.id}"]`);
+      if (!dot) return;
+      if (entry.isIntersecting) {
+        navDots.forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(sec => secObserver.observe(sec));
+
+  // Back to top button
+  const backBtn = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      backBtn.classList.remove('opacity-0', 'pointer-events-none');
+    } else {
+      backBtn.classList.add('opacity-0', 'pointer-events-none');
+    }
+  });
+  backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
 
 </body>
 </html>
