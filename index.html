@@ -3,15 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AHN-II Clinical & OSPE Portal | Mudassir Khan</title>
+  <title>AHN-II Clinical & OSPE Portal | Mudassir Hussain Khan</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Three.js Library for 3D Visualizations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <style>
     @keyframes pulse-slow {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    @keyframes ecg-scan {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .animate-ecg {
+      animation: ecg-scan 2.5s linear infinite;
     }
     /* Hide scrollbars for crisp UI */
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -46,7 +56,7 @@
               <span class="hidden sm:inline-block bg-teal-500/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-teal-500/30">OSPE & Viva Ready</span>
             </div>
             <p class="text-[11px] text-slate-400 font-medium truncate max-w-[200px] sm:max-w-none">
-              Lead Author & Curator: <span class="text-teal-400 font-bold">Mudassir Khan</span>
+              Lead Author & Curator: <span class="text-teal-400 font-bold">Mudassir Hussain Khan</span>
             </p>
           </div>
         </div>
@@ -75,22 +85,13 @@
       <!-- CATEGORY NAVIGATION TABS -->
       <nav class="flex space-x-1 overflow-x-auto py-2 border-t border-slate-800/80 text-xs no-scrollbar">
         <button onclick="filterCategory('all')" id="tab-all" class="cat-btn px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-all bg-teal-600 text-white shadow-sm">
-          All Topics (20)
+          All Topics (6)
         </button>
         <button onclick="filterCategory('airway')" id="tab-airway" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
           Airway & Respiratory
         </button>
         <button onclick="filterCategory('taps')" id="tab-taps" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
           Invasive Taps & Drainage
-        </button>
-        <button onclick="filterCategory('radiology')" id="tab-radiology" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-          Radiology & Diagnostics
-        </button>
-        <button onclick="filterCategory('ortho')" id="tab-ortho" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-          Orthopedics & Immobilization
-        </button>
-        <button onclick="filterCategory('sensory')" id="tab-sensory" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-          Sensory, Cardiac & Specialized
         </button>
       </nav>
     </div>
@@ -99,7 +100,7 @@
   <!-- MOBILE SEARCH BAR -->
   <div class="p-2.5 bg-slate-200/80 border-b border-slate-300 md:hidden">
     <div class="relative w-full">
-      <input type="text" id="mobileSearchInput" oninput="handleSearch(this.value)" placeholder="Search 20 clinical procedures..." 
+      <input type="text" id="mobileSearchInput" oninput="handleSearch(this.value)" placeholder="Search clinical procedures..." 
         class="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-white text-slate-800 border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm">
       <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
     </div>
@@ -121,7 +122,7 @@
             <h2 class="font-bold text-slate-800 text-xs tracking-wider uppercase">Procedure Index</h2>
           </div>
           <div class="flex items-center gap-2">
-            <span id="procedureCount" class="text-[11px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-full">20 Topics</span>
+            <span id="procedureCount" class="text-[11px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-full">6 Topics</span>
             <button onclick="toggleMobileSidebar()" class="lg:hidden text-slate-400 hover:text-slate-600 p-1">
               <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -160,26 +161,26 @@
         </div>
       </div>
 
-      <!-- REAL CLINICAL PROCEDURE PHOTO GALLERY (REPLACED VECTOR DIAGRAM) -->
+      <!-- ACCURATE 3D PROCEDURAL MODEL CANVAS (REPLACES 2D VECTOR) -->
       <div class="bg-slate-900 rounded-xl shadow-md border border-slate-800 overflow-hidden">
         <div class="px-4 py-2.5 bg-slate-950 border-b border-slate-800 flex justify-between items-center text-slate-300 text-xs">
           <span class="flex items-center gap-2 font-mono text-[11px]">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="text-slate-200 font-semibold">Real Clinical Procedure Photos & Visual Guide</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-slate-200 font-semibold">Interactive 3D Anatomical & Procedure Visualizer</span>
           </span>
-          <span class="bg-slate-800 px-2.5 py-0.5 rounded-md text-[10px] text-teal-400 font-medium">
-            2 to 3 Clinical Views
-          </span>
+          <button onclick="reset3DCamera()" class="hover:text-white flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors">
+            <i data-lucide="rotate-ccw" class="w-3 h-3 text-teal-400"></i> Reset View
+          </button>
         </div>
         
-        <!-- Image Grid Gallery Container -->
-        <div id="visualizerCanvas" class="w-full bg-slate-950 p-3 sm:p-4">
-          <!-- Dynamically populated with 2 to 3 real procedure photos -->
+        <!-- 3D Canvas Container -->
+        <div id="visualizerCanvas" class="w-full h-72 sm:h-80 bg-slate-950 relative text-slate-400 select-none">
+          <!-- Three.js Canvas renders inside here -->
         </div>
 
         <div class="px-4 py-2 bg-slate-900/90 text-[11px] text-slate-400 border-t border-slate-800/80 flex items-center justify-between">
-          <span id="visualCaption" class="truncate max-w-[80%]">Real-world clinical photos showing actual equipment and patient setup.</span>
-          <span class="text-slate-500 font-mono text-[10px]">HN-II Clinical Standard</span>
+          <span id="visualCaption" class="truncate max-w-[80%]">3D Procedural model. Drag to rotate, scroll to zoom.</span>
+          <span class="text-slate-500 font-mono text-[10px]">HN-II 3D Engine</span>
         </div>
       </div>
 
@@ -282,14 +283,13 @@
   <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-8">
     <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
       <p class="text-slate-200 font-semibold text-sm">Adult Health Nursing-II (AHN-II) Clinical & OSPE Interactive Portal</p>
-      <p class="text-slate-400">Curated & Developed by: <strong class="text-teal-400">Mudassir Khan</strong> • BS Nursing  4th sem Class Representative</p>
-      <p class="text-slate-500 text-[11px]">Designed for Desktop & Mobile • Single File Web App</p>
+      <p class="text-slate-400">Curated & Developed by: <strong class="text-teal-400">Mudassir Hussain Khan</strong> • BS Nursing Class Representative</p>
+      <p class="text-slate-500 text-[11px]">Designed for Desktop & Mobile • Single File Web App with 3D Rendering</p>
     </div>
   </footer>
 
   <!-- SCRIPT DATA & APP LOGIC -->
   <script>
-    // DATABASE OF ALL CLINICAL PROCEDURES WITH REAL HIGH-QUALITY CLINICAL PROCEDURE IMAGES (2 TO 3 PICTURES EACH)
     const proceduresData = [
       {
         id: 1,
@@ -318,11 +318,7 @@
           { q: "What crucial emergency items must always be present at a tracheostomy patient's bedside?", a: "An emergency tracheostomy tray, two spare tubes (one same size, one size smaller), obturator, resuscitation bag-valve mask, and functional suction unit." },
           { q: "How tight should new tracheostomy ties be secured?", a: "They should be tight enough to prevent dislodgement, allowing exactly 1 to 2 fingers to fit snugly between the tie and the patient's neck." }
         ],
-        photos: [
-          { url: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", caption: "Tracheostomy Stoma & Tube Assembly", label: "Figure 1: Tube Placement" },
-          { url: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80", caption: "Aseptic Inner Cannula & Stoma Care", label: "Figure 2: Sterile Technique" },
-          { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", caption: "Securing Split Dressing & Velcro Ties", label: "Figure 3: Dressing Fixation" }
-        ]
+        3dModelType: "tracheostomy"
       },
       {
         id: 2,
@@ -350,11 +346,7 @@
           { q: "Why do we hyperoxygenate the patient before and after suctioning?", a: "To prevent suction-induced arterial hypoxemia and cardiac dysrhythmias during the procedure." },
           { q: "What suction pressure range is recommended for adult patients?", a: "100 to 120 mmHg (never exceed 150 mmHg to avoid mucosal invagination)." }
         ],
-        photos: [
-          { url: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=600&q=80", caption: "Suction Apparatus Setup & Gauge", label: "Figure 1: Pressure Control" },
-          { url: "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=600&q=80", caption: "Sterile Suction Catheter Insertion", label: "Figure 2: Catheter Insertion" },
-          { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", caption: "Hyperoxygenation & SpO2 Monitoring", label: "Figure 3: Patient Oxygenation" }
-        ]
+        3dModelType: "suction"
       },
       {
         id: 3,
@@ -383,11 +375,7 @@
           { q: "What position prevents post-lumbar puncture headache?", a: "Flat supine position for 4 to 6 hours to reduce CSF leakage from the dural puncture site." },
           { q: "Why is tube #1 not usually sent for microbiological culture?", a: "Tube #1 is most likely to contain skin contaminants or blood from a traumatic tap." }
         ],
-        photos: [
-          { url: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80", caption: "Patient Lateral Fetal Positioning", label: "Figure 1: Patient Positioning" },
-          { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", caption: "Spinal Needle Insertion (L3-L4 Space)", label: "Figure 2: Needle Insertion" },
-          { url: "https://images.unsplash.com/photo-1582719271384-894fba16e2a9?auto=format&fit=crop&w=600&q=80", caption: "CSF Collection in Numbered Vials", label: "Figure 3: CSF Collection" }
-        ]
+        3dModelType: "lumbar"
       },
       {
         id: 4,
@@ -416,11 +404,7 @@
           { q: "What complications are signaled by sudden onset dyspnea after thoracentesis?", a: "Pneumothorax or hemothorax caused by accidental lung parenchyma or intercostal vessel puncture." },
           { q: "How should the patient be positioned if pneumothorax is suspected?", a: "High Fowler's position to assist breathing while preparing for diagnostic X-ray and intervention." }
         ],
-        photos: [
-          { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", caption: "Patient Seated Leaning Forward Position", label: "Figure 1: Patient Position" },
-          { url: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80", caption: "Ultrasound-Guided Thoracentesis", label: "Figure 2: Needle Insertion" },
-          { url: "https://images.unsplash.com/photo-1582719271384-894fba16e2a9?auto=format&fit=crop&w=600&q=80", caption: "Pleural Fluid Drainage Vacuum Bottle", label: "Figure 3: Drainage Bottle" }
-        ]
+        3dModelType: "thoracentesis"
       },
       {
         id: 5,
@@ -449,191 +433,368 @@
           { q: "Why is IV Albumin administered after large-volume paracentesis (>5L)?", a: "Albumin increases intravascular oncotic pressure, preventing hypovolemic shock and renal failure." },
           { q: "What key post-procedure measurements evaluate paracentesis effectiveness?", a: "Body weight loss and abdominal girth reduction." }
         ],
-        photos: [
-          { url: "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=600&q=80", caption: "Abdominal Prep & Trocar Site Selection", label: "Figure 1: Site Preparation" },
-          { url: "https://images.unsplash.com/photo-1582719271384-894fba16e2a9?auto=format&fit=crop&w=600&q=80", caption: "Peritoneal Fluid Drainage to Vacuum Bottle", label: "Figure 2: Fluid Drainage" },
-          { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", caption: "Post-Procedure Occlusive Dressing", label: "Figure 3: Occlusive Dressing" }
-        ]
+        3dModelType: "paracentesis"
       },
       {
         id: 6,
-        title: "Chest Tube Insertion & Drainage Care",
+        title: "Chest Tube Drainage System",
         category: "taps",
         catName: "Invasive Taps & Drainage",
-        objective: "Assist with chest tube placement and connection to a closed chest drainage unit (CDU) to restore negative intrapleural pressure.",
-        positioning: "Supine or semi-Fowler's position with patient's arm on affected side raised overhead.",
-        equipment: ["Chest tube kit (20-32 Fr)", "Closed chest drainage unit (CDU)", "Sterile water", "Vaseline petrolatum gauze & occlusive tape", "Chest tube clamps"],
+        objective: "Manage and monitor closed chest drainage unit (CDU) to restore negative intrapleural pressure and re-expand collapsed lung.",
+        positioning: "Semi-Fowler's to High Fowler's position.",
+        equipment: ["Three-chamber Chest Drainage Unit (CDU)", "Sterile water", "Suction tubing", "Chest tube clamps"],
         steps: [
-          "Fill water-seal chamber of CDU with sterile water up to the 2 cm line mark.",
-          "Position patient with affected arm elevated behind head to expose 4th-5th intercostal space.",
-          "Assist clinician with aseptic prep, local anesthesia, incision, and tube placement.",
-          "Connect chest tube immediately to CDU drainage tubing; observe for tidaling.",
-          "Wrap insertion site with Vaseline gauze, cover with occlusive dressing, and tape securely.",
-          "Tape all tube connections along the line to prevent accidental disconnects.",
-          "Obtain immediate post-procedure chest X-ray to confirm tube placement."
+          "Fill water seal chamber to 2cm level with sterile water.",
+          "Connect thoracic catheter to CDU collection tube and secure connections.",
+          "Maintain CDU below level of patient's chest at all times.",
+          "Observe for normal tidaling in water seal chamber during inhalation/exhalation.",
+          "Monitor drainage characteristics, rate, and total output in collection chamber."
         ],
-        safetyAlerts: "NEVER clamp a chest tube without a physician order! Clamping traps air inside pleural space causing fatal tension pneumothorax.",
+        safetyAlerts: "Never clamp a chest tube routinely during transport or without specific medical order to prevent tension pneumothorax!",
         complications: [
-          { name: "Tension Pneumothorax", action: "Check for kinked tubing; ensure water seal is functioning and tracheal alignment is centered." },
-          { name: "Accidental Disconnection", action: "Submerge open chest tube 1-2 inches in a sterile saline bottle to recreate water seal immediately." }
+          { name: "Tension Pneumothorax", action: "Unclamp tubing immediately if clamped; check for kinks or blockages in drainage tubing." },
+          { name: "Accidental Disconnection", action: "Submerge open end of chest tube in bottle of sterile saline immediately to re-establish water seal." }
         ],
         viva: [
-          { q: "What does continuous vigorous bubbling in the water-seal chamber indicate?", a: "An air leak in the system or patient's pleural space (normal is intermittent bubbling with expiration)." },
-          { q: "What should you do if the chest tube accidentally pulls out from the chest wall?", a: "Immediately cover site with sterile occlusive Vaseline gauze taped on THREE sides (allowing air to escape)." },
-          { q: "What is tidaling in a chest drainage system?", a: "The rise and fall of fluid in the water seal chamber with patient inspiration and expiration, indicating tube patency." }
+          { q: "What does continuous air bubbling in the water seal chamber indicate?", a: "An active air leak in the patient's pleural space or within the drainage tubing system." },
+          { q: "What is 'tidaling' in a chest tube system?", a: "Normal fluctuation of water level in the water seal chamber rising with inspiration and falling with expiration." }
         ],
-        photos: [
-          { url: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80", caption: "Chest Tube Insertion Site & Arm Elevation", label: "Figure 1: Insertion Site" },
-          { url: "https://images.unsplash.com/photo-1582719271384-894fba16e2a9?auto=format&fit=crop&w=600&q=80", caption: "Chest Drainage Unit (3-Chamber System)", label: "Figure 2: CDU Setup" },
-          { url: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80", caption: "Occlusive Dressing & Taped Connections", label: "Figure 3: Taped Dressing" }
-        ]
+        3dModelType: "chestDrain"
       }
     ];
 
-    // STATE VARIABLES
-    let currentProcedureId = 1;
-    let activeCategory = 'all';
+    let currentProc = proceduresData[0];
+    let scene, camera, renderer, controls, activeMeshGroup;
 
-    // INITIALIZATION
-    document.addEventListener('DOMContentLoaded', () => {
+    // INITIALIZE APP
+    window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
-      renderProcedureList();
-      selectProcedure(1);
+      renderProcedureList(proceduresData);
+      init3DViewer();
+      loadProcedure(proceduresData[0].id);
     });
 
-    // RENDER PROCEDURE INDEX LIST
-    function renderProcedureList(filteredData = null) {
-      const list = filteredData || (activeCategory === 'all' ? proceduresData : proceduresData.filter(p => p.category === activeCategory));
+    // 3D THREE.JS ENGINE SETUP
+    function init3DViewer() {
+      const container = document.getElementById('visualizerCanvas');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x090d16);
+
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.set(0, 3, 10);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0x00f2fe, 1.2);
+      dirLight.position.set(5, 10, 7);
+      dirLight.castShadow = true;
+      scene.add(dirLight);
+
+      const pointLight = new THREE.PointLight(0x10b981, 0.8, 20);
+      pointLight.position.set(-5, 2, -2);
+      scene.add(pointLight);
+
+      // Grid helper
+      const gridHelper = new THREE.GridHelper(12, 12, 0x1e293b, 0x0f172a);
+      gridHelper.position.y = -2;
+      scene.add(gridHelper);
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        if (activeMeshGroup) {
+          activeMeshGroup.rotation.y += 0.003;
+        }
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', onWindowResize);
+    }
+
+    function onWindowResize() {
+      const container = document.getElementById('visualizerCanvas');
+      if (!container || !renderer || !camera) return;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+
+    // GENERATE ACCURATE 3D PROCEDURAL MODELS
+    function update3DModel(type) {
+      if (activeMeshGroup) {
+        scene.remove(activeMeshGroup);
+      }
+
+      activeMeshGroup = new THREE.Group();
+
+      if (type === 'tracheostomy' || type === 'suction') {
+        // Anatomical Neck & Tracheostomy Tube Model
+        const neckGeo = new THREE.CylinderGeometry(1.4, 1.6, 4, 32);
+        const neckMat = new THREE.MeshPhongMaterial({ color: 0x334155, wireframe: false, opacity: 0.85, transparent: true });
+        const neck = new THREE.Mesh(neckGeo, neckMat);
+        neck.position.y = 0;
+        activeMeshGroup.add(neck);
+
+        // Tracheal Ring Structure
+        for (let i = -1.2; i <= 1.2; i += 0.6) {
+          const ringGeo = new THREE.TorusGeometry(1.2, 0.12, 16, 32);
+          const ringMat = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.3 });
+          const ring = new THREE.Mesh(ringGeo, ringMat);
+          ring.rotation.x = Math.PI / 2;
+          ring.position.y = i;
+          activeMeshGroup.add(ring);
+        }
+
+        // Tracheostomy Outer Curve Tube
+        const curve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(0, 0, 0.5),
+          new THREE.Vector3(0, -0.3, 1.8),
+          new THREE.Vector3(0, -1.5, 2.2)
+        ]);
+        const tubeGeo = new THREE.TubeGeometry(curve, 32, 0.35, 16, false);
+        const tubeMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.1, metalness: 0.1 });
+        const tube = new THREE.Mesh(tubeGeo, tubeMat);
+        activeMeshGroup.add(tube);
+
+        // Flange / Faceplate
+        const flangeGeo = new THREE.BoxGeometry(2.2, 0.6, 0.1);
+        const flangeMat = new THREE.MeshStandardMaterial({ color: 0x0284c7 });
+        const flange = new THREE.Mesh(flangeGeo, flangeMat);
+        flange.position.set(0, -0.1, 1.7);
+        activeMeshGroup.add(flange);
+
+        if (type === 'suction') {
+          // Suction Catheter inserted inside tube
+          const suctCurve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(0, 1.2, 2.5),
+            new THREE.Vector3(0, -0.3, 1.8),
+            new THREE.Vector3(0, -1.8, 0.2)
+          ]);
+          const suctGeo = new THREE.TubeGeometry(suctCurve, 32, 0.12, 12, false);
+          const suctMat = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.2 });
+          const suctionCatheter = new THREE.Mesh(suctGeo, suctMat);
+          activeMeshGroup.add(suctionCatheter);
+        }
+
+      } else if (type === 'lumbar') {
+        // Lumbar Vertebrae Stack (L3-L5 Anatomical Representation)
+        for (let i = -1; i <= 1; i++) {
+          const vertGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.8, 16);
+          const vertMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.4 });
+          const vert = new THREE.Mesh(vertGeo, vertMat);
+          vert.position.y = i * 1.5;
+          activeMeshGroup.add(vert);
+
+          // Intervertebral Disc
+          if (i < 1) {
+            const discGeo = new THREE.CylinderGeometry(1.1, 1.1, 0.4, 16);
+            const discMat = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, opacity: 0.8, transparent: true });
+            const disc = new THREE.Mesh(discGeo, discMat);
+            disc.position.y = i * 1.5 + 0.65;
+            activeMeshGroup.add(disc);
+          }
+        }
+
+        // Spinal Needle Insertion at L3-L4 space
+        const needleGeo = new THREE.CylinderGeometry(0.04, 0.04, 4, 8);
+        const needleMat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, metalness: 0.8, roughness: 0.2 });
+        const needle = new THREE.Mesh(needleGeo, needleMat);
+        needle.rotation.z = Math.PI / 2.5;
+        needle.position.set(1.5, 0, 0.8);
+        activeMeshGroup.add(needle);
+
+      } else if (type === 'chestDrain' || type === 'thoracentesis') {
+        // 3-Chamber Drainage Unit Model
+        const canisterGeo = new THREE.BoxGeometry(3, 4, 1.5);
+        const canisterMat = new THREE.MeshPhysicalMaterial({
+          color: 0xffffff,
+          transmission: 0.85,
+          opacity: 1,
+          transparent: true,
+          roughness: 0.1,
+          ior: 1.5
+        });
+        const canister = new THREE.Mesh(canisterGeo, canisterMat);
+        activeMeshGroup.add(canister);
+
+        // Water Seal Fluid Chamber (Blue)
+        const fluidGeo = new THREE.BoxGeometry(0.8, 2, 1.3);
+        const fluidMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, opacity: 0.7, transparent: true });
+        const fluid = new THREE.Mesh(fluidGeo, fluidMat);
+        fluid.position.set(-0.9, -0.8, 0);
+        activeMeshGroup.add(fluid);
+
+        // Drainage Fluid Chamber (Red/Serosanguinous)
+        const drainFluidGeo = new THREE.BoxGeometry(0.8, 1.5, 1.3);
+        const drainFluidMat = new THREE.MeshStandardMaterial({ color: 0xe11d48, opacity: 0.8, transparent: true });
+        const drainFluid = new THREE.Mesh(drainFluidGeo, drainFluidMat);
+        drainFluid.position.set(0.9, -1, 0);
+        activeMeshGroup.add(drainFluid);
+
+        // Tubing Top Connectors
+        const pipeGeo = new THREE.CylinderGeometry(0.12, 0.12, 2, 12);
+        const pipeMat = new THREE.MeshStandardMaterial({ color: 0x10b981 });
+        const pipe = new THREE.Mesh(pipeGeo, pipeMat);
+        pipe.position.set(0.9, 2.5, 0);
+        activeMeshGroup.add(pipe);
+      } else {
+        // Generic Sphere/Torus fallback model
+        const fallbackGeo = new THREE.TorusKnotGeometry(1.2, 0.4, 64, 16);
+        const fallbackMat = new THREE.MeshStandardMaterial({ color: 0x14b8a6, roughness: 0.2 });
+        const mesh = new THREE.Mesh(fallbackGeo, fallbackMat);
+        activeMeshGroup.add(mesh);
+      }
+
+      scene.add(activeMeshGroup);
+      reset3DCamera();
+    }
+
+    function reset3DCamera() {
+      if (!camera || !controls) return;
+      camera.position.set(0, 2, 8);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    }
+
+    // RENDER PROCEDURE SELECTION LIST
+    function renderProcedureList(list) {
       const container = document.getElementById('procedureList');
-      
       document.getElementById('procedureCount').innerText = `${list.length} Topics`;
 
       if (list.length === 0) {
-        container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No matching clinical procedures found.</div>`;
+        container.innerHTML = `<div class="p-4 text-xs text-slate-400 text-center">No procedures match your search filter.</div>`;
         return;
       }
 
       container.innerHTML = list.map(item => `
-        <button onclick="selectProcedure(${item.id})" class="w-full text-left p-3 hover:bg-slate-50 transition-colors flex items-center justify-between group ${item.id === currentProcedureId ? 'bg-teal-50/80 border-l-4 border-teal-600' : ''}">
-          <div class="pr-2">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5">${item.catName}</span>
-            <h3 class="text-xs font-bold text-slate-800 group-hover:text-teal-700 transition-colors line-clamp-1">${item.title}</h3>
+        <button onclick="loadProcedure(${item.id})" id="proc-item-${item.id}" 
+          class="proc-item-btn w-full text-left p-3 rounded-lg transition-all flex items-start gap-2.5 hover:bg-slate-50 border border-transparent ${item.id === currentProc.id ? 'bg-teal-50/80 border-teal-200/80 shadow-sm' : ''}">
+          <div class="p-1.5 rounded-md ${item.id === currentProc.id ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-500'} shrink-0 mt-0.5">
+            <i data-lucide="activity" class="w-3.5 h-3.5"></i>
           </div>
-          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-teal-600 flex-shrink-0"></i>
+          <div class="overflow-hidden">
+            <h4 class="text-xs font-bold ${item.id === currentProc.id ? 'text-teal-900' : 'text-slate-800'} truncate">${item.title}</h4>
+            <p class="text-[11px] text-slate-400 truncate mt-0.5">${item.catName}</p>
+          </div>
         </button>
       `).join('');
 
       lucide.createIcons();
     }
 
-    // SELECT AND DISPLAY PROCEDURE DETAILS
-    function selectProcedure(id) {
-      currentProcedureId = id;
+    // LOAD SELECTED PROCEDURE DATA
+    function loadProcedure(id) {
       const proc = proceduresData.find(p => p.id === id);
       if (!proc) return;
 
-      // Update Header Text
-      document.getElementById('procTitle').innerText = proc.title;
+      currentProc = proc;
+
+      // Highlight in List
+      document.querySelectorAll('.proc-item-btn').forEach(btn => {
+        btn.classList.remove('bg-teal-50/80', 'border-teal-200/80', 'shadow-sm');
+      });
+      const activeBtn = document.getElementById(`proc-item-${id}`);
+      if (activeBtn) activeBtn.classList.add('bg-teal-50/80', 'border-teal-200/80', 'shadow-sm');
+
+      // Populate Header
       document.getElementById('procCategory').innerText = proc.catName;
-      document.getElementById('procSub').innerText = `Clinical procedure guidelines and viva prep for ${proc.title}.`;
+      document.getElementById('procTitle').innerText = proc.title;
       document.getElementById('procObjective').innerText = proc.objective;
       document.getElementById('procPositioning').innerText = proc.positioning;
-      
-      // Update Equipment List
+
+      // Equipment List
       document.getElementById('procEquipment').innerHTML = proc.equipment.map(e => `<li>${e}</li>`).join('');
 
-      // Update Step-by-Step
+      // Steps List
       document.getElementById('procStepsContainer').innerHTML = proc.steps.map((step, idx) => `
-        <div class="flex items-start gap-3 p-2.5 bg-slate-50 rounded-lg border border-slate-100">
-          <span class="bg-teal-600 text-white font-black text-xs w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">${idx + 1}</span>
+        <div class="flex items-start gap-3 p-2.5 bg-slate-50 rounded-lg border border-slate-200/60">
+          <span class="bg-teal-600 text-white font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
           <p class="text-xs text-slate-700 leading-relaxed">${step}</p>
         </div>
       `).join('');
 
-      // Update Safety & Complications
+      // Safety Alerts & Complications
       document.getElementById('procSafetyAlerts').innerText = proc.safetyAlerts;
       document.getElementById('procComplications').innerHTML = proc.complications.map(c => `
-        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
-          <span class="font-bold text-red-600 block mb-1">${c.name}</span>
-          <p class="text-slate-600">${c.action}</p>
+        <div class="bg-rose-50/60 border border-rose-200/60 p-2.5 rounded-lg">
+          <h5 class="font-bold text-rose-900 text-xs">${c.name}</h5>
+          <p class="text-slate-600 text-[11px] mt-1">${c.action}</p>
         </div>
       `).join('');
 
-      // Update Viva Questions
+      // Viva Questions
       document.getElementById('procVivaContainer').innerHTML = proc.viva.map((v, idx) => `
-        <div class="border border-amber-200 rounded-lg overflow-hidden bg-white shadow-sm">
-          <button onclick="toggleVivaAnswer(${idx})" class="w-full text-left p-3 bg-amber-50/50 hover:bg-amber-50 flex justify-between items-center text-xs font-bold text-slate-800">
-            <span>Q${idx + 1}: ${v.q}</span>
-            <i data-lucide="chevron-down" id="viva-icon-${idx}" class="w-4 h-4 text-amber-600 transition-transform"></i>
-          </button>
-          <div id="viva-ans-${idx}" class="hidden p-3 text-xs bg-white text-slate-700 border-t border-amber-100 leading-relaxed">
-            <strong class="text-teal-700 block mb-1">Model OSPE Answer:</strong>
-            ${v.a}
+        <div onclick="this.querySelector('.viva-ans').classList.toggle('hidden')" class="cursor-pointer bg-slate-50 hover:bg-slate-100/80 p-3 rounded-lg border border-slate-200/80 transition-all">
+          <div class="flex items-center justify-between gap-2">
+            <h5 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+              <span class="text-amber-600 font-black">Q${idx + 1}:</span> ${v.q}
+            </h5>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 shrink-0"></i>
+          </div>
+          <div class="viva-ans hidden mt-2.5 pt-2 border-t border-slate-200 text-xs text-teal-900 bg-teal-50/60 p-2 rounded">
+            <strong>Model Answer:</strong> ${v.a}
           </div>
         </div>
       `).join('');
 
-      // Render Real Clinical Procedure Photos (2 to 3 photos)
-      renderProcedurePhotos(proc.photos);
+      // Update 3D Canvas Model
+      update3DModel(proc['3dModelType']);
+      document.getElementById('visualCaption').innerText = `3D Realistic representation: ${proc.title}. Drag mouse to rotate model.`;
 
-      // Re-render sidebar to highlight selected item
-      renderProcedureList();
       lucide.createIcons();
-
-      // Close mobile drawer if open
-      if (window.innerWidth < 1024) {
-        toggleMobileSidebar(false);
-      }
+      switchDetailTab('prep');
     }
 
-    // RENDER 2 TO 3 REAL CLINICAL PROCEDURE PHOTOS
-    function renderProcedurePhotos(photos) {
-      const container = document.getElementById('visualizerCanvas');
-      if (!photos || photos.length === 0) {
-        container.innerHTML = `<div class="text-center text-slate-500 text-xs py-8">No clinical photos available for this procedure.</div>`;
-        return;
-      }
-
-      container.innerHTML = `
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-          ${photos.map(photo => `
-            <div class="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden flex flex-col shadow-md group">
-              <div class="relative h-40 sm:h-44 w-full bg-slate-950 overflow-hidden">
-                <img src="${photo.url}" alt="${photo.caption}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                <span class="absolute top-2 left-2 bg-slate-900/80 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm border border-slate-700">
-                  ${photo.label}
-                </span>
-              </div>
-              <div class="p-2.5 bg-slate-900 flex-grow border-t border-slate-800">
-                <p class="text-[11px] font-medium text-slate-300 leading-tight">${photo.caption}</p>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-
-      document.getElementById('visualCaption').innerText = `Real clinical procedure reference: ${photos.map(p => p.label).join(' • ')}`;
-    }
-
-    // TAB SWITCHING IN DETAIL PANEL
+    // TAB SWITCHING
     function switchDetailTab(tabKey) {
-      document.querySelectorAll('.detail-tab').forEach(btn => {
-        btn.classList.remove('text-teal-600', 'border-teal-600', 'font-bold');
-        btn.classList.add('text-slate-500', 'border-transparent', 'font-semibold');
+      document.querySelectorAll('.detail-panel').forEach(panel => panel.classList.add('hidden'));
+      document.querySelectorAll('.detail-tab').forEach(tab => {
+        tab.classList.remove('text-teal-600', 'border-teal-600', 'font-bold');
+        tab.classList.add('text-slate-500', 'border-transparent');
       });
 
-      document.querySelectorAll('.detail-panel').forEach(panel => panel.classList.add('hidden'));
+      const activePanel = document.getElementById(`panel-${tabKey}`);
+      const activeTab = document.getElementById(`dtab-${tabKey}`);
 
-      const activeBtn = document.getElementById(`dtab-${tabKey}`);
-      activeBtn.classList.remove('text-slate-500', 'border-transparent');
-      activeBtn.classList.add('text-teal-600', 'border-teal-600', 'font-bold');
-
-      document.getElementById(`panel-${tabKey}`).classList.remove('hidden');
+      if (activePanel) activePanel.classList.remove('hidden');
+      if (activeTab) {
+        activeTab.classList.add('text-teal-600', 'border-teal-600', 'font-bold');
+        activeTab.classList.remove('text-slate-500', 'border-transparent');
+      }
     }
 
-    // CATEGORY FILTERING
+    // SEARCH FILTER
+    function handleSearch(query) {
+      const q = query.toLowerCase().trim();
+      const filtered = proceduresData.filter(p => 
+        p.title.toLowerCase().includes(q) || 
+        p.catName.toLowerCase().includes(q) ||
+        p.objective.toLowerCase().includes(q)
+      );
+      renderProcedureList(filtered);
+    }
+
+    // CATEGORY FILTER
     function filterCategory(catKey) {
-      activeCategory = catKey;
       document.querySelectorAll('.cat-btn').forEach(btn => {
         btn.classList.remove('bg-teal-600', 'text-white', 'shadow-sm');
         btn.classList.add('text-slate-300');
@@ -641,60 +802,24 @@
 
       const activeTab = document.getElementById(`tab-${catKey}`);
       if (activeTab) {
-        activeTab.classList.remove('text-slate-300');
         activeTab.classList.add('bg-teal-600', 'text-white', 'shadow-sm');
+        activeTab.classList.remove('text-slate-300');
       }
 
-      renderProcedureList();
-    }
-
-    // SEARCH FUNCTIONALITY
-    function handleSearch(query) {
-      const q = query.toLowerCase().trim();
-      if (!q) {
-        renderProcedureList();
-        return;
-      }
-
-      const filtered = proceduresData.filter(p => 
-        p.title.toLowerCase().includes(q) || 
-        p.catName.toLowerCase().includes(q) ||
-        p.objective.toLowerCase().includes(q)
-      );
-
-      renderProcedureList(filtered);
-    }
-
-    // TOGGLE VIVA ANSWER VISIBILITY
-    function toggleVivaAnswer(idx) {
-      const ans = document.getElementById(`viva-ans-${idx}`);
-      const icon = document.getElementById(`viva-icon-${idx}`);
-      
-      if (ans.classList.contains('hidden')) {
-        ans.classList.remove('hidden');
-        icon.style.transform = 'rotate(180deg)';
+      if (catKey === 'all') {
+        renderProcedureList(proceduresData);
       } else {
-        ans.classList.add('hidden');
-        icon.style.transform = 'rotate(0deg)';
+        const filtered = proceduresData.filter(p => p.category === catKey);
+        renderProcedureList(filtered);
       }
     }
 
     // MOBILE SIDEBAR TOGGLE
-    function toggleMobileSidebar(forceState = null) {
+    function toggleMobileSidebar() {
       const sidebar = document.getElementById('sidebarDrawer');
       const backdrop = document.getElementById('drawerBackdrop');
-      
-      const isOpen = forceState !== null ? !forceState : sidebar.classList.contains('translate-x-0');
-
-      if (isOpen) {
-        sidebar.classList.remove('translate-x-0');
-        sidebar.classList.add('-translate-x-full');
-        backdrop.classList.add('hidden');
-      } else {
-        sidebar.classList.remove('-translate-x-full');
-        sidebar.classList.add('translate-x-0');
-        backdrop.classList.remove('hidden');
-      }
+      sidebar.classList.toggle('-translate-x-full');
+      backdrop.classList.toggle('hidden');
     }
   </script>
 </body>
