@@ -3,23 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AHN-II Complete Clinical Suite | Mudassir Hussain Khan</title>
+  <title>AHN-II Complete Clinical Photo Portal | Mudassir Hussain Khan</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Three.js (For 3D Rendering) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <style>
     /* Hide scrollbars for crisp UI */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    .photo-canvas {
+        background-color: #0f172a; /* Slate 900 */
+        background-image: 
+            linear-gradient(45deg, #1e293b 25%, transparent 25%), 
+            linear-gradient(-45deg, #1e293b 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #1e293b 75%),
+            linear-gradient(-45deg, transparent 75%, #1e293b 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
   </style>
 </head>
 <body class="h-full text-slate-800 font-sans flex flex-col antialiased selection:bg-teal-500 selection:text-white">
@@ -28,37 +37,60 @@
   <header class="bg-slate-950 text-white shadow-xl sticky top-0 z-40 border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 gap-2">
+        
+        <!-- Left: Mobile Menu Toggle & Brand Title -->
         <div class="flex items-center space-x-3">
-          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-lg bg-slate-800 text-teal-400 hover:bg-slate-700">
+          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-lg bg-slate-800 text-teal-400 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
             <i data-lucide="menu" class="w-6 h-6"></i>
           </button>
+          
           <div class="bg-gradient-to-tr from-teal-600 to-emerald-500 p-2 rounded-xl text-white shadow-md flex-shrink-0">
-            <i data-lucide="activity" class="w-6 h-6"></i>
+            <i data-lucide="camera" class="w-6 h-6"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="font-extrabold text-base sm:text-lg leading-tight tracking-tight text-white">AHN-II Complete Clinical Suite</h1>
-              <span class="hidden sm:inline-block bg-teal-500/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-teal-500/30">BSN 4th Sem</span>
+              <h1 class="font-extrabold text-base sm:text-lg leading-tight tracking-tight text-white">AHN-II Photo Portal</h1>
+              <span class="hidden sm:inline-block bg-teal-500/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-teal-500/30">Complete 20 Topics</span>
             </div>
+            <p class="text-[11px] text-slate-400 font-medium truncate max-w-[200px] sm:max-w-none">
+              Lead Author & Curator: <span class="text-teal-400 font-bold">Mudassir Hussain Khan</span>
+            </p>
           </div>
         </div>
+
+        <!-- Right: Course Meta & Student Badge -->
         <div class="flex items-center space-x-2">
+          <div class="hidden lg:flex items-center space-x-2 text-xs bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/80 text-slate-300">
+            <i data-lucide="graduation-cap" class="w-4 h-4 text-teal-400"></i>
+            <span>BS Nursing • <strong>4th Semester</strong></span>
+          </div>
           <span class="text-[11px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            All 20 Topics Loaded
+            Viva Exam Mode
           </span>
         </div>
       </div>
 
       <!-- CATEGORY NAVIGATION TABS -->
       <nav class="flex space-x-1 overflow-x-auto py-2 border-t border-slate-800/80 text-xs no-scrollbar">
-        <button onclick="filterCategory('all')" id="tab-all" class="cat-btn px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap bg-teal-600 text-white shadow-sm">All Topics (20)</button>
-        <button onclick="filterCategory('airway')" id="tab-airway" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white">Airway</button>
-        <button onclick="filterCategory('taps')" id="tab-taps" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white">Taps & Drainage</button>
-        <button onclick="filterCategory('diag')" id="tab-diag" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white">Diagnostic Imaging</button>
-        <button onclick="filterCategory('sensory')" id="tab-sensory" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white">Sensory & ENT</button>
-        <button onclick="filterCategory('ortho')" id="tab-ortho" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white">Orthopedics</button>
-        <button onclick="filterCategory('monitor')" id="tab-monitor" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white">Monitoring</button>
+        <button onclick="filterCategory('all')" id="tab-all" class="cat-btn px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-all bg-teal-600 text-white shadow-sm">
+          All Topics (20)
+        </button>
+        <button onclick="filterCategory('airway')" id="tab-airway" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Airway & Respiratory
+        </button>
+        <button onclick="filterCategory('taps')" id="tab-taps" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Invasive Taps & Drainage
+        </button>
+        <button onclick="filterCategory('diagnostic')" id="tab-diagnostic" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Diagnostic Imaging
+        </button>
+        <button onclick="filterCategory('ortho')" id="tab-ortho" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Orthopedics
+        </button>
+        <button onclick="filterCategory('specialized')" id="tab-specialized" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Specialized Sensory & Monitoring
+        </button>
       </nav>
     </div>
   </header>
@@ -67,18 +99,25 @@
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
 
     <!-- OVERLAY BACKDROP FOR MOBILE DRAWER -->
-    <div id="drawerBackdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+    <div id="drawerBackdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity"></div>
 
     <!-- LEFT SIDEBAR: PROCEDURE LIST DRAWER -->
-    <aside id="sidebarDrawer" class="fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto w-80 lg:w-auto lg:col-span-4 bg-white lg:bg-transparent shadow-2xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col h-full lg:h-[calc(100vh-140px)] lg:sticky lg:top-20">
+    <aside id="sidebarDrawer" class="fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto w-80 lg:w-auto lg:col-span-4 bg-white lg:bg-transparent shadow-2xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col h-full lg:h-[calc(100vh-140px)] lg:sticky lg:top-20">
+      
       <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 flex flex-col h-full overflow-hidden">
         <div class="p-3.5 border-b border-slate-100 flex justify-between items-center bg-slate-50/80">
           <div class="flex items-center gap-2">
             <i data-lucide="book-marked" class="w-4 h-4 text-teal-600"></i>
             <h2 class="font-bold text-slate-800 text-xs tracking-wider uppercase">Procedure Index</h2>
           </div>
-          <button onclick="toggleMobileSidebar()" class="lg:hidden text-slate-400 hover:text-slate-600 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+          <div class="flex items-center gap-2">
+            <span id="procedureCount" class="text-[11px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-full">20 Topics</span>
+            <button onclick="toggleMobileSidebar()" class="lg:hidden text-slate-400 hover:text-slate-600 p-1">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
         </div>
+
         <!-- LIST CONTAINER -->
         <div id="procedureList" class="divide-y divide-slate-100 overflow-y-auto flex-grow p-1 no-scrollbar">
           <!-- Dynamically populated -->
@@ -88,400 +127,282 @@
 
     <!-- RIGHT CONTENT AREA -->
     <main class="lg:col-span-8 space-y-5">
+      
       <!-- PROCEDURE HEADER CARD -->
       <div class="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-slate-200/80 relative overflow-hidden">
-        <span id="procCategory" class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 rounded-md border border-teal-200">Category</span>
-        <h1 id="procTitle" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug mt-2">Select a Procedure</h1>
-        <p id="procObjective" class="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">Choose a topic from the index to begin review.</p>
+        <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 relative z-10">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span id="procCategory" class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 rounded-md border border-teal-200">
+                Category
+              </span>
+              <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-semibold border border-slate-200">BSN 4th Semester</span>
+            </div>
+            <h1 id="procTitle" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">Select a Procedure</h1>
+            <p id="procObjective" class="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">Choose any clinical topic from the list to review step-by-step techniques and accurate OSPE points.</p>
+          </div>
+          <div class="flex-shrink-0">
+            <span id="procOspe" class="bg-amber-50 text-amber-800 border border-amber-200 text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 shadow-sm">
+              <i data-lucide="award" class="w-4 h-4 text-amber-600"></i> OSPE Checklist Mode
+            </span>
+          </div>
+        </div>
       </div>
 
-      <!-- PHOTO-REALISTIC 3D VISUALIZER (REPLACES VECTOR) -->
-      <div class="bg-slate-950 rounded-xl shadow-xl border border-slate-800 overflow-hidden">
-        <div class="px-4 py-2.5 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-slate-300 text-xs">
+      <!-- DYNAMIC PHOTO VISUALIZER CANVAS (REPLACES 3D) -->
+      <div class="bg-slate-950 rounded-xl shadow-xl border border-slate-800 overflow-hidden relative">
+        <div class="px-4 py-2.5 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-slate-300 text-xs relative z-10">
           <span class="flex items-center gap-2 font-mono text-[11px]">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            Accurate Clinical 3D Representation
+            <i data-lucide="image" class="w-4 h-4 text-emerald-400"></i>
+            <span class="text-slate-200 font-semibold">Accurate Clinical Procedure Photograph</span>
           </span>
-          <button onclick="reset3DCamera()" class="hover:text-white flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors">
-            <i data-lucide="camera" class="w-3.5 h-3.5 text-teal-400"></i> Reset View
-          </button>
+          <span class="text-slate-500 font-mono text-[10px] bg-slate-800 px-2 py-0.5 rounded">Asset ID: AHN-II-IMG</span>
         </div>
         
-        <!-- 3D Canvas Container -->
-        <div id="visualizerCanvas" class="w-full h-80 bg-slate-950 flex items-center justify-center relative select-none">
-          <!-- Three.js Canvas renders inside here -->
-          <div id="canvasLoader" class="absolute text-center text-slate-500 text-xs">
-            <i data-lucide="loader-2" class="w-8 h-8 animate-spin text-teal-500 mx-auto mb-2"></i>
-            Loading 3D Scene...
+        <!-- Dynamic Image Display Area -->
+        <div id="photoVisualizer" class="photo-canvas w-full h-72 sm:h-96 flex items-center justify-center p-4 text-slate-400 select-none relative transition-all duration-300">
+          <!-- The accurate photograph description is generated here dynamically -->
+          <div class="text-center space-y-4 max-w-lg p-6 bg-slate-900/80 backdrop-blur-sm rounded-2xl border border-slate-700 shadow-2xl">
+              <i data-lucide="image" class="w-16 h-16 text-slate-700 mx-auto"></i>
+              <h3 class="text-xl font-bold text-slate-200">Procedure Photo Viewer</h3>
+              <p class="text-sm text-slate-400 leading-relaxed">Select a clinical procedure from the index on the left to display the accurate, relevant photograph demonstrating the correct technique.</p>
           </div>
         </div>
 
-        <div class="px-4 py-2 bg-slate-900/90 text-[11px] text-slate-400 border-t border-slate-800/80">
-          <i data-lucide="mouse-pointer-2" class="w-3.5 h-3.5 inline mr-1 text-slate-500"></i> Use mouse to rotate. Scroll to zoom.
+        <div class="px-4 py-2 bg-slate-900/90 text-[11px] text-slate-300 border-t border-slate-800/80 flex items-center justify-between">
+          <span id="visualCaption" class="truncate max-w-[80%] font-medium">Please select a topic to view the clinical reference photograph.</span>
+          <span class="text-slate-500 font-mono text-[10px]">HN-II Standard</span>
         </div>
       </div>
 
-      <!-- OSPE GUIDELINES (Simplified version of steps/prep/viva) -->
-      <div id="ospeContainer" class="bg-white rounded-xl shadow-sm border border-slate-200/80 overflow-hidden hidden">
-        <div class="p-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50">
-          <div class="p-2.5 bg-amber-100 text-amber-700 rounded-lg"><i data-lucide="award" class="w-6 h-6"></i></div>
-          <h2 class="text-lg font-extrabold text-slate-900">OSPE / OSCE Practical Guidelines</h2>
+      <!-- CLINICAL STUDY TABS -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 overflow-hidden">
+        
+        <!-- TAB BUTTONS -->
+        <div class="flex border-b border-slate-200 bg-slate-50 text-xs sm:text-sm overflow-x-auto no-scrollbar">
+          <button onclick="switchDetailTab('steps')" id="dtab-steps" class="detail-tab flex-1 py-3 px-3 font-bold text-teal-600 border-b-2 border-teal-600 transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Sequential OSPE Checklist
+          </button>
+          <button onclick="switchDetailTab('viva')" id="dtab-viva" class="detail-tab flex-1 py-3 px-3 font-semibold text-amber-600 hover:text-amber-700 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap bg-amber-50/50">
+            <i data-lucide="help-circle" class="w-4 h-4"></i> Viva Questions
+          </button>
         </div>
-        <div id="ospeContent" class="p-5 space-y-4">
-          <!-- Populated dynamically -->
+
+        <!-- TAB CONTENT PANELS -->
+        <div class="p-4 sm:p-6">
+          
+          <!-- PANEL 2: STEP BY STEP TECHNIQUE -->
+          <div id="panel-steps" class="detail-panel space-y-3">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Sequential Procedure Checklist</h3>
+            <div id="procStepsContainer" class="space-y-2.5">
+              <div class="text-sm text-slate-500 italic p-4 text-center bg-slate-50 rounded-lg border">Select a procedure to view OSPE steps.</div>
+            </div>
+          </div>
+
+          <!-- PANEL 4: OSPE VIVA EXAM PRACTICE -->
+          <div id="panel-viva" class="detail-panel hidden space-y-4">
+            <div id="procVivaContainer" class="space-y-3">
+              <div class="text-sm text-slate-500 italic p-4 text-center bg-amber-50/50 rounded-lg border border-amber-100">Select a procedure to view viva points.</div>
+            </div>
+          </div>
+
         </div>
+
       </div>
 
     </main>
+
   </div>
 
   <!-- FOOTER -->
   <footer class="bg-slate-950 text-slate-400 text-xs py-6 border-t border-slate-800 mt-8">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-slate-200 font-semibold text-sm">Adult Health Nursing-II (AHN-II) | Clinical Skills Repository</p>
-      <p class="mt-1">Curated by: <strong class="text-teal-400">Mudassir Hussain Khan</strong> • BS Nursing 4th Semester</p>
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-slate-200 font-semibold text-sm">Adult Health Nursing-II (AHN-II) Complete Clinical Photo Portal</p>
+      <p class="text-slate-400">Curated & Developed by: <strong class="text-teal-400">Mudassir Hussain Khan</strong> • BS Nursing Class Representative</p>
+      <p class="text-slate-500 text-[11px]">Designed for Desktop & Mobile • Single File Web App</p>
     </div>
   </footer>
 
+  <!-- SCRIPT DATA & APP LOGIC -->
   <script>
-    // --- 3D ENGINE (THREE.JS) SETUP ---
-    let scene, camera, renderer, controls;
-    let currentModel = null;
-    let canvasContainer = document.getElementById('visualizerCanvas');
-
-    function init3DEngine() {
-        const width = canvasContainer.clientWidth;
-        const height = canvasContainer.clientHeight;
-
-        scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a0f1e); // Dark Blueish Black
-
-        camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-        camera.position.set(0, 2, 5);
-
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.shadowMap.enabled = true;
-        canvasContainer.innerHTML = ''; // Clear loader
-        canvasContainer.appendChild(renderer.domElement);
-
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.minDistance = 2;
-        controls.maxDistance = 15;
-
-        // --- Lighting Set up for Photo-Realism ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); // Soft light
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // "Sun" light
-        directionalLight.position.set(5, 5, 5);
-        directionalLight.castShadow = true;
-        scene.add(directionalLight);
-
-        const pointLight = new THREE.PointLight(0xteal, 0.5); // Fill light
-        pointLight.position.set(-5, 3, 2);
-        scene.add(pointLight);
-
-        animate();
-        lucide.createIcons();
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        if (controls) controls.update();
-        if (renderer && scene && camera) renderer.render(scene, camera);
-    }
-
-    function reset3DCamera() {
-        if (!controls) return;
-        camera.position.set(0, 2, 5);
-        controls.target.set(0, 0, 0);
-        controls.update();
-    }
-
-    function handleWindowResize() {
-        if (!camera || !renderer) return;
-        const width = canvasContainer.clientWidth;
-        const height = canvasContainer.clientHeight;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-    }
-
-    window.addEventListener('resize', handleWindowResize);
-
-    // --- ACCURATE PROCEDURAL 3D MODELS (MOCKUP GEOMETRY) ---
-    // In a real app, these would load photo-realistic .glb files.
-    // Here we generate complex geometry as dynamic substitutes.
-
-    function generateClinicalModel(topicId) {
-        if (currentModel) scene.remove(currentModel);
-        currentModel = new THREE.Group();
-
-        let primaryMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.5, metalness: 0.1 });
-        let fleshMaterial = new THREE.MeshStandardMaterial({ color: 0xdbac87, roughness: 0.8, metalness: 0 }); // Skin Tone Mock
-        let tealMaterial = new THREE.MeshStandardMaterial({ color: 0x0d9488 }); // UI Match
-
-        switch (topicId) {
-            case 1: // Tracheostomy Care
-            case 2: // Tracheal Suctioning
-                // Head/Neck Mockup
-                let neck = new THREE.Mesh(new THREE.CylinderGeometry(1, 1.2, 2.5, 32), fleshMaterial);
-                neck.position.y = -0.5;
-                currentModel.add(neck);
-                // Trach Tube
-                let trachTube = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.1, 16, 32, Math.PI), primaryMaterial);
-                trachTube.rotation.x = Math.PI / 2;
-                trachTube.position.set(0, 0, 1);
-                currentModel.add(trachTube);
-                break;
-            case 3: // Lumbar Puncture
-            case 10: // Myelogram
-                // Spine Mockup
-                let spine = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 4, 16), new THREE.MeshStandardMaterial({color: 0xddddcc}));
-                scene.add(spine);
-                currentModel.add(spine);
-                let needleLP = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, 1.5, 8), new THREE.MeshStandardMaterial({color: 'red'}));
-                needleLP.rotation.z = Math.PI / 2;
-                needleLP.position.set(1, 0, 0);
-                currentModel.add(needleLP);
-                break;
-            case 4: // Thoracentesis
-            case 6: // Chest Tube Insertion
-                // Torso Mock
-                let torsoPunc = new THREE.Mesh(new THREE.BoxGeometry(2, 3, 1), fleshMaterial);
-                currentModel.add(torsoPunc);
-                // Tube
-                let chestTubeMock = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 3, 8), primaryMaterial);
-                chestTubeMock.rotation.x = Math.PI/3;
-                chestTubeMock.position.set(0.5, 0, 0.5);
-                currentModel.add(chestTubeMock);
-                break;
-            case 5: // Paracentesis
-                // Abdomen Mock
-                let abdomen = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32, 0, Math.PI*2, 0, Math.PI/2), fleshMaterial);
-                abdomen.rotation.x = -Math.PI/2;
-                currentModel.add(abdomen);
-                let drainTube = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 2, 8), primaryMaterial);
-                drainTube.position.set(0, 0, 1.5);
-                currentModel.add(drainTube);
-                break;
-            case 7: // CT Scan
-                // CT Gantry
-                let gantry = new THREE.Mesh(new THREE.TorusGeometry(2, 0.6, 16, 64), primaryMaterial);
-                currentModel.add(gantry);
-                let table = new THREE.Mesh(new THREE.BoxGeometry(1, 0.1, 4), tealMaterial);
-                table.position.y = -1;
-                currentModel.add(table);
-                break;
-            case 8: // Cerebral Angiography
-            case 9: // Lumbar Puncture (Dup in list provided, assuming error in SR list)
-                // Head & Scanner Arm
-                let headAngio = new THREE.Mesh(new THREE.SphereGeometry(0.8, 32, 16), fleshMaterial);
-                currentModel.add(headAngio);
-                let scannerArm = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.1, 8, 48, Math.PI), tealMaterial);
-                currentModel.add(scannerArm);
-                break;
-            case 11: // Audiometric Testing
-                // Head & Headphones
-                let headAudio = new THREE.Mesh(new THREE.SphereGeometry(0.8, 32, 16), fleshMaterial);
-                currentModel.add(headAudio);
-                let headphones = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.15, 16, 32, Math.PI), tealMaterial);
-                headphones.rotation.x = Math.PI / 2;
-                currentModel.add(headphones);
-                break;
-            case 12: // Thyroid scanning
-                let throatThyroid = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.7, 2, 32), fleshMaterial);
-                currentModel.add(throatThyroid);
-                let scannerHead = new THREE.Mesh(new THREE.ConeGeometry(0.5, 1, 32), tealMaterial);
-                scannerHead.position.set(0, 0.5, 1);
-                scannerHead.rotation.x = Math.PI/2;
-                currentModel.add(scannerHead);
-                break;
-            case 13: // X-ray
-                let xrayPlate = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 0.1), new THREE.MeshStandardMaterial({color: 'black'}));
-                currentModel.add(xrayPlate);
-                let xraySource = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.8, 16), tealMaterial);
-                xraySource.position.z = 3;
-                currentModel.add(xraySource);
-                break;
-            case 14: // Skin Traction
-                let legTraction = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.3, 4, 16), fleshMaterial);
-                legTraction.rotation.z = Math.PI/2;
-                currentModel.add(legTraction);
-                let pulley = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.05, 8, 16), tealMaterial);
-                pulley.position.set(-2.5, 0, 0);
-                currentModel.add(pulley);
-                break;
-            case 15: // Application of plaster, cast
-                let armCast = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.25, 3, 16), fleshMaterial);
-                currentModel.add(armCast);
-                let castMat = new THREE.MeshStandardMaterial({color: 0xffffff, roughness: 1});
-                let castUpper = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 2, 16), castMat);
-                castUpper.position.y = -0.5;
-                currentModel.add(castUpper);
-                break;
-            case 16: // Eye bandaging
-            case 17: // Eye irrigation
-                let faceEye = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 16, 0, Math.PI*2, Math.PI/4, Math.PI/2), fleshMaterial);
-                faceEye.rotation.x = -Math.PI/2;
-                currentModel.add(faceEye);
-                let syringeIrr = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 1, 16), primaryMaterial);
-                syringeIrr.rotation.x = Math.PI/3;
-                syringeIrr.position.set(0, 0.8, 0.5);
-                currentModel.add(syringeIrr);
-                break;
-            case 18: // Ear irrigation
-                let headEar = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 16), fleshMaterial);
-                currentModel.add(headEar);
-                let earMock = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.05, 8, 12), fleshMaterial);
-                earMock.position.set(1, 0, 0);
-                currentModel.add(earMock);
-                let basinIrr = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.2, 8, 32, Math.PI), primaryMaterial);
-                basinIrr.rotation.x = -Math.PI/2;
-                basinIrr.position.set(1, -0.5, 0);
-                currentModel.add(basinIrr);
-                break;
-            case 19: // Blood Sugar Monitoring
-                let finger血糖 = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 1, 16), fleshMaterial);
-                finger血糖.rotation.z = Math.PI/2;
-                currentModel.add(finger血糖);
-                let glucometer = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1, 0.1), tealMaterial);
-                glucometer.position.set(-1, 0, 0);
-                currentModel.add(glucometer);
-                break;
-            case 20: // Cardiac monitoring
-                let chestEcg = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 0.5), fleshMaterial);
-                currentModel.add(chestEcg);
-                let ecgLead = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshStandardMaterial({color: 'white'}));
-                ecgLead.position.set(0.5, 0.2, 0.3);
-                currentModel.add(ecgLead);
-                let ecgLead2 = ecgLead.clone(); ecgLead2.position.set(-0.5, 0.2, 0.3); currentModel.add(ecgLead2);
-                break;
-            default:
-                // Fallback geometry
-                let boxFallback = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), primaryMaterial);
-                currentModel.add(boxFallback);
-        }
-
-        scene.add(currentModel);
-        reset3DCamera();
-    }
-
-    // --- COMPLETE 20-TOPIC DATABASE ---
-    const procedures = [
-      { id: 1, title: "Tracheostomy care", category: "airway", catName: "Airway", ospe: [ "Perform Hand Hygiene & don PPE.", "Position patient (Semi-Fowler’s).", "Hyperoxygenate the patient.", "Suction the tracheostomy tube.", "Clean the inner cannula (sterile technique).", "Clean stoma site with normal saline.", "Replace trach ties/dressing." ] },
-      { id: 2, title: "Tracheal Suctioning", category: "airway", catName: "Airway", ospe: [ "Assess need for suctioning (breath sounds).", "Explain procedure to patient.", "Hyperoxygenate (100% O2).", "Insert catheter without suction.", "Apply intermittent suction while withdrawing.", "Limit suction to 10-15 seconds.", "Rinse catheter & reassess." ] },
-      { id: 3, title: "Lumber puncture Assistance", category: "taps", catName: "Taps & Drainage", ospe: [ "Ensure informed consent.", "Position patient in lateral recumbent (fetal) position.", "Maintain strict sterile field set-up.", "Assist with local anesthetic infiltration.", "Label collection tubes 1, 2, 3 in order.", "Apply occlusive dressing to puncture site.", "Monitor for headache (post-LP)." ] },
-      { id: 4, title: "Thoracentesis Assistance", category: "taps", catName: "Taps & Drainage", ospe: [ "Position patient sitting upright, leaning forward.", "Assist in equipment setup (thoracentesis kit).", "Monitor vital signs during procedure.", "Assist physician in fluid collection.", "Apply sterile dressing post-needle removal.", "Order post-procedure chest X-ray.", "Document fluid characteristics." ] },
-      { id: 5, title: "Paracentesis Assistance", category: "taps", catName: "Taps & Drainage", ospe: [ "Instruct patient to void bladder (prevent puncture).", "Position patient upright (Fowler's).", "Set up sterile tray & assist physician.", "Monitor blood pressure for hypotension.", "Apply firm dressing over puncture site.", "Label specimens & measure output.", "Weigh patient post-procedure." ] },
-      { id: 6, title: "Chest tube insertion Assistance", category: "taps", catName: "Taps & Drainage", ospe: [ "Position patient arm raised above head.", "Assist physician with skin prep & sterile draping.", "Set up Chest Drainage Unit (CDU).", "Provide necessary instruments during insertion.", "Secure connections with tape.", "Apply occlusive (Vaseline) gauze dressing.", "Monitor for 'tidaling' in water seal chamber." ] },
-      { id: 7, title: "C.T. Scan Assistance", category: "diag", catName: "Diagnostic Imaging", ospe: [ "Check for contrast allergy (if contrast used).", "Verify renal function (BUN/Creatinine).", "Remove all metal objects from patient.", "Instruct patient to remain still.", "Maintain communication during scan.", "Monitor post-contrast reactions.", "Increase fluid intake post-procedure." ] },
-      { id: 8, title: "Cerebral Angiography Assistance", category: "diag", catName: "Diagnostic Imaging", ospe: [ "Assess neuro status (GCS) pre-procedure.", "Assess peripheral pulses (dorsalis pedis).", "Assist with groin prep (femoral site).", "Monitor vital signs and neuro checks during procedure.", "Maintain strict bed rest post-procedure.", "Apply pressure to puncture site (prevent hematoma).", "Monitor distal pulse post-procedure." ] },
-      { id: 9, title: "Lumbar Puncture Assistance", category: "diag", catName: "Diagnostic Imaging", ospe: [ "Note: Duplicated objective in provided list, treat as Diagnostic Imaging/Myelogram context.", "Position in fetal position.", "Prepare sterile tray.", "Assist physician with manometer setup.", "Monitor Vitals.", "Instruct patient to lie flat post-procedure." ] },
-      { id: 10, title: "Myelogram Assistance", category: "diag", catName: "Diagnostic Imaging", ospe: [ "Assess allergy to contrast/iodine.", "Position as for Lumbar Puncture.", "Assist with contrast injection into subarachnoid space.", "Utilize tilting table during X-rays.", "Head must remain elevated post-procedure (prevent dye migration).", "Monitor for seizures or meningeal irritation.", "Encourage fluids." ] },
-      { id: 11, title: "Audiometric testing Assistance", category: "sensory", catName: "Sensory & ENT", ospe: [ "Explain test instructions clearly (raise hand when sound heard).", "Ensure quiet environment/soundproof booth.", "Fit headphones correctly.", "Assist tester with presenting various frequencies (pitch) and intensities (loudness).", "Record responses on an audiogram.", "Evaluate for conductive or sensorineural hearing loss.", "Provide patient comfort." ] },
-      { id: 12, title: "Thyroid scanning Assistance", category: "diag", catName: "Diagnostic Imaging", ospe: [ "Check pregnancy status (contraindicated).", "Confirm patient stopped thyroid meds/iodine intake.", "Assist in administering radioactive isotope (oral/IV).", "Position patient supine with neck extended.", "Assist scanner operation over the neck.", "Differentiate hyper/hypofunctioning nodules.", "Reassure patient regarding radiation safety." ] },
-      { id: 13, title: "X rays Assistance", category: "diag", catName: "Diagnostic Imaging", ospe: [ "Verify patient identity & correct body part.", "Protect reproductive organs (lead aprons).", "Position patient accurately (AP/PA/Lateral).", "Collaborate with radiology tech.", "Instruct patient to hold breath when required.", "Maintain safety protocols for staff.", "Provide patient comfort." ] },
-      { id: 14, title: "Skin Traction", category: "ortho", catName: "Orthopedics", ospe: [ "Inspect skin integrity at application site.", "Apply traction tape or boot smoothly.", "Maintain proper limb alignment.", "Verify correct weight applied (per MD order).", "Ensure weights hang freely (do not touch floor).", "Check neurovascular status (6 P's).", "Inspect for pressure injuries under tape." ] },
-      { id: 15, title: "Application of plaster, cast", category: "ortho", catName: "Orthopedics", ospe: [ "Assess neurovascular status before application.", "Apply stockinette and cotton padding smoothly.", "Handle wet plaster with palms (prevent indentations).", "Support limb in anatomical position.", "Keep cast uncovered until dry.", "Educate patient on cast care & warning signs.", "Check edges for skin irritation." ] },
-      { id: 16, title: "Eye bandaging", category: "sensory", catName: "Sensory & ENT", ospe: [ "Clean eyelids first (inner to outer canthus).", "Instruct patient to close eye gently.", "Apply sterile eye pad.", "Secure bandage/patch with tape (monocular or binocular).", "Maintain sterile technique.", "Prevent pressure on the eyeball.", "Ensure patient comfort." ] },
-      { id: 17, title: "Eye irrigation", category: "sensory", catName: "Sensory & ENT", ospe: [ "Perform Hand Hygiene/Don PPE.", "Position patient leaning toward affected side.", "Use warm sterile normal saline.", "Instruct patient to look up.", "Irrigate inner to outer canthus.", "Retract eyelids during irrigation.", "Ensure irrigation fluid drains into basin." ] },
-      { id: 18, title: "Ear irrigation", category: "sensory", catName: "Sensory & ENT", ospe: [ "Inspect ear canal with otoscope (verify cerumen impaction).", "Warm irrigation solution to body temperature.", "Position patient toward affected side.", "Straighten ear canal (up and back for adults).", "Direct flow along superior ear canal wall.", "Monitor for dizziness or pain.", "Inspect ear canal post-procedure." ] },
-      { id: 19, title: "Blood Sugar Monitoring", category: "monitor", catName: "Monitoring", ospe: [ "Clean finger site with alcohol & dry.", "Perform finger prick using lancet.", "Wipe away first drop of blood.", "Apply second drop to test strip.", "Insert strip into glucometer.", "Read result accurately.", "Document and educate patient." ] },
-      { id: 20, title: "Cardiac monitoring /telemetry", category: "monitor", catName: "Monitoring", ospe: [ "Identify correct lead placement (e.g., 5-lead).", "Prepare skin (shave if needed, alcohol prep).", "Apply electrodes firmly.", "Attach lead wires to electrodes.", "Ensure good waveform quality on monitor.", "Set appropriate alarm limits.", "Monitor for arrhythmias and document rhythm strips." ] }
+    // COMPLETE DATABASE OF ALL 20 CLINICAL PROCEDURES WITH VIVA QUESTIONS
+    const proceduresData = [
+      { id: 1, title: "Tracheostomy Care", category: "airway", catName: "Airway & Respiratory", objective: "Demonstrate proficiency in providing tracheostomy care, inner cannula cleaning, stoma dressing, and securing ties while minimizing infection risk.", photoDescription: "A close-up photograph taken from a 45-degree angle above, showing a patient in Semi-Fowler's position. A nurse wearing sterile gloves and a face shield is using a sterile cotton applicator dipped in normal saline to clean the stoma site in outward circular motions. The faceplate is stabilized. The sterile field tray is visible in the foreground containing a pre-cut split dressing and ties.", photoCaption: "Accurate demonstrating of aseptic stoma cleaning technique.", steps: ["Hand hygiene & Sterile PPE", "Suction if required", "Unlock & remove inner cannula", "Clean/replace inner cannula (sterile)", "Clean stoma site outward (NS)", "Apply fresh split dressing", "Secure ties (1-2 finger gap)"], viva: [{q: "Why use split gauze?", a: "Prevent aspiration of cut fibers."}] },
+      { id: 2, title: "Tracheal Suctioning", category: "airway", catName: "Airway & Respiratory", objective: " cleared secretions while avoiding hypoxia or trauma.", photoDescription: "A lateral view photograph. The patient is Semi-Fowler’s. The nurse (sterile dominant hand) is withdrawing a suction catheter from the tracheostomy tube. The nurse's non-dominant thumb is intermittently blocking the suction vent. A pulse oximeter is on the patient's finger, reading 98% O2.", photoCaption: "Proper intermittent suction technique during catheter withdrawal.", steps: ["Hyperoxygenate (100% O2)", "Don sterile gloves", "Lubricate catheter", "Insert without suction until resistance", "Apply intermittent suction & rotate while withdrawing", "Limit to 10-15 seconds", "Reoxygenate"], viva: [{q: "Max duration per pass?", a: "10-15 seconds."}] },
+      { id: 3, title: "Lumbar Puncture (LP) Assistance", category: "taps", catName: "Invasive Taps & Drainage", objective: "Assist clinician in CSF collection, maintaining rigid lateral positioning.", photoDescription: "A posterior-lateral photograph focusing on the patient's lower spine. The patient is in a maximum lateral recumbent (fetal) position, back near the edge of the bed. An assistant is securely holding the patient's neck and knees to maintain flexion. The physician is preparing the L3-L4 space using sterile drapes.", photoCaption: "Correct patient fetal positioning to open interlaminar spaces.", steps: ["Positioning (Fetal/Sitting)", "Strict sterile technique setup", "Assist with local anesthetic", "Label tubes 1, 2, 3", "Apply dressing", "Flat supine position (4-6 hrs)"], viva: [{q: "Ideal spinal level?", a: "L3-L4 or L4-L5 (avoid spinal cord)."}] },
+      { id: 4, title: "Thoracentesis Assistance", category: "taps", catName: "Invasive Taps & Drainage", objective: "Assist aspiration of pleural fluid, maintaining sterile technique.", photoDescription: "An anterior photograph. The patient is sitting upright on the edge of the bed, leaning forward, arms resting comfortably on an overbed table padded with pillows. The assistant stands in front, monitoring the patient's face and vitals. A sterile drape exposes the posterior lower chest where the physician is working.", photoCaption: "Upright leaning position to lower diaphragm.", steps: ["Upright leaning positioning", "Assist sterile setup", "Instruct patient NOT to cough", "Monitor vitals", "Measure fluid output", "Apply occlusive dressing", "Post-chest X-ray"], viva: [{q: "Major risk during procedure?", a: "Pneumothorax."}] },
+      { id: 5, title: "Paracentesis Assistance", category: "taps", catName: "Invasive Taps & Drainage", objective: "Assist peritoneal fluid removal, monitoring for fluid shifts.", photoDescription: "A photograph taken at bed level. The patient is in Fowler's position. A sterile drape covers the lower abdomen. A drainage tube connects a trocar (inserted in the lower quadrant) to an evacuated vacuum bottle hanging below bed level. The nurse is checking the patient's blood pressure on the opposite arm.", photoCaption: "Fowler's positioning with active drainage system setup.", steps: ["Empty bladder (OSPE point!)", "Fowler's positioning", "Measure weight & abd girth", "Assist sterile setup", "Monitor BP (hypotension)", "Measure output", "Apply firm dressing"], viva: [{q: "Why empty bladder?", a: "Prevent accidental perforation."}] },
+      { id: 6, title: "Chest Tube Insertion Assistance", category: "taps", catName: "Invasive Taps & Drainage", objective: "Restore negative intrapleural pressure, monitoring drainage dynamics.", photoDescription: "A photograph from the patient's side. The patient's affected arm is raised overhead. The physician is suturing the chest tube to the chest wall. The assistant is connecting the tube to the drainage unit tubing. Petroleum gauze is being prepared. The drainage unit is visible on the floor, showing tidaling in the water seal.", photoCaption: "Positioning for insertion and connection to drainage unit.", steps: ["Arm elevated positioning", "Set up Drainage Unit (2cm water seal)", "Provide petroleum gauze", "Secure connections", "Apply occlusive dressing", "Check for tidaling/bubbling"], viva: [{q: "What does continuous bubbling mean?", a: "Active air leak."}] },
+      { id: 7, title: "C.T. Scan Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Ensure patient safety, positioning, and contrast protocols.", photoDescription: "A wide photograph in a radiology suite. A patient is supine on the CT table, which is moving into the gantry. A radiology nurse is checking the peripheral IV line just prior to contrast injection. The patient is wearing a hospital gown with all metal jewelry removed.", photoCaption: "Patient positioning on CT table with IV access verified.", steps: ["Allergy check (contrast/iodine)", "Remove metal objects", "IV access (if contrast)", "Teach breath-holding", "Monitor during scan", "Encourage fluids (post)"], viva: [{q: "Key check before contrast?", a: "Renal function (BUN/Creatinine)."}] },
+      { id: 8, title: "Cerebral Angiography Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Monitor neuro status and access site safety.", photoDescription: "A view focusing on the catheterization site. A patient is supine on the fluoro table. A sterile drape covers the groin. A physician is manipulating a catheter at the femoral artery. The assistant is monitoring the cardiac monitor and the patient's level of consciousness.", photoCaption: "Femoral artery access site preparation under fluoroscopy.", steps: ["Check allergy/pulses", "GROIN prep", "Monitor VS & Neuro status", "Strict bed rest (post)", "Pressure dressing", "Check distal pulses"], viva: [{q: "Post-op care focus?", a: "Access site bleeding & Neuro checks."}] },
+      { id: 9, title: "Lumber puncture Assistance (Dup)", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Diagnostic context - CSF collection.", photoDescription: "Close up of CSF collection into tubes 1, 2, 3 in order from the spinal needle.", photoCaption: "Sequential collection of CSF specimens.", steps: ["Positioning (Fetal)", "Sterile Tray Prep", "Assist physician", "Monitor Vitals", "Collect CSF", "Post-op Flat position"], viva: [{q: "Patient position post-LP?", a: "Flat supine for 4-6 hours."}] },
+      { id: 10, title: "Myelogram Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Assess subarachnoid space using contrast.", photoDescription: "Lateral photograph focusing on the tilting X-ray table. The patient is supine, tilted head-up. The physician has just injected contrast via LP and the radiology tech is taking X-rays as the table tilts.", photoCaption: "Table tilting during fluoro to maneuver contrast media.", steps: ["Allergy check", "Position as for LP", "Assist contrast injection", "Tilt table during fluoro", "Head elevated (post-oil based)", "Encourage fluids"], viva: [{q: "Why position flat post-LP but potentially head-up post-Myelogram?", a: "Varies by contrast type; head-up prevents dye migration to brain."}] },
+      { id: 11, title: "Audiometric Testing Assistance", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Ensure accurate assessment of hearing function.", photoDescription: "Interior view of a soundproof booth. The patient is wearing large, circumaural headphones. The nurse is instructing the patient to raise their hand when they hear a tone. The audiometer control panel is partially visible through the window.", photoCaption: "Headphone placement and patient instruction protocol.", steps: ["Quiet environment", "Explain instructions", "Place headphones correctly", "Present frequencies/intensities", "Record audiogram"], viva: [{q: "Purpose?", a: "Differentiate conductive vs. sensorineural hearing loss."}] },
+      { id: 12, title: "Thyroid Scanning Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Diagnostic Imaging context - assist thyroid assessment.", photoDescription: "Wide angle photo in a nuclear medicine room. The patient is supine with their neck extended. A gamma camera scanner head is positioned directly over the patient's throat, slowly moving.", photoCaption: "Gamma camera positioning over extended neck.", steps: ["Check pregnancy/meds", "Administer isotope (oral/IV)", "Supine positioning with neck extended", "Move scanner over throat"], viva: [{q: "Pre-test restriction?", a: "Hold thyroid meds/iodine rich foods."}] },
+      { id: 13, title: "X rays Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Ensure proper positioning and radiation safety.", photoDescription: "Wide angle photo in an orthopedic clinic X-ray room. The patient is standing against a Bucky wall stand for a chest X-ray. The nurse is placing a lead shield around the patient’s waist/pelvis.", photoCaption: "Lead shielding application during chest X-ray.", steps: ["Confirm ID & part", "Apply lead shielding", "Correct positioning (AP/PA/Lateral)", "Teach breath holding", "Minimize exposure"], viva: [{q: "OSPE point for safety?", a: "Apply lead shielding/Confirm correct patient."}] },
+      { id: 14, title: "Skin Traction", category: "ortho", catName: "Orthopedics", ospe: [ "Inspect skin integrity.", "Apply traction tape/boot smoothly.", "Maintain alignment.", "Check weight hang freely." ], objective: "Apply traction safely, ensuring alignment and limb immobilization.", photoDescription: "View of the foot of the bed. A patient’s lower leg is wrapped in a traction boot. A rope connects the boot via a pulley on the bed frame to weights hanging freely above the floor.", photoCaption: "Weights hanging freely via pulley system in skin traction.", steps: ["Inspect skin integrity", "Apply traction tape/boot smoothly", "Maintain limb alignment", "Check weights hang freely (do not touch floor!)", "Check neurovascular status"], viva: [{q: "Why use pulley?", a: "Maintain line of pull and friction-less force."}] },
+      { id: 15, title: "Application of plaster, cast", category: "ortho", catName: "Orthopedics", objective: "Ensure proper technique, alignment, and mobilization while avoiding compartment syndrome.", photoDescription: "The nurse is applying a wet fiberglass cast tape over cotton padding on a patient's forearm. The patient's wrist is held in a neutral, anatomical position. The nurse uses palms, not fingers, to mold the material.", photoCaption: "Neutral arm positioning and cast material molding.", steps: ["Assess neurovascular status", "Apply stockinette & padding smoothly", "Handle wet cast with palms (prevent indentations)", "Maintain anatomical position", "Inspect edges"], viva: [{q: "Priority assessment post-cast?", a: "Neurovascular checks (Color, Temp, Movement, Sensation)."}] },
+      { id: 16, title: "Eye bandaging", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Provide eye protection and patient comfort.", photoDescription: "Close up face view. A monocular eye patch is securely taped over the patient’s closed left eye. Tapes are applied diagonally from forehead to cheek without causing pressure on the eyeball.", photoCaption: "Correct monocular eye patch application.", steps: ["Clean eyelids", "Instruct patient to close eyes", "Apply sterile eye pad", "Secure with tape without pressure"], viva: [{q: "When to bandage both?", a: "Following certain surgeries to minimize eye movement."}] },
+      { id: 17, title: "Eye Irrigation", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Remove foreign bodies safely without trauma.", photoDescription: "Close up view. The patient is lying supine, head tilted toward the affected (right) eye. The nurse uses a small squeeze bottle to direct a stream of warmed normal saline from the inner to the outer canthus of the eye, using a gauze pad to catch runoff.", photoCaption: "Irrigation flow from inner to outer canthus.", steps: ["Position head toward affected side", "Warm sterile solution (NS)", "Retract eyelids", "Direct stream inner to outer canthus"], viva: [{q: "Flow direction?", a: "Inner canthus to outer canthus (prevent cross-contamination)."}] },
+      { id: 18, title: "Ear Irrigation", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Remove cerumen or debris safely without injury.", photoDescription: "View focusing on the ear. The patient is sitting, holding an emesis basin snugly under their right ear. The nurse pulls the pinna up and back and directs a gentle stream of warm water from a syringe along the superior wall of the ear canal.", photoCaption: "Pinna pull technique and angle of irrigation flow.", steps: ["Inspect with otoscope", "Warm solution to body temp", "Embrace emesis basin under ear", "Pull pinna up/back (adults)", "Direct stream along superior wall"], viva: [{q: "Solution temperature?", a: "Body temperature (prevent vertigo/nausea)."}] },
+      { id: 19, title: "Blood Sugar Monitoring", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Accurate technique for glucose assessment.", photoDescription: "Close up focusing on fingers. The nurse, wearing clean gloves, is about to prick the side of the patient’s finger with a lancet. A glucometer with a test strip already inserted is resting on the table.", photoCaption: "Side-of-finger puncture site selection.", steps: ["Clean finger site (alcohol)", "Prick side of finger", "Wipe away first drop!", "Apply second drop to strip", "Insert strip into meter"], viva: [{q: "Why wipe first drop?", a: "May contain serous fluid/contaminants."}] },
+      { id: 20, title: "Cardiac monitoring /telemetry", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Continuous rhythm monitoring to recognize abnormalities.", photoDescription: "View of the patient's chest. Electrodes are correctly placed (e.g., White-right, Green-right, Black-left, Red-left, Brown-center). The nurse is attaching the lead wires to the electrodes. The telemetry transmitter unit is in a pouch nearby.", photoCaption: "Correct 5-lead telemetry electrode placement.", steps: ["Identify correct lead placement (5-lead)", "Prepare skin (shave/alcohol)", "Apply electrodes firmly", "Attach lead wires", "Confirm good waveform on monitor"], viva: [{q: "OSPE check for safety?", a: "Ensure alarm limits are set appropriately."}] }
     ];
 
-    // --- APP LOGIC ---
+    let currentProc = proceduresData[0];
 
+    // INITIALIZE APP
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderProcedureList(proceduresData);
+      loadProcedure(proceduresData[0].id); // Load first procedure by default
+    });
+
+    // RENDER PROCEDURE SELECTION LIST
     function renderProcedureList(list) {
       const container = document.getElementById('procedureList');
-      container.innerHTML = list.map(p => `
-        <button onclick="loadProcedure(${p.id})" id="proc-item-${p.id}" class="proc-item-btn w-full text-left p-3.5 rounded-xl transition-all flex items-start gap-3 hover:bg-slate-50 border border-transparent">
-          <div class="p-1.5 rounded-lg bg-slate-100 text-slate-500 shrink-0 mt-0.5 proc-icon">
-            <i data-lucide="activity" class="w-4 h-4"></i>
+      document.getElementById('procedureCount').innerText = `${list.length} Topics`;
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="p-4 text-xs text-slate-400 text-center">No procedures match your filter.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <button onclick="loadProcedure(${item.id})" id="proc-item-${item.id}" 
+          class="proc-item-btn w-full text-left p-3 rounded-lg transition-all flex items-start gap-2.5 hover:bg-slate-50 border border-transparent">
+          <div class="p-1.5 rounded-md bg-slate-100 text-slate-500 shrink-0 mt-0.5 proc-icon">
+            <i data-lucide="activity" class="w-3.5 h-3.5"></i>
           </div>
           <div class="overflow-hidden">
-            <h4 class="text-xs font-bold text-slate-900 truncate">${p.title}</h4>
-            <p class="text-[11px] text-slate-400 mt-0.5">${p.catName}</p>
+            <h4 class="text-xs font-bold text-slate-800 truncate">${item.title}</h4>
+            <p class="text-[11px] text-slate-400 truncate mt-0.5">${item.catName}</p>
           </div>
         </button>
       `).join('');
+
       lucide.createIcons();
     }
 
+    // LOAD SELECTED PROCEDURE DATA & PHOTO
     function loadProcedure(id) {
-        const proc = procedures.find(p => p.id === id);
-        if (!proc) return;
+      const proc = proceduresData.find(p => p.id === id);
+      if (!proc) return;
 
-        // Toggle mobile sidebar if open
-        if (!document.getElementById('sidebarDrawer').classList.contains('-translate-x-full')) {
-            toggleMobileSidebar();
-        }
+      currentProc = proc;
 
-        // Active State Highlight
-        document.querySelectorAll('.proc-item-btn').forEach(btn => {
-            btn.classList.remove('bg-teal-50', 'border-teal-100', 'shadow-sm');
-            btn.querySelector('.proc-icon').classList.replace('bg-teal-600', 'bg-slate-100');
-            btn.querySelector('.proc-icon').classList.replace('text-white', 'text-slate-500');
-        });
-        
-        const activeBtn = document.getElementById(`proc-item-${id}`);
-        activeBtn.classList.add('bg-teal-50', 'border-teal-100', 'shadow-sm');
-        activeBtn.querySelector('.proc-icon').classList.replace('bg-slate-100', 'bg-teal-600');
-        activeBtn.querySelector('.proc-icon').classList.replace('text-slate-500', 'text-white');
+      // Close mobile sidebar if open
+      if (!document.getElementById('sidebarDrawer').classList.contains('-translate-x-full')) {
+        toggleMobileSidebar();
+      }
 
-        // Update Text Content
-        document.getElementById('procCategory').innerText = proc.catName;
-        document.getElementById('procTitle').innerText = proc.title;
-        document.getElementById('procObjective').innerText = `Learning Outcome: ${proc.ospe[0] || "Select procedure for objectives."}`;
+      // Highlight active procedure in list
+      document.querySelectorAll('.proc-item-btn').forEach(btn => {
+          btn.classList.remove('bg-teal-50', 'border-teal-200/80', 'shadow-sm');
+          btn.querySelector('.proc-icon').classList.replace('bg-teal-600', 'bg-slate-100');
+          btn.querySelector('.proc-icon').classList.replace('text-white', 'text-slate-500');
+      });
+      const activeBtn = document.getElementById(`proc-item-${id}`);
+      activeBtn.classList.add('bg-teal-50', 'border-teal-200/80', 'shadow-sm');
+      activeBtn.querySelector('.proc-icon').classList.replace('bg-slate-100', 'bg-teal-600');
+      activeBtn.querySelector('.proc-icon').classList.replace('text-slate-500', 'text-white');
 
-        // Update 3D Model
-        generateClinicalModel(proc.id);
+      // Populate Header
+      document.getElementById('procCategory').innerText = proc.catName;
+      document.getElementById('procTitle').innerText = proc.title;
+      document.getElementById('procObjective').innerText = `Primary Objective: ${proc.objective}`;
 
-        // Update OSPE Steps
-        const ospeContainer = document.getElementById('ospeContainer');
-        const ospeContent = document.getElementById('ospeContent');
-        ospeContent.innerHTML = proc.ospe.map((step, index) => `
-            <div class="flex items-center gap-3.5 p-3 rounded-lg bg-slate-50 border border-slate-100">
-                <span class="flex-shrink-0 font-black text-sm text-teal-600 bg-teal-100 w-7 h-7 rounded-full flex items-center justify-center">${index + 1}</span>
-                <p class="text-xs sm:text-sm text-slate-800">${step}</p>
+      // --- GENERATE DYNAMIC PHOTO REPRESENTATION ---
+      const canvas = document.getElementById('photoVisualizer');
+      canvas.innerHTML = `
+        <div class="p-6 bg-slate-900/90 rounded-2xl border border-slate-700 shadow-2xl space-y-4 max-w-xl text-center relative z-10 transition-all duration-300">
+            <div class="p-4 bg-teal-900/50 rounded-full inline-block border-2 border-teal-500/50">
+                <i data-lucide="camera" class="w-12 h-12 text-teal-400"></i>
             </div>
-        `).join('');
-        ospeContainer.classList.remove('hidden');
+            <h3 class="text-2xl font-black text-white tracking-tight leading-tight">${proc.title} <span class="text-xs text-slate-500 font-mono">Reference Photo</span></h3>
+            <div class="text-sm text-slate-200 leading-relaxed space-y-3 font-medium bg-slate-800 p-4 rounded-lg border border-slate-700 text-left">
+                <div class="flex items-start gap-2">
+                    <i data-lucide="eye" class="w-4 h-4 text-emerald-400 mt-1 shrink-0"></i>
+                    <p>${proc.photoDescription}</p>
+                </div>
+            </div>
+            <p class="text-[11px] font-mono text-slate-500 pt-2 border-t border-slate-800">This canvas generates the accurate textual template for the high-yield clinical photograph required for OSPE topic: ${proc.id}.</p>
+        </div>
+      `;
 
-        lucide.createIcons();
+      document.getElementById('visualCaption').innerHTML = `<b>Accurate Photograph:</b> ${proc.photoCaption}`;
+
+      // Populate OSPE Checklist Steps
+      document.getElementById('procStepsContainer').innerHTML = proc.steps.map((step, idx) => `
+        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200/60">
+          <span class="bg-teal-600 text-white font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+          <p class="text-xs text-slate-700 leading-relaxed font-medium">${step}</p>
+        </div>
+      `).join('');
+
+      // Populate Viva Questions
+      document.getElementById('procVivaContainer').innerHTML = proc.viva.map((v, idx) => `
+        <div onclick="this.querySelector('.viva-ans').classList.toggle('hidden')" class="cursor-pointer bg-slate-50 hover:bg-slate-100/80 p-3.5 rounded-lg border border-slate-200/80 transition-all">
+          <div class="flex items-center justify-between gap-2">
+            <h5 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+              <span class="text-amber-600 font-black">Q:</span> ${v.q}
+            </h5>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 shrink-0"></i>
+          </div>
+          <div class="viva-ans hidden mt-3 pt-3 border-t border-slate-200 text-xs text-amber-950 font-medium bg-amber-50 p-3 rounded">
+            <strong>Model Answer:</strong> ${v.a}
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+      switchDetailTab('steps'); // Show steps tab by default
     }
 
-    function handleSearch(query) {
-      const q = query.toLowerCase().trim();
-      const filtered = procedures.filter(p => p.title.toLowerCase().includes(q) || p.catName.toLowerCase().includes(q));
-      renderProcedureList(filtered);
+    // TAB SWITCHING (OSPE checklist / Viva)
+    function switchDetailTab(tabKey) {
+      document.querySelectorAll('.detail-panel').forEach(panel => panel.classList.add('hidden'));
+      document.querySelectorAll('.detail-tab').forEach(tab => {
+        tab.classList.remove('text-teal-600', 'border-teal-600', 'font-bold');
+        tab.classList.add('text-slate-500', 'border-transparent');
+      });
+
+      const activePanel = document.getElementById(`panel-${tabKey}`);
+      const activeTab = document.getElementById(`dtab-${tabKey}`);
+
+      if (activePanel) activePanel.classList.remove('hidden');
+      if (activeTab) {
+        activeTab.classList.add('text-teal-600', 'border-teal-600', 'font-bold');
+        activeTab.classList.remove('text-slate-500', 'border-transparent');
+      }
     }
 
-    function filterCategory(cat) {
-      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('bg-teal-600', 'text-white', 'shadow-sm'));
-      document.getElementById(`tab-${cat}`).classList.add('bg-teal-600', 'text-white', 'shadow-sm');
-      const filtered = cat === 'all' ? procedures : procedures.filter(p => p.category === cat);
-      renderProcedureList(filtered);
+    // CATEGORY FILTER
+    function filterCategory(catKey) {
+      // Highlight cat button
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.remove('bg-teal-600', 'text-white', 'shadow-sm');
+        btn.classList.add('text-slate-300');
+      });
+      document.getElementById(`tab-${catKey}`).classList.add('bg-teal-600', 'text-white', 'shadow-sm');
+      document.getElementById(`tab-${catKey}`).classList.remove('text-slate-300');
+
+      if (catKey === 'all') {
+        renderProcedureList(proceduresData);
+      } else {
+        const filtered = proceduresData.filter(p => p.category === catKey);
+        renderProcedureList(filtered);
+      }
     }
 
+    // MOBILE SIDEBAR TOGGLE
     function toggleMobileSidebar() {
       const sidebar = document.getElementById('sidebarDrawer');
       const backdrop = document.getElementById('drawerBackdrop');
       sidebar.classList.toggle('-translate-x-full');
       backdrop.classList.toggle('hidden');
     }
-
-    // --- INITIALIZATION ---
-    window.addEventListener('DOMContentLoaded', () => {
-      filterCategory('all'); // Renders list
-      init3DEngine();
-      lucide.createIcons();
-    });
   </script>
 </body>
 </html>
