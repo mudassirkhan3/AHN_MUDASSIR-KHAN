@@ -3,12 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AHN-II Complete Clinical Photo Portal | Mudassir Hussain Khan</title>
+  <title>AHN-II Clinical & OSPE Portal | Mudassir Hussain Khan</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    @keyframes ecg-scan {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .animate-ecg {
+      animation: ecg-scan 2.5s linear infinite;
+    }
     /* Hide scrollbars for crisp UI */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -18,23 +29,12 @@
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-    .photo-canvas {
-        background-color: #0f172a; /* Slate 900 */
-        background-image: 
-            linear-gradient(45deg, #1e293b 25%, transparent 25%), 
-            linear-gradient(-45deg, #1e293b 25%, transparent 25%),
-            linear-gradient(45deg, transparent 75%, #1e293b 75%),
-            linear-gradient(-45deg, transparent 75%, #1e293b 75%);
-        background-size: 20px 20px;
-        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-    }
   </style>
 </head>
 <body class="h-full text-slate-800 font-sans flex flex-col antialiased selection:bg-teal-500 selection:text-white">
 
   <!-- TOP HEADER / NAVBAR -->
-  <header class="bg-slate-950 text-white shadow-xl sticky top-0 z-40 border-b border-slate-800">
+  <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 gap-2">
         
@@ -45,17 +45,24 @@
           </button>
           
           <div class="bg-gradient-to-tr from-teal-600 to-emerald-500 p-2 rounded-xl text-white shadow-md flex-shrink-0">
-            <i data-lucide="camera" class="w-6 h-6"></i>
+            <i data-lucide="activity" class="w-6 h-6"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="font-extrabold text-base sm:text-lg leading-tight tracking-tight text-white">AHN-II Photo Portal</h1>
-              <span class="hidden sm:inline-block bg-teal-500/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-teal-500/30">Complete 20 Topics</span>
+              <h1 class="font-extrabold text-base sm:text-lg leading-tight tracking-tight text-white">AHN-II Clinical Suite</h1>
+              <span class="hidden sm:inline-block bg-teal-500/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-teal-500/30">OSPE & Viva Ready</span>
             </div>
             <p class="text-[11px] text-slate-400 font-medium truncate max-w-[200px] sm:max-w-none">
               Lead Author & Curator: <span class="text-teal-400 font-bold">Mudassir Hussain Khan</span>
             </p>
           </div>
+        </div>
+
+        <!-- Center: Search Input (Desktop) -->
+        <div class="relative w-64 sm:w-80 hidden md:block">
+          <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search procedures, OSPE points..." 
+            class="w-full pl-9 pr-4 py-1.5 text-xs sm:text-sm rounded-full bg-slate-800 text-slate-100 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder-slate-400 transition-all">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
         </div>
 
         <!-- Right: Course Meta & Student Badge -->
@@ -69,6 +76,7 @@
             Viva Exam Mode
           </span>
         </div>
+
       </div>
 
       <!-- CATEGORY NAVIGATION TABS -->
@@ -82,18 +90,27 @@
         <button onclick="filterCategory('taps')" id="tab-taps" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
           Invasive Taps & Drainage
         </button>
-        <button onclick="filterCategory('diagnostic')" id="tab-diagnostic" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-          Diagnostic Imaging
+        <button onclick="filterCategory('radiology')" id="tab-radiology" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Radiology & Diagnostics
         </button>
         <button onclick="filterCategory('ortho')" id="tab-ortho" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-          Orthopedics
+          Orthopedics & Immobilization
         </button>
-        <button onclick="filterCategory('specialized')" id="tab-specialized" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-          Specialized Sensory & Monitoring
+        <button onclick="filterCategory('sensory')" id="tab-sensory" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Sensory, Cardiac & Specialized
         </button>
       </nav>
     </div>
   </header>
+
+  <!-- MOBILE SEARCH BAR -->
+  <div class="p-2.5 bg-slate-200/80 border-b border-slate-300 md:hidden">
+    <div class="relative w-full">
+      <input type="text" id="mobileSearchInput" oninput="handleSearch(this.value)" placeholder="Search 20 clinical procedures..." 
+        class="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-white text-slate-800 border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm">
+      <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+    </div>
+  </div>
 
   <!-- MAIN LAYOUT -->
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
@@ -119,7 +136,7 @@
         </div>
 
         <!-- LIST CONTAINER -->
-        <div id="procedureList" class="divide-y divide-slate-100 overflow-y-auto flex-grow p-1 no-scrollbar">
+        <div id="procedureList" class="divide-y divide-slate-100 overflow-y-auto flex-grow p-1">
           <!-- Dynamically populated -->
         </div>
       </div>
@@ -131,7 +148,7 @@
       <!-- PROCEDURE HEADER CARD -->
       <div class="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-slate-200/80 relative overflow-hidden">
         <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
-        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 relative z-10">
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
           <div>
             <div class="flex items-center gap-2 mb-1.5 flex-wrap">
               <span id="procCategory" class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 rounded-md border border-teal-200">
@@ -140,38 +157,35 @@
               <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-semibold border border-slate-200">BSN 4th Semester</span>
             </div>
             <h1 id="procTitle" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">Select a Procedure</h1>
-            <p id="procObjective" class="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">Choose any clinical topic from the list to review step-by-step techniques and accurate OSPE points.</p>
+            <p id="procSub" class="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">Choose any clinical topic from the list to review step-by-step techniques and OSPE viva questions.</p>
           </div>
           <div class="flex-shrink-0">
             <span id="procOspe" class="bg-amber-50 text-amber-800 border border-amber-200 text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 shadow-sm">
-              <i data-lucide="award" class="w-4 h-4 text-amber-600"></i> OSPE Checklist Mode
+              <i data-lucide="award" class="w-4 h-4 text-amber-600"></i> High-Yield OSPE Station
             </span>
           </div>
         </div>
       </div>
 
-      <!-- DYNAMIC PHOTO VISUALIZER CANVAS (REPLACES 3D) -->
-      <div class="bg-slate-950 rounded-xl shadow-xl border border-slate-800 overflow-hidden relative">
-        <div class="px-4 py-2.5 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-slate-300 text-xs relative z-10">
+      <!-- ANIMATED VISUAL DIAGRAM CANVAS -->
+      <div class="bg-slate-900 rounded-xl shadow-md border border-slate-800 overflow-hidden">
+        <div class="px-4 py-2.5 bg-slate-950 border-b border-slate-800 flex justify-between items-center text-slate-300 text-xs">
           <span class="flex items-center gap-2 font-mono text-[11px]">
-            <i data-lucide="image" class="w-4 h-4 text-emerald-400"></i>
-            <span class="text-slate-200 font-semibold">Accurate Clinical Procedure Photograph</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-slate-200 font-semibold">Anatomical Vector Diagram</span>
           </span>
-          <span class="text-slate-500 font-mono text-[10px] bg-slate-800 px-2 py-0.5 rounded">Asset ID: AHN-II-IMG</span>
+          <button onclick="resetAnimation()" class="hover:text-white flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors">
+            <i data-lucide="rotate-ccw" class="w-3 h-3 text-teal-400"></i> Replay Motion
+          </button>
         </div>
         
-        <!-- Dynamic Image Display Area -->
-        <div id="photoVisualizer" class="photo-canvas w-full h-72 sm:h-96 flex items-center justify-center p-4 text-slate-400 select-none relative transition-all duration-300">
-          <!-- The accurate photograph description is generated here dynamically -->
-          <div class="text-center space-y-4 max-w-lg p-6 bg-slate-900/80 backdrop-blur-sm rounded-2xl border border-slate-700 shadow-2xl">
-              <i data-lucide="image" class="w-16 h-16 text-slate-700 mx-auto"></i>
-              <h3 class="text-xl font-bold text-slate-200">Procedure Photo Viewer</h3>
-              <p class="text-sm text-slate-400 leading-relaxed">Select a clinical procedure from the index on the left to display the accurate, relevant photograph demonstrating the correct technique.</p>
-          </div>
+        <!-- SVG Visualizer Container -->
+        <div id="visualizerCanvas" class="w-full h-60 sm:h-72 bg-slate-950 flex items-center justify-center relative p-4 text-slate-400 select-none">
+          <!-- Rendered dynamically -->
         </div>
 
-        <div class="px-4 py-2 bg-slate-900/90 text-[11px] text-slate-300 border-t border-slate-800/80 flex items-center justify-between">
-          <span id="visualCaption" class="truncate max-w-[80%] font-medium">Please select a topic to view the clinical reference photograph.</span>
+        <div class="px-4 py-2 bg-slate-900/90 text-[11px] text-slate-400 border-t border-slate-800/80 flex items-center justify-between">
+          <span id="visualCaption" class="truncate max-w-[80%]">Anatomical and equipment vector representation.</span>
           <span class="text-slate-500 font-mono text-[10px]">HN-II Standard</span>
         </div>
       </div>
@@ -181,8 +195,14 @@
         
         <!-- TAB BUTTONS -->
         <div class="flex border-b border-slate-200 bg-slate-50 text-xs sm:text-sm overflow-x-auto no-scrollbar">
-          <button onclick="switchDetailTab('steps')" id="dtab-steps" class="detail-tab flex-1 py-3 px-3 font-bold text-teal-600 border-b-2 border-teal-600 transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Sequential OSPE Checklist
+          <button onclick="switchDetailTab('prep')" id="dtab-prep" class="detail-tab flex-1 py-3 px-3 font-bold text-teal-600 border-b-2 border-teal-600 transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="clipboard-list" class="w-4 h-4"></i> Prep & Position
+          </button>
+          <button onclick="switchDetailTab('steps')" id="dtab-steps" class="detail-tab flex-1 py-3 px-3 font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Step-by-Step
+          </button>
+          <button onclick="switchDetailTab('safety')" id="dtab-safety" class="detail-tab flex-1 py-3 px-3 font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Safety Alerts
           </button>
           <button onclick="switchDetailTab('viva')" id="dtab-viva" class="detail-tab flex-1 py-3 px-3 font-semibold text-amber-600 hover:text-amber-700 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap bg-amber-50/50">
             <i data-lucide="help-circle" class="w-4 h-4"></i> Viva Questions
@@ -192,18 +212,68 @@
         <!-- TAB CONTENT PANELS -->
         <div class="p-4 sm:p-6">
           
+          <!-- PANEL 1: PREPARATION & POSITIONING -->
+          <div id="panel-prep" class="detail-panel space-y-4">
+            <div>
+              <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Primary Objective & Clinical Rationale</h3>
+              <p id="procObjective" class="text-slate-700 text-xs sm:text-sm leading-relaxed">Select a topic to display specific learning outcomes.</p>
+            </div>
+            <hr class="border-slate-100">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200/60">
+                <h4 class="text-xs font-bold text-slate-800 uppercase mb-2 flex items-center gap-1.5">
+                  <i data-lucide="user-check" class="w-4 h-4 text-teal-600"></i> Patient Positioning
+                </h4>
+                <p id="procPositioning" class="text-xs text-slate-600 leading-relaxed">Position instructions will be rendered here.</p>
+              </div>
+              <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200/60">
+                <h4 class="text-xs font-bold text-slate-800 uppercase mb-2 flex items-center gap-1.5">
+                  <i data-lucide="package" class="w-4 h-4 text-teal-600"></i> Equipment Checklist
+                </h4>
+                <ul id="procEquipment" class="text-xs text-slate-600 space-y-1 list-disc pl-4">
+                  <li>Equipment list will populate here.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           <!-- PANEL 2: STEP BY STEP TECHNIQUE -->
-          <div id="panel-steps" class="detail-panel space-y-3">
+          <div id="panel-steps" class="detail-panel hidden space-y-3">
             <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Sequential Procedure Checklist</h3>
             <div id="procStepsContainer" class="space-y-2.5">
-              <div class="text-sm text-slate-500 italic p-4 text-center bg-slate-50 rounded-lg border">Select a procedure to view OSPE steps.</div>
+              <!-- Steps populated dynamically -->
+            </div>
+          </div>
+
+          <!-- PANEL 3: SAFETY ALERTS & COMPLICATIONS -->
+          <div id="panel-safety" class="detail-panel hidden space-y-4">
+            <div class="bg-amber-50/80 border-l-4 border-amber-500 p-3.5 rounded-r-lg">
+              <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600"></i> Critical Safety Rules (OSPE Points)
+              </h4>
+              <p id="procSafetyAlerts" class="text-xs text-amber-800 leading-relaxed font-medium">Critical safety rules to avoid OSPE point deductions.</p>
+            </div>
+            
+            <div>
+              <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Complications & Emergency Interventions</h3>
+              <div id="procComplications" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <!-- Complications populated dynamically -->
+              </div>
             </div>
           </div>
 
           <!-- PANEL 4: OSPE VIVA EXAM PRACTICE -->
           <div id="panel-viva" class="detail-panel hidden space-y-4">
+            <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 p-3.5 rounded-lg border border-amber-200/80 flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-amber-900 uppercase">OSPE Viva Prep Module</h4>
+                <p class="text-[11px] text-amber-700">Click on any question card to reveal the expert response for viva examinations.</p>
+              </div>
+              <span class="text-xs bg-amber-600 text-white px-2.5 py-1 rounded-md font-bold shadow-sm">Viva Exam</span>
+            </div>
+
             <div id="procVivaContainer" class="space-y-3">
-              <div class="text-sm text-slate-500 italic p-4 text-center bg-amber-50/50 rounded-lg border border-amber-100">Select a procedure to view viva points.</div>
+              <!-- Viva questions populated dynamically -->
             </div>
           </div>
 
@@ -216,9 +286,9 @@
   </div>
 
   <!-- FOOTER -->
-  <footer class="bg-slate-950 text-slate-400 text-xs py-6 border-t border-slate-800 mt-8">
+  <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-8">
     <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-      <p class="text-slate-200 font-semibold text-sm">Adult Health Nursing-II (AHN-II) Complete Clinical Photo Portal</p>
+      <p class="text-slate-200 font-semibold text-sm">Adult Health Nursing-II (AHN-II) Clinical & OSPE Interactive Portal</p>
       <p class="text-slate-400">Curated & Developed by: <strong class="text-teal-400">Mudassir Hussain Khan</strong> • BS Nursing Class Representative</p>
       <p class="text-slate-500 text-[11px]">Designed for Desktop & Mobile • Single File Web App</p>
     </div>
@@ -228,180 +298,874 @@
   <script>
     // COMPLETE DATABASE OF ALL 20 CLINICAL PROCEDURES WITH VIVA QUESTIONS
     const proceduresData = [
-      { id: 1, title: "Tracheostomy Care", category: "airway", catName: "Airway & Respiratory", objective: "Demonstrate proficiency in providing tracheostomy care, inner cannula cleaning, stoma dressing, and securing ties while minimizing infection risk.", photoDescription: "A close-up photograph taken from a 45-degree angle above, showing a patient in Semi-Fowler's position. A nurse wearing sterile gloves and a face shield is using a sterile cotton applicator dipped in normal saline to clean the stoma site in outward circular motions. The faceplate is stabilized. The sterile field tray is visible in the foreground containing a pre-cut split dressing and ties.", photoCaption: "Accurate demonstrating of aseptic stoma cleaning technique.", steps: ["Hand hygiene & Sterile PPE", "Suction if required", "Unlock & remove inner cannula", "Clean/replace inner cannula (sterile)", "Clean stoma site outward (NS)", "Apply fresh split dressing", "Secure ties (1-2 finger gap)"], viva: [{q: "Why use split gauze?", a: "Prevent aspiration of cut fibers."}] },
-      { id: 2, title: "Tracheal Suctioning", category: "airway", catName: "Airway & Respiratory", objective: " cleared secretions while avoiding hypoxia or trauma.", photoDescription: "A lateral view photograph. The patient is Semi-Fowler’s. The nurse (sterile dominant hand) is withdrawing a suction catheter from the tracheostomy tube. The nurse's non-dominant thumb is intermittently blocking the suction vent. A pulse oximeter is on the patient's finger, reading 98% O2.", photoCaption: "Proper intermittent suction technique during catheter withdrawal.", steps: ["Hyperoxygenate (100% O2)", "Don sterile gloves", "Lubricate catheter", "Insert without suction until resistance", "Apply intermittent suction & rotate while withdrawing", "Limit to 10-15 seconds", "Reoxygenate"], viva: [{q: "Max duration per pass?", a: "10-15 seconds."}] },
-      { id: 3, title: "Lumbar Puncture (LP) Assistance", category: "taps", catName: "Invasive Taps & Drainage", objective: "Assist clinician in CSF collection, maintaining rigid lateral positioning.", photoDescription: "A posterior-lateral photograph focusing on the patient's lower spine. The patient is in a maximum lateral recumbent (fetal) position, back near the edge of the bed. An assistant is securely holding the patient's neck and knees to maintain flexion. The physician is preparing the L3-L4 space using sterile drapes.", photoCaption: "Correct patient fetal positioning to open interlaminar spaces.", steps: ["Positioning (Fetal/Sitting)", "Strict sterile technique setup", "Assist with local anesthetic", "Label tubes 1, 2, 3", "Apply dressing", "Flat supine position (4-6 hrs)"], viva: [{q: "Ideal spinal level?", a: "L3-L4 or L4-L5 (avoid spinal cord)."}] },
-      { id: 4, title: "Thoracentesis Assistance", category: "taps", catName: "Invasive Taps & Drainage", objective: "Assist aspiration of pleural fluid, maintaining sterile technique.", photoDescription: "An anterior photograph. The patient is sitting upright on the edge of the bed, leaning forward, arms resting comfortably on an overbed table padded with pillows. The assistant stands in front, monitoring the patient's face and vitals. A sterile drape exposes the posterior lower chest where the physician is working.", photoCaption: "Upright leaning position to lower diaphragm.", steps: ["Upright leaning positioning", "Assist sterile setup", "Instruct patient NOT to cough", "Monitor vitals", "Measure fluid output", "Apply occlusive dressing", "Post-chest X-ray"], viva: [{q: "Major risk during procedure?", a: "Pneumothorax."}] },
-      { id: 5, title: "Paracentesis Assistance", category: "taps", catName: "Invasive Taps & Drainage", objective: "Assist peritoneal fluid removal, monitoring for fluid shifts.", photoDescription: "A photograph taken at bed level. The patient is in Fowler's position. A sterile drape covers the lower abdomen. A drainage tube connects a trocar (inserted in the lower quadrant) to an evacuated vacuum bottle hanging below bed level. The nurse is checking the patient's blood pressure on the opposite arm.", photoCaption: "Fowler's positioning with active drainage system setup.", steps: ["Empty bladder (OSPE point!)", "Fowler's positioning", "Measure weight & abd girth", "Assist sterile setup", "Monitor BP (hypotension)", "Measure output", "Apply firm dressing"], viva: [{q: "Why empty bladder?", a: "Prevent accidental perforation."}] },
-      { id: 6, title: "Chest Tube Insertion Assistance", category: "taps", catName: "Invasive Taps & Drainage", objective: "Restore negative intrapleural pressure, monitoring drainage dynamics.", photoDescription: "A photograph from the patient's side. The patient's affected arm is raised overhead. The physician is suturing the chest tube to the chest wall. The assistant is connecting the tube to the drainage unit tubing. Petroleum gauze is being prepared. The drainage unit is visible on the floor, showing tidaling in the water seal.", photoCaption: "Positioning for insertion and connection to drainage unit.", steps: ["Arm elevated positioning", "Set up Drainage Unit (2cm water seal)", "Provide petroleum gauze", "Secure connections", "Apply occlusive dressing", "Check for tidaling/bubbling"], viva: [{q: "What does continuous bubbling mean?", a: "Active air leak."}] },
-      { id: 7, title: "C.T. Scan Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Ensure patient safety, positioning, and contrast protocols.", photoDescription: "A wide photograph in a radiology suite. A patient is supine on the CT table, which is moving into the gantry. A radiology nurse is checking the peripheral IV line just prior to contrast injection. The patient is wearing a hospital gown with all metal jewelry removed.", photoCaption: "Patient positioning on CT table with IV access verified.", steps: ["Allergy check (contrast/iodine)", "Remove metal objects", "IV access (if contrast)", "Teach breath-holding", "Monitor during scan", "Encourage fluids (post)"], viva: [{q: "Key check before contrast?", a: "Renal function (BUN/Creatinine)."}] },
-      { id: 8, title: "Cerebral Angiography Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Monitor neuro status and access site safety.", photoDescription: "A view focusing on the catheterization site. A patient is supine on the fluoro table. A sterile drape covers the groin. A physician is manipulating a catheter at the femoral artery. The assistant is monitoring the cardiac monitor and the patient's level of consciousness.", photoCaption: "Femoral artery access site preparation under fluoroscopy.", steps: ["Check allergy/pulses", "GROIN prep", "Monitor VS & Neuro status", "Strict bed rest (post)", "Pressure dressing", "Check distal pulses"], viva: [{q: "Post-op care focus?", a: "Access site bleeding & Neuro checks."}] },
-      { id: 9, title: "Lumber puncture Assistance (Dup)", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Diagnostic context - CSF collection.", photoDescription: "Close up of CSF collection into tubes 1, 2, 3 in order from the spinal needle.", photoCaption: "Sequential collection of CSF specimens.", steps: ["Positioning (Fetal)", "Sterile Tray Prep", "Assist physician", "Monitor Vitals", "Collect CSF", "Post-op Flat position"], viva: [{q: "Patient position post-LP?", a: "Flat supine for 4-6 hours."}] },
-      { id: 10, title: "Myelogram Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Assess subarachnoid space using contrast.", photoDescription: "Lateral photograph focusing on the tilting X-ray table. The patient is supine, tilted head-up. The physician has just injected contrast via LP and the radiology tech is taking X-rays as the table tilts.", photoCaption: "Table tilting during fluoro to maneuver contrast media.", steps: ["Allergy check", "Position as for LP", "Assist contrast injection", "Tilt table during fluoro", "Head elevated (post-oil based)", "Encourage fluids"], viva: [{q: "Why position flat post-LP but potentially head-up post-Myelogram?", a: "Varies by contrast type; head-up prevents dye migration to brain."}] },
-      { id: 11, title: "Audiometric Testing Assistance", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Ensure accurate assessment of hearing function.", photoDescription: "Interior view of a soundproof booth. The patient is wearing large, circumaural headphones. The nurse is instructing the patient to raise their hand when they hear a tone. The audiometer control panel is partially visible through the window.", photoCaption: "Headphone placement and patient instruction protocol.", steps: ["Quiet environment", "Explain instructions", "Place headphones correctly", "Present frequencies/intensities", "Record audiogram"], viva: [{q: "Purpose?", a: "Differentiate conductive vs. sensorineural hearing loss."}] },
-      { id: 12, title: "Thyroid Scanning Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Diagnostic Imaging context - assist thyroid assessment.", photoDescription: "Wide angle photo in a nuclear medicine room. The patient is supine with their neck extended. A gamma camera scanner head is positioned directly over the patient's throat, slowly moving.", photoCaption: "Gamma camera positioning over extended neck.", steps: ["Check pregnancy/meds", "Administer isotope (oral/IV)", "Supine positioning with neck extended", "Move scanner over throat"], viva: [{q: "Pre-test restriction?", a: "Hold thyroid meds/iodine rich foods."}] },
-      { id: 13, title: "X rays Assistance", category: "diagnostic", catName: "Diagnostic Imaging", objective: "Ensure proper positioning and radiation safety.", photoDescription: "Wide angle photo in an orthopedic clinic X-ray room. The patient is standing against a Bucky wall stand for a chest X-ray. The nurse is placing a lead shield around the patient’s waist/pelvis.", photoCaption: "Lead shielding application during chest X-ray.", steps: ["Confirm ID & part", "Apply lead shielding", "Correct positioning (AP/PA/Lateral)", "Teach breath holding", "Minimize exposure"], viva: [{q: "OSPE point for safety?", a: "Apply lead shielding/Confirm correct patient."}] },
-      { id: 14, title: "Skin Traction", category: "ortho", catName: "Orthopedics", ospe: [ "Inspect skin integrity.", "Apply traction tape/boot smoothly.", "Maintain alignment.", "Check weight hang freely." ], objective: "Apply traction safely, ensuring alignment and limb immobilization.", photoDescription: "View of the foot of the bed. A patient’s lower leg is wrapped in a traction boot. A rope connects the boot via a pulley on the bed frame to weights hanging freely above the floor.", photoCaption: "Weights hanging freely via pulley system in skin traction.", steps: ["Inspect skin integrity", "Apply traction tape/boot smoothly", "Maintain limb alignment", "Check weights hang freely (do not touch floor!)", "Check neurovascular status"], viva: [{q: "Why use pulley?", a: "Maintain line of pull and friction-less force."}] },
-      { id: 15, title: "Application of plaster, cast", category: "ortho", catName: "Orthopedics", objective: "Ensure proper technique, alignment, and mobilization while avoiding compartment syndrome.", photoDescription: "The nurse is applying a wet fiberglass cast tape over cotton padding on a patient's forearm. The patient's wrist is held in a neutral, anatomical position. The nurse uses palms, not fingers, to mold the material.", photoCaption: "Neutral arm positioning and cast material molding.", steps: ["Assess neurovascular status", "Apply stockinette & padding smoothly", "Handle wet cast with palms (prevent indentations)", "Maintain anatomical position", "Inspect edges"], viva: [{q: "Priority assessment post-cast?", a: "Neurovascular checks (Color, Temp, Movement, Sensation)."}] },
-      { id: 16, title: "Eye bandaging", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Provide eye protection and patient comfort.", photoDescription: "Close up face view. A monocular eye patch is securely taped over the patient’s closed left eye. Tapes are applied diagonally from forehead to cheek without causing pressure on the eyeball.", photoCaption: "Correct monocular eye patch application.", steps: ["Clean eyelids", "Instruct patient to close eyes", "Apply sterile eye pad", "Secure with tape without pressure"], viva: [{q: "When to bandage both?", a: "Following certain surgeries to minimize eye movement."}] },
-      { id: 17, title: "Eye Irrigation", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Remove foreign bodies safely without trauma.", photoDescription: "Close up view. The patient is lying supine, head tilted toward the affected (right) eye. The nurse uses a small squeeze bottle to direct a stream of warmed normal saline from the inner to the outer canthus of the eye, using a gauze pad to catch runoff.", photoCaption: "Irrigation flow from inner to outer canthus.", steps: ["Position head toward affected side", "Warm sterile solution (NS)", "Retract eyelids", "Direct stream inner to outer canthus"], viva: [{q: "Flow direction?", a: "Inner canthus to outer canthus (prevent cross-contamination)."}] },
-      { id: 18, title: "Ear Irrigation", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Remove cerumen or debris safely without injury.", photoDescription: "View focusing on the ear. The patient is sitting, holding an emesis basin snugly under their right ear. The nurse pulls the pinna up and back and directs a gentle stream of warm water from a syringe along the superior wall of the ear canal.", photoCaption: "Pinna pull technique and angle of irrigation flow.", steps: ["Inspect with otoscope", "Warm solution to body temp", "Embrace emesis basin under ear", "Pull pinna up/back (adults)", "Direct stream along superior wall"], viva: [{q: "Solution temperature?", a: "Body temperature (prevent vertigo/nausea)."}] },
-      { id: 19, title: "Blood Sugar Monitoring", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Accurate technique for glucose assessment.", photoDescription: "Close up focusing on fingers. The nurse, wearing clean gloves, is about to prick the side of the patient’s finger with a lancet. A glucometer with a test strip already inserted is resting on the table.", photoCaption: "Side-of-finger puncture site selection.", steps: ["Clean finger site (alcohol)", "Prick side of finger", "Wipe away first drop!", "Apply second drop to strip", "Insert strip into meter"], viva: [{q: "Why wipe first drop?", a: "May contain serous fluid/contaminants."}] },
-      { id: 20, title: "Cardiac monitoring /telemetry", category: "specialized", catName: "Specialized Sensory & Monitoring", objective: "Continuous rhythm monitoring to recognize abnormalities.", photoDescription: "View of the patient's chest. Electrodes are correctly placed (e.g., White-right, Green-right, Black-left, Red-left, Brown-center). The nurse is attaching the lead wires to the electrodes. The telemetry transmitter unit is in a pouch nearby.", photoCaption: "Correct 5-lead telemetry electrode placement.", steps: ["Identify correct lead placement (5-lead)", "Prepare skin (shave/alcohol)", "Apply electrodes firmly", "Attach lead wires", "Confirm good waveform on monitor"], viva: [{q: "OSPE check for safety?", a: "Ensure alarm limits are set appropriately."}] }
+      {
+        id: 1,
+        title: "Tracheostomy Care",
+        category: "airway",
+        catName: "Airway & Respiratory",
+        objective: "Demonstrate proficiency in providing tracheostomy care, inner cannula cleaning, stoma dressing, and securing ties while maintaining sterile technique and airway patency.",
+        positioning: "Semi-Fowler's to High-Fowler's position (30° - 90°) to promote maximal lung expansion and reduce work of breathing.",
+        equipment: ["Tracheostomy care kit", "Sterile inner cannula / saline solution", "Pre-cut tracheostomy split sponge", "Sterile cotton applicators", "Velcro tracheostomy strap / ties", "Suction apparatus & PPE"],
+        steps: [
+          "Assess respiratory rate, SpO2, stoma skin integrity, and presence of pulmonary secretions.",
+          "Perform hand hygiene, don sterile PPE (mask with face shield, sterile gloves).",
+          "Unlock and remove disposable or reusable inner cannula with non-dominant hand.",
+          "Clean reusable inner cannula with hydrogen peroxide/saline, rinse thoroughly with sterile saline, and lock back into position.",
+          "Clean stoma site using sterile saline swabs in single outward strokes from stoma site outward.",
+          "Apply fresh pre-cut tracheostomy split dressing underneath the faceplate.",
+          "Secure new tracheostomy ties before removing old ties, allowing 1 to 2 fingers width space."
+        ],
+        safetyAlerts: "NEVER cut standard 4x4 gauze sponges around stoma as frayed cotton fibers can be aspirated! Always keep a replacement tracheostomy tube of same size and one size smaller at bedside for emergency re-intubation.",
+        complications: [
+          { name: "Accidental Decannulation", action: "Call for emergency help, extend neck, attempt reinsertion using obturator or use bag-valve-mask ventilations." },
+          { name: "Stoma Site Infection", action: "Maintain strict aseptic technique during dressing changes; report purulent discharge or spreading erythema." }
+        ],
+        viva: [
+          { q: "Why is a precut slit gauze used instead of cutting a standard gauze sponge?", a: "Cutting standard gauze leaves loose cotton threads that can enter the stoma and cause tracheal irritation, foreign body reaction, or airway obstruction." },
+          { q: "What crucial emergency items must always be present at a tracheostomy patient's bedside?", a: "An emergency tracheostomy tray, two spare tubes (one same size, one size smaller), obturator, resuscitation bag-valve mask, and functional suction unit." },
+          { q: "How tight should new tracheostomy ties be secured?", a: "They should be tight enough to prevent dislodgement, allowing exactly 1 to 2 fingers to fit snugly between the tie and the patient's neck." }
+        ],
+        svgType: "trachCare"
+      },
+      {
+        id: 2,
+        title: "Tracheal Suctioning",
+        category: "airway",
+        catName: "Airway & Respiratory",
+        objective: "Perform suctioning safely to clear tracheobronchial secretions, maintain airway patency, and avoid hypoxia or mucosal trauma.",
+        positioning: "Semi-Fowler's position for conscious patients; side-lying position for unconscious patients.",
+        equipment: ["Suction catheter kit (12-14 Fr)", "Suction source (100-120 mmHg for adults)", "Sterile gloves & lubricant", "100% Oxygen source"],
+        steps: [
+          "Hyperoxygenate patient with 100% O2 for 30 to 60 seconds prior to catheter insertion.",
+          "Don sterile gloves. Maintain dominant hand sterile and non-dominant hand clean.",
+          "Insert suction catheter gently without applying suction until resistance is felt or patient coughs, then pull back 1 cm.",
+          "Apply continuous/intermittent suction while gently rotating catheter upon withdrawal (maximum 10-15 seconds per pass).",
+          "Reoxygenate patient and allow 1 to 2 minutes rest between suction passes.",
+          "Reassess lung sounds, heart rate, and oxygen saturation."
+        ],
+        safetyAlerts: "Suctioning duration must NEVER exceed 10 to 15 seconds per pass. Continuous suctioning during insertion causes acute airway trauma and severe hypoxemia!",
+        complications: [
+          { name: "Vagal Bradycardia & Hypoxia", action: "Stop suctioning immediately, remove catheter, and supply 100% oxygen." },
+          { name: "Airway Mucosal Trauma", action: "Limit suction pressure to 100-120 mmHg in adults and never force insertion." }
+        ],
+        viva: [
+          { q: "What is the maximum duration for a single suctioning pass in adults?", a: "10 to 15 seconds. Exceeding this causes sudden hypoxia, dysrhythmias, and vagal stimulation." },
+          { q: "Why do we hyperoxygenate the patient before and after suctioning?", a: "To prevent suction-induced arterial hypoxemia and cardiac dysrhythmias during the procedure." },
+          { q: "What suction pressure range is recommended for adult patients?", a: "100 to 120 mmHg (never exceed 150 mmHg to avoid mucosal invagination)." }
+        ],
+        svgType: "trachSuction"
+      },
+      {
+        id: 3,
+        title: "Lumbar Puncture (LP) Assistance",
+        category: "taps",
+        catName: "Invasive Taps & Drainage",
+        objective: "Assist the clinician in spinal fluid collection, maintaining rigid lateral spinal positioning, and monitoring post-LP recovery.",
+        positioning: "Lateral recumbent 'fetal position' (flexed knees to chest, chin touching chest) or sitting upright leaning forward over bedside table.",
+        equipment: ["Sterile LP spinal tray", "Spinal needle with stylet (20-22G)", "Local anesthetic (Lidocaine 1%)", "4 CSF collection tubes", "Manometer & stopcock"],
+        steps: [
+          "Verify consent and baseline neurological status; ensure no signs of raised ICP.",
+          "Position patient at edge of bed in maximum spinal flexion (L3-L4 or L4-L5 space).",
+          "Hold patient securely during needle placement to prevent sudden movement.",
+          "Assist physician with opening pressure measurement via manometer.",
+          "Collect CSF sequentially into numbered specimen tubes 1 through 4.",
+          "Apply sterile occlusive dressing over puncture site post-procedure.",
+          "Instruct patient to maintain flat supine position for 4-6 hours post-procedure."
+        ],
+        safetyAlerts: "Perform LP with extreme caution if intracranial pressure (ICP) is elevated due to risk of fatal brainstem herniation!",
+        complications: [
+          { name: "Post-Dural Puncture Headache", action: "Keep patient strictly flat supine, encourage oral fluids, and administer prescribed analgesics." },
+          { name: "CSF Leakage at Site", action: "Monitor dressing for clear fluid drainage; notify provider if persistent." }
+        ],
+        viva: [
+          { q: "At what anatomical interspace is a lumbar puncture performed and why?", a: "L3-L4 or L4-L5 interspace. The spinal cord terminates at L1-L2, minimizing spinal cord injury risk." },
+          { q: "What position prevents post-lumbar puncture headache?", a: "Flat supine position for 4 to 6 hours to reduce CSF leakage from the dural puncture site." },
+          { q: "Why is tube #1 not usually sent for microbiological culture?", a: "Tube #1 is most likely to contain skin contaminants or blood from a traumatic tap." }
+        ],
+        svgType: "lumbarPuncture"
+      },
+      {
+        id: 4,
+        title: "Thoracentesis Assistance",
+        category: "taps",
+        catName: "Invasive Taps & Drainage",
+        objective: "Assist with aspiration of pleural cavity fluid, maintaining sterile technique, monitoring lung re-expansion, and preventing pneumothorax.",
+        positioning: "Upright sitting position on edge of bed, leaning forward with arms resting on an overbed table.",
+        equipment: ["Thoracentesis kit", "Local anesthetic", "Large-gauge thoracentesis needle/catheter", "Evacuated drainage bottles", "Sterile occlusive dressing"],
+        steps: [
+          "Confirm chest X-ray or ultrasound location of pleural effusion.",
+          "Position patient leaning forward over table; instruct patient NOT to cough or move abruptly.",
+          "Assist physician with skin prep, sterile draping, and local anesthetic infiltration.",
+          "Connect drainage catheter to vacuum bottles and monitor fluid rate.",
+          "Do NOT remove more than 1,000 to 1,500 mL of fluid in a single session.",
+          "Apply airtight occlusive dressing upon needle removal.",
+          "Obtain post-procedure chest X-ray to confirm lung expansion and rule out pneumothorax."
+        ],
+        safetyAlerts: "Removing more than 1,500 mL of fluid in one session can cause sudden re-expansion pulmonary edema and severe hypovolemia!",
+        complications: [
+          { name: "Pneumothorax", action: "Monitor for acute dyspnea, tachypnea, or diminished breath sounds; prepare for chest tube insertion." },
+          { name: "Re-expansion Pulmonary Edema", action: "Cap drainage at 1,000-1,500 mL max; monitor for cough with pink frothy sputum." }
+        ],
+        viva: [
+          { q: "Why is pleural fluid removal capped at 1,000 to 1,500 mL at a time?", a: "To prevent re-expansion pulmonary edema and severe circulatory hypotension." },
+          { q: "What complications are signaled by sudden onset dyspnea after thoracentesis?", a: "Pneumothorax or hemothorax caused by accidental lung parenchyma or intercostal vessel puncture." },
+          { q: "How should the patient be positioned if pneumothorax is suspected?", a: "High Fowler's position to assist breathing while preparing for diagnostic X-ray and intervention." }
+        ],
+        svgType: "thoracentesis"
+      },
+      {
+        id: 5,
+        title: "Paracentesis Assistance",
+        category: "taps",
+        catName: "Invasive Taps & Drainage",
+        objective: "Assist with peritoneal cavity fluid removal, monitor fluid dynamics, and prevent post-paracentesis circulatory collapse.",
+        positioning: "Upright sitting position in Fowler's or High Fowler's position in bed or chair.",
+        equipment: ["Paracentesis tray", "Trocar / drainage needle", "Collection vacuum bottles", "IV Albumin (for large volume)", "Sterile bandage"],
+        steps: [
+          "Instruct patient to VOID urine prior to procedure to prevent accidental bladder perforation!",
+          "Obtain baseline weight, abdominal girth, blood pressure, and heart rate.",
+          "Position patient comfortably in high Fowler's position.",
+          "Assist clinician with trocar insertion in lower quadrant of abdomen.",
+          "Monitor clear amber peritoneal fluid drainage and document total volume.",
+          "Apply firm pressure dressing over puncture site post-procedure.",
+          "Re-measure weight, abdominal girth, and monitor blood pressure closely."
+        ],
+        safetyAlerts: "Bladder MUST be emptied before inserting trocar. Rapid removal of ascites fluid causes massive fluid shift and hypovolemic shock!",
+        complications: [
+          { name: "Post-Paracentesis Shock", action: "Administer prescribed IV Albumin (6-8g per liter removed over 5L) to maintain vascular volume." },
+          { name: "Bladder Perforation", action: "Ensure patient voids before procedure; monitor for bloody urine or severe abdominal pain." }
+        ],
+        viva: [
+          { q: "Why MUST the patient void before paracentesis?", a: "An enlarged bladder can be accidentally punctured by the trocar during insertion into the lower abdomen." },
+          { q: "Why is IV Albumin administered after large-volume paracentesis (>5L)?", a: "Albumin increases intravascular oncotic pressure, preventing hypovolemic shock and renal failure." },
+          { q: "What key post-procedure measurements evaluate paracentesis effectiveness?", a: "Body weight loss and abdominal girth reduction." }
+        ],
+        svgType: "paracentesis"
+      },
+      {
+        id: 6,
+        title: "Chest Tube Insertion Assistance",
+        category: "taps",
+        catName: "Invasive Taps & Drainage",
+        objective: "Assist with chest tube placement and connection to a closed chest drainage unit (CDU) to restore negative intrapleural pressure.",
+        positioning: "Supine or semi-Fowler's position with patient's arm on affected side raised overhead.",
+        equipment: ["Chest tube kit (20-32 Fr)", "Closed chest drainage unit (CDU)", "Sterile water", "Vaseline petrolatum gauze & occlusive tape", "Chest tube clamps"],
+        steps: [
+          "Fill water-seal chamber of CDU with sterile water up to the 2 cm line mark.",
+          "Position patient with affected arm elevated behind head to expose 4th-5th intercostal space.",
+          "Assist clinician with aseptic prep, local anesthesia, incision, and tube placement.",
+          "Connect chest tube immediately to CDU drainage tubing; observe for tidaling.",
+          "Wrap insertion site with Vaseline gauze, cover with occlusive dressing, and tape securely.",
+          "Tape all tube connections along the line to prevent accidental disconnects.",
+          "Obtain immediate post-procedure chest X-ray to confirm tube placement."
+        ],
+        safetyAlerts: "NEVER clamp a chest tube without a physician order! Clamping traps air inside pleural space causing fatal tension pneumothorax.",
+        complications: [
+          { name: "Tension Pneumothorax", action: "Check for kinked tubing; ensure water seal is functioning and tracheal alignment is centered." },
+          { name: "Accidental Disconnection", action: "Submerge open chest tube 1-2 inches in a sterile saline bottle to recreate water seal immediately." }
+        ],
+        viva: [
+          { q: "What does continuous vigorous bubbling in the water-seal chamber indicate?", a: "An air leak in the system or patient's pleural space (normal is intermittent bubbling with expiration)." },
+          { q: "What should you do if the chest tube accidentally pulls out from the chest wall?", a: "Immediately cover site with sterile occlusive Vaseline gauze taped on THREE sides (allowing air to escape)." },
+          { q: "What is 'tidaling' in a chest drainage system?", a: "The rise and fall of water level in the water seal chamber corresponding with patient respiration (rises on inspiration, falls on expiration)." }
+        ],
+        svgType: "chestTube"
+      },
+      {
+        id: 7,
+        title: "CT Scan Assistance",
+        category: "radiology",
+        catName: "Radiology & Diagnostics",
+        objective: "Prepare patient for Computed Tomography, evaluate renal function for IV contrast, and monitor for contrast reactions.",
+        positioning: "Supine on motor-driven CT scanner table with head/body restraint straps as required.",
+        equipment: ["18-20G IV catheter for contrast injector", "Iodinated contrast media", "Resuscitation emergency kit & antihistamines"],
+        steps: [
+          "Check Serum Creatinine and eGFR to verify kidney function before IV contrast administration.",
+          "Check patient history for iodine, shellfish, or contrast dye allergies.",
+          "Hold metformin medication for 48 hours post-contrast if instructed.",
+          "Remove all metal jewelry, clothing zippers, or metallic objects.",
+          "Position patient on CT table and instruct to remain perfectly motionless.",
+          "Inform patient that IV contrast injection triggers a warm flushing sensation.",
+          "Encourage high fluid intake post-exam to clear contrast from kidneys."
+        ],
+        safetyAlerts: "Contrast-Induced Nephropathy (CIN) risk is high in patients with elevated creatinine. Always verify renal labs prior to IV contrast injection!",
+        complications: [
+          { name: "Anaphylactoid Reaction", action: "Monitor for urticaria, laryngeal edema, or shortness of breath; administer emergency Epinephrine/Antihistamines." },
+          { name: "Contrast Extravasation", action: "Stop injection immediately, elevate extremity, and apply cold packs." }
+        ],
+        viva: [
+          { q: "Why must Serum Creatinine be checked before IV contrast CT scans?", a: "Iodinated contrast media is nephrotoxic and can cause acute kidney injury in impaired patients." },
+          { q: "Why is Metformin withheld before and 48 hours after contrast administration?", a: "If contrast-induced renal failure occurs, Metformin accumulates, leading to life-threatening Lactic Acidosis." },
+          { q: "What physical sensation should patients be warned about during contrast injection?", a: "A sudden warm flushing sensation, metallic taste in the mouth, and feeling as if they wet themselves." }
+        ],
+        svgType: "ctScan"
+      },
+      {
+        id: 8,
+        title: "Cerebral Angiography Assistance",
+        category: "radiology",
+        catName: "Radiology & Diagnostics",
+        objective: "Assist in fluoroscopic visualization of cerebral blood vessels via arterial catheter insertion, monitoring puncture site for bleeding.",
+        positioning: "Flat supine position during procedure and flat with affected leg kept straight for 4-6 hours post-procedure.",
+        equipment: ["Fluoroscopy suite setup", "Femoral arterial sheath kit", "Contrast media", "Pressure dressing / vascular closure device"],
+        steps: [
+          "Keep patient NPO for 4-8 hours prior to procedure.",
+          "Perform baseline neurological assessment and mark pedal pulses (DP/PT).",
+          "Assist with femoral artery cannulation under fluoroscopy guidance.",
+          "Post-procedure: apply direct firm pressure over puncture site for 15-30 minutes if closure device not used.",
+          "Keep affected leg strictly straight and immobilize patient flat in bed for 4 to 6 hours.",
+          "Check distal pedal pulses, vital signs, and groin site every 15 minutes during first hour."
+        ],
+        safetyAlerts: "Leg flexion post-procedure can cause massive femoral artery hemorrhage or retroperitoneal hematoma! Check distal pedal pulses frequently.",
+        complications: [
+          { name: "Femoral Hematoma / Hemorrhage", action: "Apply immediate manual pressure 1 inch above puncture site and call provider." },
+          { name: "Thromboembolic Stroke", action: "Perform frequent neuro checks (FAST assessment) to detect focal deficits immediately." }
+        ],
+        viva: [
+          { q: "Why must the leg be kept straight for 4-6 hours post-femoral arterial catheterization?", a: "Flexion increases intra-arterial pressure at the insertion site, leading to hematoma or retroperitoneal bleeding." },
+          { q: "What pulse points must be marked and checked post-angiography?", a: "Dorsalis Pedis (DP) and Posterior Tibial (PT) pulses to monitor lower limb arterial perfusion." },
+          { q: "What neuro assessment scale is used post-cerebral angiography?", a: "Glasgow Coma Scale (GCS) and NIH Stroke Scale/FAST check." }
+        ],
+        svgType: "cerebralAngio"
+      },
+      {
+        id: 9,
+        title: "Myelogram Assistance",
+        category: "radiology",
+        catName: "Radiology & Diagnostics",
+        objective: "Assist in subarachnoid injection of contrast media via lumbar puncture to visualize spinal cord pathology under fluoroscopy.",
+        positioning: "Prone or lateral position during injection; head elevated 30-45° post-procedure (for water-soluble contrast).",
+        equipment: ["Spinal LP kit", "Intrathecal water-soluble contrast media", "Fluoroscopy table", "Emesis basin"],
+        steps: [
+          "Verify consent and allergy history.",
+          "Assist physician with lumbar puncture to access subarachnoid space.",
+          "Assist with intrathecal contrast injection under fluoroscopic visualization.",
+          "Tilt table as required to allow contrast medium to flow along spinal canal.",
+          "Post-procedure: Maintain head elevation at 30° to 45° for 6-8 hours to prevent contrast reaching brain ventricles.",
+          "Encourage oral hydration to clear contrast."
+        ],
+        safetyAlerts: "Elevation of head 30-45° post-myelogram is CRITICAL with water-soluble contrast to prevent contrast migration into cerebral ventricles which triggers seizures!",
+        complications: [
+          { name: "Seizures", action: "Keep head elevated 30-45°; maintain seizure precautions at bedside." },
+          { name: "Spinal Headache", action: "Maintain head rest, encourage fluids, and administer prescribed analgesics." }
+        ],
+        viva: [
+          { q: "Why must the patient's head be elevated 30° to 45° post-myelogram with water-soluble contrast?", a: "To prevent contrast fluid from flowing upward into cerebral ventricles, which can induce severe seizures." },
+          { q: "What route is used to inject contrast during a myelogram?", a: "Intrathecal route into the subarachnoid space via lumbar puncture." },
+          { q: "What medication class should be held before a myelogram?", a: "Phenothiazines and neuroleptics, as they lower the seizure threshold." }
+        ],
+        svgType: "myelogram"
+      },
+      {
+        id: 10,
+        title: "Audiometric Testing Assistance",
+        category: "sensory",
+        catName: "Sensory, Cardiac & Specialized",
+        objective: "Prepare patients for audiometry, evaluating air and bone conduction hearing thresholds across tone frequencies.",
+        positioning: "Seated upright comfortably inside a soundproof testing booth.",
+        equipment: ["Pure-tone audiometer", "Air-conduction headphones", "Bone-conduction oscillator headset", "Response signal button"],
+        steps: [
+          "Perform otoscopic examination of ear canal to rule out cerumen impaction prior to test.",
+          "Place patient in quiet booth facing away from audiometer controls.",
+          "Fit headphones correctly (Red = Right ear, Blue = Left ear).",
+          "Instruct patient to press signal button whenever tone is heard, even if faint.",
+          "Deliver pure tones ranging from 250 Hz to 8000 Hz at varying decibel levels.",
+          "Document hearing thresholds on the audiogram chart."
+        ],
+        safetyAlerts: "Cerumen obstruction invalidates audiometry results. Always inspect outer ear canal with an otoscope before starting tone tests!",
+        complications: [
+          { name: "Inaccurate Results", action: "Ensure test environment is silent and patient clearly understands response signaling." },
+          { name: "Patient Fatigue", action: "Provide short rest breaks during testing if patient experiences concentration fatigue." }
+        ],
+        viva: [
+          { q: "What color coding is universally used for audiometry headphones?", a: "RED headphone for RIGHT ear; BLUE headphone for LEFT ear." },
+          { q: "What does bone conduction testing evaluate compared to air conduction?", a: "Bone conduction bypasses the outer/middle ear to evaluate sensorineural function directly." },
+          { q: "Why must otoscopy be performed before audiometry?", a: "Impacted cerumen causes conductive hearing loss, producing false testing results." }
+        ],
+        svgType: "audiometry"
+      },
+      {
+        id: 11,
+        title: "Thyroid Scanning Assistance",
+        category: "sensory",
+        catName: "Sensory, Cardiac & Specialized",
+        objective: "Assist with radionuclide administration (I-123 / Tc-99m) and gamma camera scanning to evaluate thyroid nodule function.",
+        positioning: "Supine with neck extended on gamma camera imaging table.",
+        equipment: ["Radionuclide dose (I-123 capsule or Tc-99m IV)", "Gamma camera scanner", "Radiation safety container"],
+        steps: [
+          "Verify patient is not pregnant and stop thyroid/iodine medications as instructed.",
+          "Administer oral Radioiodine I-123 or IV Tc-99m as prescribed.",
+          "Wait required uptake period (2-24 hours for oral I-123).",
+          "Position patient supine with neck hyperextended under gamma camera.",
+          "Obtain anterior and oblique scan images of thyroid gland.",
+          "Educate patient that radioisotope dose is low and excretes in urine."
+        ],
+        safetyAlerts: "Radioactive iodine is CONTRAINDICATED during pregnancy and lactation. Always verify pregnancy status prior to radionuclide administration!",
+        complications: [
+          { name: "Inaccurate Uptake Results", action: "Ensure patient discontinued iodine-containing foods and thyroid meds prior to test." },
+          { name: "Radiation Exposure Risk", action: "Follow ALARA principles and instruct patient on proper post-test fluid flushing." }
+        ],
+        viva: [
+          { q: "What is the difference between a 'Hot Nodule' and a 'Cold Nodule' on a thyroid scan?", a: "'Hot' nodules hyperaccumulate isotope and are almost always benign. 'Cold' nodules do not take up isotope and carry a higher risk of malignancy." },
+          { q: "Is thyroid radionuclide scanning safe in pregnant patients?", a: "No, radioactive iodine crosses the placenta and destroys the fetal thyroid gland." },
+          { q: "What dietary items must be avoided prior to thyroid scan?", a: "Iodized salt, seafood, kelp, and iodine-containing cough syrups." }
+        ],
+        svgType: "thyroidScan"
+      },
+      {
+        id: 12,
+        title: "ECG / EKG Lead Placement",
+        category: "sensory",
+        catName: "Sensory, Cardiac & Specialized",
+        objective: "Perform 12-lead Electrocardiography with precise anatomical electrode placement to detect dysrhythmias and myocardial infarction.",
+        positioning: "Supine position with head elevated 15-30°, limbs supported, and chest exposed.",
+        equipment: ["12-lead ECG machine", "Conductive gel / adhesive electrodes", "Skin prep alcohol wipes"],
+        steps: [
+          "Clean skin electrode sites with alcohol wipes to reduce skin resistance.",
+          "Attach 4 Limb Leads: RA (Right Arm), LA (Left Arm), RL (Right Leg/Ground), LL (Left Leg).",
+          "Place V1: 4th intercostal space at right sternal border.",
+          "Place V2: 4th intercostal space at left sternal border.",
+          "Place V4: 5th intercostal space at left midclavicular line.",
+          "Place V3: Directly midway between V2 and V4.",
+          "Place V5: 5th intercostal space at left anterior axillary line.",
+          "Place V6: 5th intercostal space at left midaxillary line.",
+          "Instruct patient to lie still and avoid talking while recording."
+        ],
+        safetyAlerts: "Incorrect lead placement (especially V1 and V2 misplaced higher) causes false ST-segment shifts and misdiagnosis of Myocardial Infarction!",
+        complications: [
+          { name: "Artifact / Interference", action: "Ensure patient muscle relaxation, check lead adhesion, and ground electrical equipment." },
+          { name: "Misdiagnosis from Misplacement", action: "Re-verify rib intercostal spaces accurately before applying chest electrodes." }
+        ],
+        viva: [
+          { q: "Where are chest leads V1 and V2 placed precisely?", a: "V1: 4th Intercostal Space right sternal border. V2: 4th Intercostal Space left sternal border." },
+          { q: "Why is lead V3 placed AFTER V4?", a: "V3 is placed anatomically on a straight line halfway between V2 and V4." },
+          { q: "What ECG change indicates hyperacute Myocardial Infarction?", a: "ST-segment elevation in anatomically contiguous leads." }
+        ],
+        svgType: "ecgPlacement"
+      },
+      {
+        id: 13,
+        title: "Holter Monitor Application",
+        category: "sensory",
+        catName: "Sensory, Cardiac & Specialized",
+        objective: "Apply continuous 24-48 hour ambulatory ECG recorder and instruct patient on logbook documentation of symptoms.",
+        positioning: "Seated upright while electrodes and recorder unit are fitted.",
+        equipment: ["Holter recording device", "Fresh batteries", "5-7 lead electrode wires", "Patient diary logbook", "Adhesive skin tape"],
+        steps: [
+          "Abraid skin slightly and clean with alcohol to ensure secure electrode adhesion.",
+          "Attach 5 to 7 lead electrodes securely onto chest torso.",
+          "Insert fresh batteries into Holter recorder and verify signal recording.",
+          "Place Holter monitor in protective pouch worn over shoulder or at waist.",
+          "Instruct patient to maintain normal daily activities, but strictly AVOID bathing/showering.",
+          "Provide patient diary to log activities, chest pain, palpitations, and meds with exact times.",
+          "Instruct patient to press event marker button during symptomatic episodes."
+        ],
+        safetyAlerts: "Water damages Holter units and invalidates recordings. Patient must NOT shower, swim, or submerge the monitor!",
+        complications: [
+          { name: "Electrode Dislodgement", action: "Provide extra adhesive tape and instruct patient on pressing electrode edges down firmly." },
+          { name: "Incomplete Diary Logs", action: "Stress to patient that unlogged symptoms cannot be correlated with ECG abnormalities." }
+        ],
+        viva: [
+          { q: "What key instruction must be given regarding patient hygiene during Holter monitoring?", a: "No bathing, showering, or swimming, as water damages the unit and detaches electrodes." },
+          { q: "Why is the patient diary so critical during Holter monitoring?", a: "It allows cardiologists to correlate physical symptoms (e.g., dizziness at 2:15 PM) with underlying ECG rhythms at that exact timestamp." },
+          { q: "What should the patient do if an electrode peels off?", a: "Press it back down firmly with extra medical tape and note the event in the diary." }
+        ],
+        svgType: "holterMonitor"
+      },
+      {
+        id: 14,
+        title: "Cardiac Stress Test Assistance",
+        category: "sensory",
+        catName: "Sensory, Cardiac & Specialized",
+        objective: "Assist with exercise tolerance test (Treadmill Bruce Protocol) or pharmacological stress testing to evaluate inducible ischemia.",
+        positioning: "Upright standing/walking on motorized treadmill during test; supine recovery post-test.",
+        equipment: ["Motorized treadmill", "Continuous 12-lead ECG monitor", "Manual BP cuff", "Emergency crash cart & Defibrillator"],
+        steps: [
+          "Obtain baseline 12-lead ECG and blood pressure reading.",
+          "Apply stress ECG electrodes firmly to torso.",
+          "Begin Bruce protocol: increase treadmill speed and incline every 3 minutes.",
+          "Monitor continuous ECG, blood pressure, and target heart rate at each stage.",
+          "Stop test immediately if patient reports severe chest pain, extreme dyspnea, or ST elevation appears.",
+          "Monitor patient in supine cool-down recovery until vital signs normalize."
+        ],
+        safetyAlerts: "Emergency defibrillator and crash cart MUST be inside the testing room! Immediately terminate test if ST elevation or severe angina develops.",
+        complications: [
+          { name: "Acute Myocardial Ischemia / Ventricular Dysrhythmia", action: "Stop treadmill immediately, place patient supine, administer O2, and call emergency code." },
+          { name: "Severe Hypotension / Dizziness", action: "Stop test, lower patient to flat position, and check vital signs." }
+        ],
+        viva: [
+          { q: "What is the Target Heart Rate formula for a cardiac stress test?", a: "Target HR = (220 - Age) × 85%." },
+          { q: "Name three absolute indications for terminating a stress test immediately.", a: "1. ST-segment elevation (>1 mm). 2. Moderate to severe angina chest pain. 3. Drop in systolic BP >10 mmHg with ischemia." },
+          { q: "What emergency equipment must be present in the stress test room?", a: "Functional Defibrillator, crash cart with emergency cardiac drugs, and oxygen supply." }
+        ],
+        svgType: "stressTest"
+      },
+      {
+        id: 15,
+        title: "Echocardiogram Assistance",
+        category: "sensory",
+        catName: "Sensory, Cardiac & Specialized",
+        objective: "Assist with Transthoracic Echocardiography (TTE) ultrasound imaging to assess valvular structure, ejection fraction, and cardiac wall motion.",
+        positioning: "Left Lateral Decubitus position (lying on left side) to bring heart closer to chest wall.",
+        equipment: ["Ultrasound machine with cardiac transducer probe", "Acoustic ultrasound gel", "3-lead ECG tracking cable"],
+        steps: [
+          "Position patient in Left Lateral Decubitus position.",
+          "Attach ECG tracking leads for cardiac cycle gating.",
+          "Apply ultrasound gel to parasternal, apical, and subcostal window areas.",
+          "Assist sonographer with probe adjustments to capture parasternal long/short axis views.",
+          "Measure Left Ventricular Ejection Fraction (LVEF) and cardiac valve gradients.",
+          "Wipe excess gel off chest post-procedure."
+        ],
+        safetyAlerts: "TTE is non-invasive and safe. Ensure patient remains in left lateral position for clear acoustic cardiac window generation.",
+        complications: [
+          { name: "Poor Image Quality", action: "Ensure left lateral positioning and adequate conductive ultrasound gel application." },
+          { name: "Positional Discomfort", action: "Provide supportive pillows under head and knees during extended scans." }
+        ],
+        viva: [
+          { q: "Why is the patient placed in the Left Lateral Decubitus position for an echocardiogram?", a: "It causes the heart to drop anteriorly against the chest wall, minimizing lung interference and maximizing ultrasound image clarity." },
+          { q: "What is normal Left Ventricular Ejection Fraction (LVEF)?", a: "55% to 70%." },
+          { q: "What cardiac features does Doppler Echocardiography evaluate?", a: "Direction and velocity of blood flow across heart valves." }
+        ],
+        svgType: "echocardiogram"
+      },
+      {
+        id: 16,
+        title: "Skin Traction Application",
+        category: "ortho",
+        catName: "Orthopedics & Immobilization",
+        objective: "Apply Buck's Skin Traction to immobilize fractured extremity, relieve muscle spasms, and maintain bone alignment pre-surgery.",
+        positioning: "Flat supine position in center of bed with foot of bed slightly elevated.",
+        equipment: ["Buck's traction boot / foam strips", "Spreader bar & traction rope", "Free-hanging weights (5-10 lbs max)", "Pulley assembly frame"],
+        steps: [
+          "Assess skin integrity and distal neurovascular status (5 P's) of extremity.",
+          "Wrap traction boot snugly around lower leg, keeping heel free.",
+          "Attach traction rope to spreader bar and loop over pulley system.",
+          "Attach ordered weight (typically 5 to 10 lbs) gently.",
+          "Ensure weights HANG FREELY off floor and never rest on bed frame or floor.",
+          "Inspect skin under boot and assess neurovascular status every 2 to 4 hours."
+        ],
+        safetyAlerts: "Traction weights must ALWAYS hang freely! Never remove or lift weights without a specific physician order.",
+        complications: [
+          { name: "Skin Breakdown / Nerve Palsy", action: "Inspect heel/peroneal nerve site frequently; rewrap boot if slipping occurs." },
+          { name: "Neurovascular Compromise", action: "Check capillary refill, pulses, sensation, and motion (5 P's) frequently." }
+        ],
+        viva: [
+          { q: "What is the maximum weight limit allowed for skin traction?", a: "5 to 10 lbs (2.3 to 4.5 kg) to prevent skin breakdown and sloughing." },
+          { q: "What are the essential golden rules for traction weights?", a: "Weights must HANG FREELY, never touch the floor or bed, and should NEVER be removed without a doctor's order." },
+          { q: "What nerve is at risk of compression from a tight Buck's traction boot?", a: "Peroneal nerve at the fibular head (causes foot drop)." }
+        ],
+        svgType: "skinTraction"
+      },
+      {
+        id: 17,
+        title: "Skeletal Traction Care",
+        category: "ortho",
+        catName: "Orthopedics & Immobilization",
+        objective: "Maintain skeletal traction (Steinmann pin / Kirschner wire), provide pin site care, and prevent osteomyelitis.",
+        positioning: "Supine in center of bed with traction alignment maintained along long axis of bone.",
+        equipment: ["Skeletal traction frame & heavy weights (15-30 lbs)", "Sterile pin care kit", "Chlorhexidine / Saline solution", "Sterile gauze split dressing"],
+        steps: [
+          "Inspect pin insertion sites for redness, purulent drainage, or tenting of skin.",
+          "Perform pin care using aseptic technique: clean pin sites with chlorhexidine/saline using single strokes outward.",
+          "Apply split sterile gauze dressing around pin sites if ordered.",
+          "Verify weights hang freely and ropes remain aligned in pulley grooves.",
+          "Perform neurovascular checks (Pulses, Paresthesia, Pallor, Paralysis, Pain) every 2-4 hours.",
+          "Provide active range of motion for un-immobilized joints."
+        ],
+        safetyAlerts: "Never scrub crusts aggressively off pin sites! Tenting of skin around pins requires immediate physician notification.",
+        complications: [
+          { name: "Pin Track Infection / Osteomyelitis", action: "Perform strict aseptic pin care; notify provider if purulent drainage or pin loosening occurs." },
+          { name: "Compartment Syndrome", action: "Assess for disproportionate pain uncontrolled by narcotics, numbness, and tightness." }
+        ],
+        viva: [
+          { q: "What is the primary purpose of daily skeletal pin site care?", a: "To prevent pin tract infection which can progress into fatal Osteomyelitis." },
+          { q: "Is crusting around a skeletal pin site normal?", a: "Serous crusting acts as a natural protective barrier; crusts should not be forcefully scrubbed off." },
+          { q: "How does skeletal traction differ from skin traction in weight capacity?", a: "Skeletal traction applies weights directly to bone (15-30+ lbs), whereas skin traction applies weight to skin (5-10 lbs max)." }
+        ],
+        svgType: "skeletalTraction"
+      },
+      {
+        id: 18,
+        title: "Cast Care & Removal",
+        category: "ortho",
+        catName: "Orthopedics & Immobilization",
+        objective: "Apply cast care management, monitor for compartment syndrome, and perform safe cast removal using oscillating saw.",
+        positioning: "Elevate casted limb on pillows above heart level for first 24-48 hours.",
+        equipment: ["Oscillating cast saw", "Cast spreader & shears", "Pillows for elevation", "Skin lotion"],
+        steps: [
+          "Elevate casted extremity above heart level to decrease post-injury edema.",
+          "Instruct patient NOT to insert objects (knitting needles) inside cast to scratch itchy skin.",
+          "Monitor neurovascular status (5 P's: Pain, Pallor, Pulselessness, Paresthesia, Paralysis).",
+          "For Cast Removal: explain that oscillating saw vibrates and cuts plaster without cutting skin.",
+          "Cut along cast seam lines with cast saw, spread open with cast spreader, and cut padding with bandage scissors.",
+          "Wash underlying skin gently with warm water and soap; apply moisturizing lotion."
+        ],
+        safetyAlerts: "Severe pain unrelieved by narcotics or pain aggravated by passive extension of toes/fingers indicates COMPARTMENT SYNDROME! Emergency fasciotomy required.",
+        complications: [
+          { name: "Compartment Syndrome", action: "Notify surgeon immediately; prepare for cast bivalving or emergency fasciotomy." },
+          { name: "Skin Maceration / Ulceration", action: "Keep cast strictly dry; never insert foreign objects under cast." }
+        ],
+        viva: [
+          { q: "What are the 5 P's of Neurovascular Assessment?", a: "Pain, Pallor, Pulselessness, Paresthesia, and Paralysis." },
+          { q: "How does an oscillating cast saw cut plaster without cutting skin?", a: "The blade vibrates back and forth rapidly rather than rotating; flexible skin moves with the vibration without tearing." },
+          { q: "What is the cardinal early sign of Compartment Syndrome?", a: "Severe, deep throbbing pain out of proportion to the injury and unrelieved by opioids." }
+        ],
+        svgType: "castCare"
+      },
+      {
+        id: 19,
+        title: "Blood Glucose Monitoring",
+        category: "sensory",
+        catName: "Sensory, Cardiac & Specialized",
+        objective: "Perform capillary blood glucose measurement, ensure quality control, and interpret glycemic results accurately.",
+        positioning: "Seated or supine with hand hanging dependent to promote digital hyperemia.",
+        equipment: ["Glucometer", "Glucose test strips", "Lancing device / safety lancet", "Alcohol swab & gauze"],
+        steps: [
+          "Clean fingertip lateral side with alcohol wipe and allow to AIR DRY completely (alcohol alters reading).",
+          "Perform fingerstick on lateral side of fingertip (less nerve endings than pad).",
+          "Wipe away FIRST drop of blood with sterile gauze (contains tissue fluid).",
+          "Gently squeeze finger to form a large drop of blood for test strip collection.",
+          "Apply blood drop to test strip reading zone on glucometer.",
+          "Apply pressure with gauze over puncture site and document glucose reading."
+        ],
+        safetyAlerts: "Always wipe away the FIRST drop of blood! Tissue thromboplastin and fluid in first drop falsely skew blood glucose values.",
+        complications: [
+          { name: "Inaccurate Reading", action: "Ensure finger is dry; do not dilute blood by excessive squeezing/milking of finger." },
+          { name: "Infection at Puncture Site", action: "Rotate fingerstick sites daily and maintain aseptic technique." }
+        ],
+        viva: [
+          { q: "Why is the first drop of blood wiped away during capillary blood glucose testing?", a: "The first drop contains tissue fluids and alcohol residue which dilutes the sample and skews blood glucose values." },
+          { q: "Why perform fingerstick on the lateral side of the fingertip rather than the center pad?", a: "The lateral sides have fewer pain receptors and superior vascular capillary density." },
+          { q: "What fasting blood glucose level defines Diabetes Mellitus?", a: "Fasting Blood Glucose ≥ 126 mg/dL (7.0 mmol/L) on two separate occasions." }
+        ],
+        svgType: "bloodGlucose"
+      },
+      {
+        id: 20,
+        title: "Insulin Administration",
+        category: "sensory",
+        catName: "Sensory, Cardiac & Specialized",
+        objective: "Demonstrate accurate preparation, mixing (Regular + NPH), site rotation, and subcutaneous injection of insulin.",
+        positioning: "Seated or supine exposing subcutaneous injection site (abdomen, thigh, upper arm).",
+        equipment: ["Insulin syringe (U-100)", "Regular (Clear) & NPH (Cloudy) insulin vials", "Alcohol swabs"],
+        steps: [
+          "Gently roll NPH insulin vial between palms (NEVER shake insulin!).",
+          "Inject air into NPH (Cloudy) vial first, then inject air into Regular (Clear) vial.",
+          "Withdraw Regular (Clear) insulin dose first, then withdraw NPH (Cloudy) insulin dose (Clear before Cloudy!).",
+          "Select subcutaneous site (abdomen preferred, 2 inches away from umbilicus).",
+          "Pinch subcutaneous skin fold and insert needle at 90° angle (45° if lean).",
+          "Inject insulin smoothly; wait 5-10 seconds before withdrawing needle.",
+          "Do NOT rub injection site."
+        ],
+        safetyAlerts: "Always draw CLEAR (Regular) insulin before CLOUDY (NPH) insulin! Contaminating Regular insulin with NPH alters rapid action onset.",
+        complications: [
+          { name: "Hypoglycemia", action: "If conscious: give 15g fast-acting carbohydrate (Rule of 15). If unconscious: give IV 50% Dextrose or IM Glucagon." },
+          { name: "Lipodystrophy", action: "Systematically rotate injection sites 1 inch apart to prevent tissue hypertrophy." }
+        ],
+        viva: [
+          { q: "What is the golden rule sequence for mixing Regular and NPH insulin?", a: "CLEAR to CLOUDY (Draw Regular insulin first, then NPH insulin)." },
+          { q: "Why must insulin vials never be shaken vigorously?", a: "Shaking creates air bubbles that lead to inaccurate dosing and denatures the insulin protein structure." },
+          { q: "What is the 'Rule of 15' for Hypoglycemia management?", a: "Administer 15g fast-acting carbs, wait 15 minutes, recheck blood glucose. Repeat if still <70 mg/dL." }
+        ],
+        svgType: "insulinAdmin"
+      }
     ];
 
-    let currentProc = proceduresData[0];
+    // CURRENT STATE
+    let currentCategory = 'all';
+    let currentProcId = 1;
+    let currentDetailTab = 'prep';
 
-    // INITIALIZE APP
-    window.addEventListener('DOMContentLoaded', () => {
+    // SVG PROCEDURAL GENERATOR
+    function generateSVG(type) {
+      const svgs = {
+        trachCare: `
+          <svg class="w-full h-full max-h-64" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#0f172a"/>
+            <!-- Neck Contour -->
+            <path d="M 120 20 C 140 80, 140 140, 120 200 L 280 200 C 260 140, 260 80, 280 20 Z" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+            <!-- Trachea tube path -->
+            <path d="M 200 40 L 200 180" stroke="#475569" stroke-width="18" stroke-dasharray="4 4"/>
+            <!-- Trach Faceplate -->
+            <rect x="160" y="100" width="80" height="30" rx="6" fill="#0d9488" stroke="#14b8a6" stroke-width="2"/>
+            <!-- Inner Cannula line -->
+            <circle cx="200" cy="115" r="8" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+            <!-- Tie straps -->
+            <line x1="120" y1="115" x2="160" y2="115" stroke="#f59e0b" stroke-width="4" stroke-dasharray="4 2"/>
+            <line x1="240" y1="115" x2="280" y2="115" stroke="#f59e0b" stroke-width="4" stroke-dasharray="4 2"/>
+            <!-- Airflow animation -->
+            <circle cx="200" cy="115" r="14" fill="none" stroke="#38bdf8" stroke-width="2" class="animate-ping" opacity="0.6"/>
+            <!-- Labels -->
+            <text x="205" y="90" fill="#2dd4bf" font-size="11" font-weight="bold">Trach Faceplate</text>
+            <text x="285" y="120" fill="#f59e0b" font-size="10">Velcro Tie</text>
+            <text x="130" y="170" fill="#94a3b8" font-size="10">Tracheal Lumen</text>
+          </svg>`,
+
+        trachSuction: `
+          <svg class="w-full h-full max-h-64" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#0f172a"/>
+            <!-- Trachea -->
+            <path d="M 170 30 L 170 190 M 230 30 L 230 190" stroke="#475569" stroke-width="6"/>
+            <!-- Suction Catheter line -->
+            <path d="M 200 20 L 200 150" stroke="#38bdf8" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 200 20 L 200 150" stroke="#e0f2fe" stroke-width="2" class="animate-flow"/>
+            <!-- Secretions -->
+            <circle cx="195" cy="140" r="10" fill="#10b981" opacity="0.7"/>
+            <circle cx="205" cy="145" r="7" fill="#10b981" opacity="0.7"/>
+            <!-- Pressure Indicator -->
+            <rect x="270" y="50" width="100" height="60" rx="8" fill="#1e293b" stroke="#334155"/>
+            <text x="280" y="72" fill="#94a3b8" font-size="10">Suction Pressure</text>
+            <text x="280" y="95" fill="#38bdf8" font-size="14" font-weight="bold">110 mmHg</text>
+            <!-- Depth warning mark -->
+            <line x1="180" y1="150" x2="220" y2="150" stroke="#ef4444" stroke-width="2" stroke-dasharray="2 2"/>
+            <text x="80" y="155" fill="#ef4444" font-size="10">Resistance / Carina</text>
+          </svg>`,
+
+        lumbarPuncture: `
+          <svg class="w-full h-full max-h-64" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#0f172a"/>
+            <!-- Spinal Vertebrae curve -->
+            <path d="M 120 40 C 180 80, 180 140, 120 180" fill="none" stroke="#64748b" stroke-width="12" stroke-linecap="round"/>
+            <!-- Interspaces L3-L4 -->
+            <circle cx="155" cy="110" r="7" fill="#0284c7"/>
+            <!-- Spinal Needle insertion -->
+            <line x1="280" y1="110" x2="160" y2="110" stroke="#f59e0b" stroke-width="3"/>
+            <!-- CSF Drops -->
+            <circle cx="290" cy="110" r="3" fill="#38bdf8" class="animate-ping"/>
+            <!-- Labels -->
+            <text x="80" y="115" fill="#94a3b8" font-size="11">L3-L4 Interspace</text>
+            <text x="240" y="95" fill="#f59e0b" font-size="11">Spinal Needle (20G)</text>
+            <text x="270" y="140" fill="#38bdf8" font-size="10">CSF Flow</text>
+          </svg>`,
+
+        thoracentesis: `
+          <svg class="w-full h-full max-h-64" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#0f172a"/>
+            <!-- Ribcage Outline -->
+            <path d="M 100 40 Q 200 20 300 40 L 300 180 Q 200 200 100 180 Z" fill="#1e293b" stroke="#334155"/>
+            <!-- Pleural Effusion Fluid -->
+            <path d="M 110 120 Q 200 130 290 120 L 290 175 Q 200 190 110 175 Z" fill="#0284c7" opacity="0.6"/>
+            <!-- Thoracentesis Needle -->
+            <line x1="330" y1="140" x2="250" y2="140" stroke="#f59e0b" stroke-width="3"/>
+            <!-- Max Volume Badge -->
+            <rect x="20" y="30" width="110" height="40" rx="6" fill="#0f172a" stroke="#ef4444"/>
+            <text x="30" y="48" fill="#ef4444" font-size="10" font-weight="bold">MAX LIMIT</text>
+            <text x="30" y="62" fill="#f87171" font-size="11">1,000-1,500 mL</text>
+          </svg>`,
+
+        ecgPlacement: `
+          <svg class="w-full h-full max-h-64" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#0f172a"/>
+            <!-- Chest Outline -->
+            <path d="M 130 30 C 200 10, 200 10, 270 30 C 290 90, 280 180, 270 200 L 130 200 C 120 180, 110 90, 130 30 Z" fill="#1e293b" stroke="#334155"/>
+            <!-- Sternum line -->
+            <line x1="200" y1="40" x2="200" y2="150" stroke="#475569" stroke-width="3" stroke-dasharray="2 2"/>
+            <!-- Precordial Leads V1-V6 -->
+            <circle cx="185" cy="80" r="6" fill="#ef4444"/><text x="172" y="84" fill="#fff" font-size="8">V1</text>
+            <circle cx="215" cy="80" r="6" fill="#f59e0b"/><text x="224" y="84" fill="#fff" font-size="8">V2</text>
+            <circle cx="225" cy="100" r="6" fill="#eab308"/><text x="234" y="104" fill="#fff" font-size="8">V3</text>
+            <circle cx="235" cy="120" r="6" fill="#10b981"/><text x="244" y="124" fill="#fff" font-size="8">V4</text>
+            <circle cx="250" cy="125" r="6" fill="#3b82f6"/><text x="259" y="129" fill="#fff" font-size="8">V5</text>
+            <circle cx="265" cy="125" r="6" fill="#8b5cf6"/><text x="274" y="129" fill="#fff" font-size="8">V6</text>
+            <!-- Scanning Line -->
+            <line x1="50" y1="180" x2="350" y2="180" stroke="#10b981" stroke-width="2"/>
+            <path d="M 50 180 L 120 180 L 130 160 L 140 200 L 150 170 L 160 180 L 350 180" fill="none" stroke="#34d399" stroke-width="2"/>
+          </svg>`,
+
+        defaultSvg: `
+          <svg class="w-full h-full max-h-64" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#0f172a"/>
+            <rect x="50" y="40" width="300" height="140" rx="12" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+            <circle cx="200" cy="110" r="35" fill="#0d9488" opacity="0.2"/>
+            <circle cx="200" cy="110" r="20" fill="#14b8a6" opacity="0.4" class="animate-pulse"/>
+            <path d="M 120 110 L 280 110" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="6 6"/>
+            <text x="140" y="80" fill="#38bdf8" font-size="12" font-weight="bold">Clinical Procedure Diagram</text>
+            <text x="135" y="150" fill="#94a3b8" font-size="10">BSN 4th Semester Standard Vector Visual</text>
+          </svg>`
+      };
+
+      return svgs[type] || svgs.defaultSvg;
+    }
+
+    // INITIALIZATION & RENDER FUNCTIONS
+    document.addEventListener("DOMContentLoaded", () => {
+      renderProcedureList();
+      selectProcedure(1);
       lucide.createIcons();
-      renderProcedureList(proceduresData);
-      loadProcedure(proceduresData[0].id); // Load first procedure by default
     });
 
-    // RENDER PROCEDURE SELECTION LIST
-    function renderProcedureList(list) {
-      const container = document.getElementById('procedureList');
-      document.getElementById('procedureCount').innerText = `${list.length} Topics`;
+    function toggleMobileSidebar() {
+      const drawer = document.getElementById('sidebarDrawer');
+      const backdrop = document.getElementById('drawerBackdrop');
+      const isHidden = drawer.classList.contains('-translate-x-full');
+      
+      if (isHidden) {
+        drawer.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        drawer.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
 
-      if (list.length === 0) {
-        container.innerHTML = `<div class="p-4 text-xs text-slate-400 text-center">No procedures match your filter.</div>`;
+    function renderProcedureList(filterText = '') {
+      const container = document.getElementById('procedureList');
+      container.innerHTML = '';
+
+      const filtered = proceduresData.filter(p => {
+        const matchesCat = (currentCategory === 'all' || p.category === currentCategory);
+        const matchesSearch = (p.title.toLowerCase().includes(filterText.toLowerCase()) || 
+                               p.objective.toLowerCase().includes(filterText.toLowerCase()));
+        return matchesCat && matchesSearch;
+      });
+
+      document.getElementById('procedureCount').innerText = `${filtered.length} Topics`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">No clinical topics found matching search criteria.</div>`;
         return;
       }
 
-      container.innerHTML = list.map(item => `
-        <button onclick="loadProcedure(${item.id})" id="proc-item-${item.id}" 
-          class="proc-item-btn w-full text-left p-3 rounded-lg transition-all flex items-start gap-2.5 hover:bg-slate-50 border border-transparent">
-          <div class="p-1.5 rounded-md bg-slate-100 text-slate-500 shrink-0 mt-0.5 proc-icon">
-            <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+      filtered.forEach(p => {
+        const isActive = p.id === currentProcId;
+        const item = document.createElement('div');
+        item.className = `p-3 rounded-lg cursor-pointer transition-all ${isActive ? 'bg-teal-50/90 border-l-4 border-teal-600 text-teal-900 font-bold shadow-sm' : 'hover:bg-slate-50 text-slate-700'}`;
+        item.onclick = () => {
+          selectProcedure(p.id);
+          if (window.innerWidth < 1024) toggleMobileSidebar();
+        };
+
+        item.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="truncate">
+              <span class="text-[10px] text-slate-400 font-semibold block uppercase">${p.catName}</span>
+              <h4 class="text-xs ${isActive ? 'text-teal-800 font-bold' : 'text-slate-800 font-medium'} truncate">${p.title}</h4>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 ${isActive ? 'text-teal-600' : 'text-slate-300'} flex-shrink-0"></i>
           </div>
-          <div class="overflow-hidden">
-            <h4 class="text-xs font-bold text-slate-800 truncate">${item.title}</h4>
-            <p class="text-[11px] text-slate-400 truncate mt-0.5">${item.catName}</p>
-          </div>
-        </button>
-      `).join('');
+        `;
+        container.appendChild(item);
+      });
 
       lucide.createIcons();
     }
 
-    // LOAD SELECTED PROCEDURE DATA & PHOTO
-    function loadProcedure(id) {
+    function selectProcedure(id) {
+      currentProcId = id;
       const proc = proceduresData.find(p => p.id === id);
       if (!proc) return;
 
-      currentProc = proc;
-
-      // Close mobile sidebar if open
-      if (!document.getElementById('sidebarDrawer').classList.contains('-translate-x-full')) {
-        toggleMobileSidebar();
-      }
-
-      // Highlight active procedure in list
-      document.querySelectorAll('.proc-item-btn').forEach(btn => {
-          btn.classList.remove('bg-teal-50', 'border-teal-200/80', 'shadow-sm');
-          btn.querySelector('.proc-icon').classList.replace('bg-teal-600', 'bg-slate-100');
-          btn.querySelector('.proc-icon').classList.replace('text-white', 'text-slate-500');
-      });
-      const activeBtn = document.getElementById(`proc-item-${id}`);
-      activeBtn.classList.add('bg-teal-50', 'border-teal-200/80', 'shadow-sm');
-      activeBtn.querySelector('.proc-icon').classList.replace('bg-slate-100', 'bg-teal-600');
-      activeBtn.querySelector('.proc-icon').classList.replace('text-slate-500', 'text-white');
-
-      // Populate Header
-      document.getElementById('procCategory').innerText = proc.catName;
+      // Update Header
       document.getElementById('procTitle').innerText = proc.title;
-      document.getElementById('procObjective').innerText = `Primary Objective: ${proc.objective}`;
+      document.getElementById('procCategory').innerText = proc.catName;
+      document.getElementById('procSub').innerText = proc.objective;
 
-      // --- GENERATE DYNAMIC PHOTO REPRESENTATION ---
-      const canvas = document.getElementById('photoVisualizer');
-      canvas.innerHTML = `
-        <div class="p-6 bg-slate-900/90 rounded-2xl border border-slate-700 shadow-2xl space-y-4 max-w-xl text-center relative z-10 transition-all duration-300">
-            <div class="p-4 bg-teal-900/50 rounded-full inline-block border-2 border-teal-500/50">
-                <i data-lucide="camera" class="w-12 h-12 text-teal-400"></i>
-            </div>
-            <h3 class="text-2xl font-black text-white tracking-tight leading-tight">${proc.title} <span class="text-xs text-slate-500 font-mono">Reference Photo</span></h3>
-            <div class="text-sm text-slate-200 leading-relaxed space-y-3 font-medium bg-slate-800 p-4 rounded-lg border border-slate-700 text-left">
-                <div class="flex items-start gap-2">
-                    <i data-lucide="eye" class="w-4 h-4 text-emerald-400 mt-1 shrink-0"></i>
-                    <p>${proc.photoDescription}</p>
-                </div>
-            </div>
-            <p class="text-[11px] font-mono text-slate-500 pt-2 border-t border-slate-800">This canvas generates the accurate textual template for the high-yield clinical photograph required for OSPE topic: ${proc.id}.</p>
-        </div>
-      `;
+      // Update Visualizer
+      document.getElementById('visualizerCanvas').innerHTML = generateSVG(proc.svgType);
+      document.getElementById('visualCaption').innerText = `Vector Visual: ${proc.title} Protocol`;
 
-      document.getElementById('visualCaption').innerHTML = `<b>Accurate Photograph:</b> ${proc.photoCaption}`;
+      // Panel 1: Prep
+      document.getElementById('procObjective').innerText = proc.objective;
+      document.getElementById('procPositioning').innerText = proc.positioning;
+      
+      const equipList = document.getElementById('procEquipment');
+      equipList.innerHTML = proc.equipment.map(item => `<li class="leading-relaxed">${item}</li>`).join('');
 
-      // Populate OSPE Checklist Steps
-      document.getElementById('procStepsContainer').innerHTML = proc.steps.map((step, idx) => `
-        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200/60">
-          <span class="bg-teal-600 text-white font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
-          <p class="text-xs text-slate-700 leading-relaxed font-medium">${step}</p>
+      // Panel 2: Steps
+      const stepsContainer = document.getElementById('procStepsContainer');
+      stepsContainer.innerHTML = proc.steps.map((step, idx) => `
+        <div class="flex items-start gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+          <span class="flex-shrink-0 w-5 h-5 rounded-full bg-teal-600 text-white font-bold text-[11px] flex items-center justify-center">${idx + 1}</span>
+          <p class="text-xs text-slate-700 leading-relaxed pt-0.5">${step}</p>
         </div>
       `).join('');
 
-      // Populate Viva Questions
-      document.getElementById('procVivaContainer').innerHTML = proc.viva.map((v, idx) => `
-        <div onclick="this.querySelector('.viva-ans').classList.toggle('hidden')" class="cursor-pointer bg-slate-50 hover:bg-slate-100/80 p-3.5 rounded-lg border border-slate-200/80 transition-all">
-          <div class="flex items-center justify-between gap-2">
-            <h5 class="text-xs font-bold text-slate-800 flex items-center gap-2">
-              <span class="text-amber-600 font-black">Q:</span> ${v.q}
-            </h5>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 shrink-0"></i>
-          </div>
-          <div class="viva-ans hidden mt-3 pt-3 border-t border-slate-200 text-xs text-amber-950 font-medium bg-amber-50 p-3 rounded">
-            <strong>Model Answer:</strong> ${v.a}
+      // Panel 3: Safety & Complications
+      document.getElementById('procSafetyAlerts').innerText = proc.safetyAlerts;
+      const compContainer = document.getElementById('procComplications');
+      compContainer.innerHTML = proc.complications.map(c => `
+        <div class="p-3 bg-red-50/60 border border-red-100 rounded-lg">
+          <h5 class="font-bold text-red-900 text-xs mb-1 flex items-center gap-1">
+            <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-red-600"></i> ${c.name}
+          </h5>
+          <p class="text-[11px] text-red-800 leading-relaxed">${c.action}</p>
+        </div>
+      `).join('');
+
+      // Panel 4: Viva Questions
+      const vivaContainer = document.getElementById('procVivaContainer');
+      vivaContainer.innerHTML = proc.viva.map((v, idx) => `
+        <div class="bg-slate-50 border border-slate-200/80 rounded-lg overflow-hidden">
+          <button onclick="toggleVivaAnswer(${idx})" class="w-full p-3 text-left flex justify-between items-center gap-2 font-semibold text-xs text-slate-800 hover:bg-slate-100">
+            <span class="flex items-center gap-2">
+              <span class="text-amber-600 font-bold">Q${idx+1}:</span> ${v.q}
+            </span>
+            <i id="vivaIcon-${idx}" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 transition-transform"></i>
+          </button>
+          <div id="vivaAns-${idx}" class="hidden p-3 bg-amber-50/50 border-t border-slate-200/60 text-xs text-slate-700 leading-relaxed font-medium">
+            <strong class="text-amber-900">Examiner Expected Answer:</strong> ${v.a}
           </div>
         </div>
       `).join('');
 
+      renderProcedureList();
       lucide.createIcons();
-      switchDetailTab('steps'); // Show steps tab by default
     }
 
-    // TAB SWITCHING (OSPE checklist / Viva)
-    function switchDetailTab(tabKey) {
-      document.querySelectorAll('.detail-panel').forEach(panel => panel.classList.add('hidden'));
-      document.querySelectorAll('.detail-tab').forEach(tab => {
-        tab.classList.remove('text-teal-600', 'border-teal-600', 'font-bold');
-        tab.classList.add('text-slate-500', 'border-transparent');
-      });
-
-      const activePanel = document.getElementById(`panel-${tabKey}`);
-      const activeTab = document.getElementById(`dtab-${tabKey}`);
-
-      if (activePanel) activePanel.classList.remove('hidden');
-      if (activeTab) {
-        activeTab.classList.add('text-teal-600', 'border-teal-600', 'font-bold');
-        activeTab.classList.remove('text-slate-500', 'border-transparent');
-      }
-    }
-
-    // CATEGORY FILTER
-    function filterCategory(catKey) {
-      // Highlight cat button
+    function filterCategory(cat) {
+      currentCategory = cat;
       document.querySelectorAll('.cat-btn').forEach(btn => {
         btn.classList.remove('bg-teal-600', 'text-white', 'shadow-sm');
         btn.classList.add('text-slate-300');
       });
-      document.getElementById(`tab-${catKey}`).classList.add('bg-teal-600', 'text-white', 'shadow-sm');
-      document.getElementById(`tab-${catKey}`).classList.remove('text-slate-300');
+      const activeBtn = document.getElementById(`tab-${cat}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-teal-600', 'text-white', 'shadow-sm');
+        activeBtn.classList.remove('text-slate-300');
+      }
+      renderProcedureList();
+    }
 
-      if (catKey === 'all') {
-        renderProcedureList(proceduresData);
-      } else {
-        const filtered = proceduresData.filter(p => p.category === catKey);
-        renderProcedureList(filtered);
+    function handleSearch(val) {
+      renderProcedureList(val);
+    }
+
+    function switchDetailTab(tabKey) {
+      currentDetailTab = tabKey;
+      document.querySelectorAll('.detail-tab').forEach(btn => {
+        btn.classList.remove('text-teal-600', 'border-teal-600', 'font-bold');
+        btn.classList.add('text-slate-500', 'border-transparent');
+      });
+      document.querySelectorAll('.detail-panel').forEach(panel => panel.classList.add('hidden'));
+
+      const activeTab = document.getElementById(`dtab-${tabKey}`);
+      const activePanel = document.getElementById(`panel-${tabKey}`);
+
+      if (activeTab && activePanel) {
+        activeTab.classList.add('text-teal-600', 'border-teal-600', 'font-bold');
+        activeTab.classList.remove('text-slate-500', 'border-transparent');
+        activePanel.classList.remove('hidden');
       }
     }
 
-    // MOBILE SIDEBAR TOGGLE
-    function toggleMobileSidebar() {
-      const sidebar = document.getElementById('sidebarDrawer');
-      const backdrop = document.getElementById('drawerBackdrop');
-      sidebar.classList.toggle('-translate-x-full');
-      backdrop.classList.toggle('hidden');
+    function toggleVivaAnswer(idx) {
+      const ans = document.getElementById(`vivaAns-${idx}`);
+      const icon = document.getElementById(`vivaIcon-${idx}`);
+      if (ans.classList.contains('hidden')) {
+        ans.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        ans.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    function resetAnimation() {
+      const proc = proceduresData.find(p => p.id === currentProcId);
+      if (proc) {
+        document.getElementById('visualizerCanvas').innerHTML = generateSVG(proc.svgType);
+        lucide.createIcons();
+      }
     }
   </script>
 </body>
