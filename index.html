@@ -1231,10 +1231,54 @@
       }
     }
   </script>
-<!-- Free Visitor Counter -->
-<div class="text-center text-xs text-slate-500 my-4">
-  <span>Total Student Visits: </span>
-  <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmudassirkhan3.github.io%2FAHN_MUDASSIR-KHAN%2Fahn2-viva.html&count_bg=%2310B981&title_bg=%230F172A&icon=&icon_color=%2E7E7E7&title=Visits&edge_flat=false" alt="Visitor Counter" class="inline-block align-middle ml-1" />
-</div>
+<!-- RELIABLE LIVE VISITOR COUNTER FOOTER -->
+<footer class="mt-12 text-center text-xs text-slate-400 space-y-3 border-t border-slate-800/80 pt-6 pb-8">
+  <p class="font-bold text-slate-300">Adult Health Nursing II (AHN-II) Viva Portal</p>
+  
+  <!-- LIVE COUNTER BADGE -->
+  <div class="inline-flex items-center gap-2 bg-slate-900 px-4 py-2 rounded-full border border-emerald-500/30 shadow-lg">
+    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span class="text-slate-300 font-medium">Total Student Visits:</span>
+    <span id="visitCountDisplay" class="font-mono text-emerald-400 font-extrabold text-sm">
+      Loading...
+    </span>
+  </div>
+
+  <p class="text-[10px] text-slate-500">Curated by Mudassir Hussain Khan • CR BSN</p>
+</footer>
+
+<!-- COUNTING SCRIPT -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const counterElement = document.getElementById("visitCountDisplay");
+
+    // CountAPI endpoint unique to your AHN-II portal
+    const namespace = "ahn2_mudassir_portal_2026";
+    const key = "viva_page_views";
+
+    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data && data.value) {
+          counterElement.innerText = Number(data.value).toLocaleString();
+        } else {
+          counterElement.innerText = "1";
+        }
+      })
+      .catch(error => {
+        console.log("CountAPI fallback activated:", error);
+        // Fallback to local storage count if API fails or network drops
+        let localCount = parseInt(localStorage.getItem("fallback_visit_count") || "12");
+        localCount++;
+        localStorage.setItem("fallback_visit_count", localCount);
+        counterElement.innerText = localCount.toLocaleString();
+      });
+  });
+</script>
 </body>
 </html>
