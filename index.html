@@ -119,6 +119,38 @@
     <div id="drawerBackdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity"></div>
 
     <!-- LEFT SIDEBAR: PROCEDURE LIST DRAWER -->
+    <!-- SLIDE-OUT SIDE MENU DRAWER -->
+<aside id="sideMenu" class="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white text-slate-800 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+  
+  <!-- Drawer Header -->
+  <div class="p-4 bg-teal-900 text-white flex items-center justify-between sticky top-0 z-10">
+    <div class="flex items-center gap-2">
+      <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+      <h2 class="font-bold text-sm">Nursing Navigation</h2>
+    </div>
+    <button id="closeBtn" class="text-slate-300 hover:text-white p-1">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+  </div>
+
+  <!-- Drawer Body -->
+  <div class="p-4 space-y-4 text-xs">
+
+    <!-- 👇 PASTE YOUR LINK RIGHT HERE AT THE TOP OF THE DRAWER BODY 👇 -->
+    <a href="ahn2-viva.html" class="flex items-center justify-between p-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors text-xs font-semibold shadow-sm">
+      <div class="flex items-center gap-2">
+        <span>📚</span>
+        <span>AHN-II High-Yield Viva & Definitions</span>
+      </div>
+      <span class="text-teal-300">→</span>
+    </a>
+    <!-- 👆 -------------------------------------------------------- 👆 -->
+
+    <!-- Other items (like tables, unit accordions, or procedure links) continue below -->
+
+  </div>
+</aside>
+    
     <aside id="sidebarDrawer" class="fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto w-80 lg:w-auto lg:col-span-4 bg-white lg:bg-transparent shadow-2xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col h-full lg:h-[calc(100vh-140px)] lg:sticky lg:top-20">
       
       <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 flex flex-col h-full overflow-hidden">
