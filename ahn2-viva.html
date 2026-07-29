@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AHN-II High-Yield Viva & Definitions | Mudassir Hussain Khan</title>
+  <title>AHN-II High-Yield Viva & Definitions | Mudassir Khan</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     .glass-card {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(12px);
     }
     .emerald-glow {
@@ -22,7 +22,7 @@
 
   <!-- TOP HEADER -->
   <header class="sticky top-0 z-50 glass-card border-b border-emerald-900/40 px-4 py-3">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-semibold text-xs transition-colors group">
         <span class="group-hover:-translate-x-1 transition-transform">←</span>
         <span>Main Portal</span>
@@ -31,47 +31,48 @@
       <div class="flex items-center gap-3">
         <button onclick="copyShareLink()" class="flex items-center gap-1.5 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 hover:text-emerald-200 text-[11px] px-3 py-1.5 rounded-lg border border-emerald-700/50 transition-all shadow-sm">
           <span>🔗</span>
-          <span id="shareBtnText" class="font-medium">Share Link</span>
+          <span id="shareBtnText" class="font-medium">Share Page</span>
         </button>
 
         <div class="text-right hidden sm:block border-l border-slate-800 pl-3">
-          <h1 class="text-xs font-bold text-slate-100 uppercase tracking-wider">AHN-II Viva Comprehensive</h1>
-          <p class="text-[10px] text-emerald-400 font-medium">Mudassir Hussain Khan • CR</p>
+          <h1 class="text-xs font-bold text-slate-100 uppercase tracking-wider">AHN-II Viva Core</h1>
+          <p class="text-[10px] text-emerald-400 font-medium">Mudassir Khan • CR</p>
         </div>
       </div>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 pt-6 space-y-6">
+  <main class="max-w-5xl mx-auto px-4 pt-6 space-y-6">
 
     <!-- HERO BANNER -->
-    <div class="relative overflow-hidden bg-gradient-to-br from-emerald-950/70 via-slate-900 to-[#090d16] p-6 sm:p-8 rounded-2xl border border-emerald-500/30 emerald-glow">
+    <div class="relative overflow-hidden bg-gradient-to-br from-emerald-950/60 via-slate-900 to-[#090d16] p-6 sm:p-8 rounded-2xl border border-emerald-500/30 emerald-glow">
+      <div class="absolute -top-12 -right-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl"></div>
       <div class="relative z-10 space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-2">
           <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full text-[10px] font-bold uppercase tracking-widest">
-            BSN Complete Viva Prep
+            Clinical Viva & OSPE Guide
           </span>
           <span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[10px] font-bold">
-            All 7 Units Included
+            BS Nursing (BSN)
           </span>
         </div>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-          Adult Health Nursing II (AHN-II) High-Yield Master Guide
+          Adult Health Nursing II High-Yield Review
         </h2>
-        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
-          Standardized clinical definitions, key diagnostic signs, examiner favorites, nursing priorities, and management pearls structured directly from the academic syllabus.
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+          Detailed clinical definitions, pathophysiological rationales, high-frequency examiner questions, and emergency nursing priorities across all 7 units.
         </p>
       </div>
     </div>
 
     <!-- SEARCH & CATEGORY FILTER -->
-    <div class="space-y-3 sticky top-16 z-40 bg-[#090d16]/95 backdrop-blur-md py-3 border-b border-slate-800/80">
+    <div class="space-y-3 sticky top-16 z-40 bg-[#090d16]/90 backdrop-blur-md py-3 border-b border-slate-800/80">
       <div class="relative">
         <input 
           type="text" 
           id="vivaSearch" 
           onkeyup="filterContent()" 
-          placeholder="🔍 Search any topic or sign (e.g., Parkland, DKA, Cushing, GBS, Osteomyelitis, Troponin)..." 
+          placeholder="🔍 Search definitions, signs, or procedures (e.g., Parkland, DKA, Cushing, GBS, RICE)..." 
           class="w-full p-3.5 pl-4 bg-slate-900/90 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-xl"
         >
       </div>
@@ -84,418 +85,257 @@
         <button onclick="filterCategory('neuro')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit III: Neuro</button>
         <button onclick="filterCategory('cvs')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit IV: CVS</button>
         <button onclick="filterCategory('resp')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit V: Resp</button>
-        <button onclick="filterCategory('ent')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit VI: Eye & ENT</button>
+        <button onclick="filterCategory('ent')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit VI: ENT/Eye</button>
         <button onclick="filterCategory('burns')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit VII: Burns</button>
       </div>
     </div>
 
-    <!-- CONTENT CONTAINER -->
-    <div id="vivaContainer" class="space-y-8">
+    <!-- CARDS CONTAINER -->
+    <div id="vivaContainer" class="space-y-6">
 
-      <!-- ================= UNIT I: ORTHOPEDIC NURSING ================= -->
-      <section class="viva-card cat-ortho space-y-4">
-        <div class="flex items-center justify-between border-b border-emerald-500/40 pb-2">
-          <h2 class="text-xl font-extrabold text-emerald-400 uppercase tracking-wide">Unit I: Orthopedic Nursing</h2>
-          <span class="text-xs bg-emerald-950/80 text-emerald-300 px-3 py-1 rounded-full border border-emerald-700/50">8 Hours • 1 Credit</span>
+      <!-- UNIT I: ORTHOPEDIC -->
+      <article class="viva-card cat-ortho bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit I • Orthopedics & Trauma
+          </span>
+          <span class="text-[11px] text-amber-400 bg-amber-950/40 px-2.5 py-0.5 rounded border border-amber-800/40 font-semibold">🔥 Top Examiner Favorite</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 1. Soft Tissue Injury -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <div class="flex justify-between items-start">
-              <h3 class="font-bold text-white text-sm">1. Soft Tissue Injury (Sprains & Strains)</h3>
-              <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded">RICE Protocol</span>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Sprain:</strong> Injury to a ligament (bone-to-bone joint stabilizer) caused by wrenching or twisting.
-              <br><strong class="text-emerald-400">Strain:</strong> Injury to a muscle or tendon (muscle-to-bone attachment) caused by overuse or excessive stretching.
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300">
-              ⚡ <strong>Management:</strong> Use <strong>RICE</strong> (Rest, Ice for 20 mins, Compression, Elevation above heart).
-            </div>
-          </div>
-
-          <!-- 2. Fracture & Amputation -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <div class="flex justify-between items-start">
-              <h3 class="font-bold text-white text-sm">2. Fractures, Compartment Syndrome & Amputation</h3>
-              <span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded font-bold">🔥 Examiner Favorite</span>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Fracture:</strong> A disruption or break in the continuity of the bone structure.
-              <br><strong class="text-emerald-400">Compartment Syndrome:</strong> Increased pressure within a non-yielding fascia compartment compromising blood flow.
-            </p>
-            <div class="bg-rose-950/30 border border-rose-900/50 p-2.5 rounded text-[11px] text-rose-300 space-y-1">
-              <span class="font-bold block">⚡ The 6 Ps of Compartment Syndrome:</span>
-              <p>Pain (out of proportion), Paresthesia, Pallor, Paralysis, Pulselessness, Poikilothermia.</p>
-              <p class="text-[10px] text-amber-300 font-bold">🚨 Viva Alert: DO NOT elevate limb or apply ice in compartment syndrome. Treatment is emergency Fasciotomy.</p>
-            </div>
-          </div>
-
-          <!-- 3. Paget's & Rheumatoid Arthritis -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">3. Paget’s Disease & Rheumatoid Arthritis (RA)</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Paget's Disease (Osteitis Deformans):</strong> A chronic bone disorder marked by excessive, disorganized bone turnover leading to structurally weak, enlarged bones.
-              <br><strong class="text-emerald-400">Rheumatoid Arthritis (RA):</strong> A systemic, chronic autoimmune inflammatory disorder affecting the synovial membrane of joints symmetrically.
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300">
-              🔑 <strong>RA Hallmarks:</strong> Morning stiffness lasting &gt;1 hour, symmetric joint involvement, ulnar drift, and swan-neck deformities.
-            </div>
-          </div>
-
-          <!-- 4. Osteomyelitis, OA & Osteoporosis -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">4. Osteomyelitis, Osteoarthritis & Osteoporosis</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Osteomyelitis:</strong> Severe pyogenic infection of the bone, bone marrow, and surrounding tissue (most common organism: <em>Staphylococcus aureus</em>).
-              <br><strong class="text-emerald-400">Osteoarthritis (OA):</strong> Non-inflammatory degenerative joint disease caused by progressive loss of articular cartilage (asymmetric, age-related).
-              <br><strong class="text-emerald-400">Osteoporosis:</strong> Metabolic bone disease characterized by low bone mineral density ($T\text{-score} \le -2.5$) and structural deterioration.
-            </p>
-          </div>
-
-          <!-- 5. Bone Tumors & Bone TB -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2 md:col-span-2">
-            <h3 class="font-bold text-white text-sm">5. Bone Tumors & Bone Tuberculosis (Pott’s Disease)</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Osteosarcoma:</strong> The most common primary malignant bone tumor, predominantly affecting the metaphysis of long bones in young adults.
-              <br><strong class="text-emerald-400">Pott’s Disease (Tuberculous Spondylitis):</strong> Extrapulmonary tuberculosis affecting the spine, leading to kyphosis (gibbus deformity), vertebral collapse, and potential spinal cord compression.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= UNIT II: ENDOCRINE NURSING ================= -->
-      <section class="viva-card cat-endo space-y-4">
-        <div class="flex items-center justify-between border-b border-emerald-500/40 pb-2">
-          <h2 class="text-xl font-extrabold text-emerald-400 uppercase tracking-wide">Unit II: Endocrine Nursing</h2>
-          <span class="text-xs bg-emerald-950/80 text-emerald-300 px-3 py-1 rounded-full border border-emerald-700/50">12 Hours • 2 Credits</span>
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">1. Compartment Syndrome & Fasciotomy</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">Definition:</strong> A life-threatening extremity condition where increased tissue pressure within a non-yielding osteofascial compartment compromises capillary perfusion, leading to muscle tissue hypoxia and tissue necrosis.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 1. Parathyroid Disorders -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">1. Parathyroid Disorders & Tetany Assessment</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Hypoparathyroidism:</strong> Inadequate Parathyroid Hormone (PTH) leading to hypocalcemia ($&lt;8.5\text{ mg/dL}$) and neuromuscular excitability (Tetany).
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300 space-y-1">
-              <span class="text-amber-400 font-bold block">⚡ Viva High-Yield Clinical Signs:</span>
-              <p>1. <strong>Trousseau's Sign:</strong> Carpopedal spasm induced by inflating BP cuff above systolic pressure for 3 mins.</p>
-              <p>2. <strong>Chvostek's Sign:</strong> Facial twitching elicited by tapping over the facial nerve anterior to the ear.</p>
-            </div>
+        <!-- CLINICAL BREAKDOWN -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-rose-400 font-bold block text-sm">⚡ The 6 Ps (Must Recite in Viva):</span>
+            <ul class="space-y-1 text-slate-300 text-[11px]">
+              <li>1. <strong>Pain:</strong> Severe, deep, out of proportion to injury, unrelieved by opioids.</li>
+              <li>2. <strong>Paresthesia:</strong> Pins and needles (earliest sensory deficit).</li>
+              <li>3. <strong>Pallor:</strong> Pale skin tone due to ischemia.</li>
+              <li>4. <strong>Paralysis:</strong> Inability to move digits (late sign).</li>
+              <li>5. <strong>Pulselessness:</strong> Absent distal pulse (very late sign).</li>
+              <li>6. <strong>Poikilothermia:</strong> Affected limb feels cool/cold.</li>
+            </ul>
           </div>
 
-          <!-- 2 & 3. Diabetes, Hypo, Hyper & DKA -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <div class="flex justify-between items-start">
-              <h3 class="font-bold text-white text-sm">2 & 3. Diabetes Mellitus, Hypoglycemia & DKA</h3>
-              <span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded font-bold">🔥 Guaranteed Question</span>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Diabetes Mellitus:</strong> Metabolic disorder of chronic hyperglycemia due to defects in insulin secretion, insulin action, or both.
-              <br><strong class="text-emerald-400">DKA Triad:</strong> Hyperglycemia ($&gt;250\text{ mg/dL}$), Metabolic Acidosis ($\text{pH} &lt;7.30$, $\text{HCO}_3 &lt;18$), and Ketonemia/Ketonuria.
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block text-sm">🩺 Management & RICE Protocol:</span>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+              <strong>Soft Tissue Injury (Sprains/Strains):</strong> Use <strong>RICE</strong> (Rest, Ice, Compression, Elevation).
             </p>
-            <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded text-[11px] text-slate-300 space-y-1">
-              <span class="text-emerald-300 font-bold block">💡 DKA Signs & Nursing Priority:</span>
-              <p>• <strong>Signs:</strong> Kussmaul respirations (deep, rapid air-hungering), fruity acetone breath.</p>
-              <p>• <strong>Priority:</strong> Rehydration with 0.9% Normal Saline before IV Regular Insulin drip.</p>
-            </div>
-          </div>
-
-          <!-- 4. Thyroid Disorders -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">4. Thyroid Disorders (Hyper vs. Hypo)</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Grave’s Disease (Hyperthyroidism):</strong> Autoimmune overproduction of T3/T4 resulting in hypermetabolism, heat intolerance, weight loss, tachycardia, and exophthalmos.
-              <br><strong class="text-emerald-400">Myxedema (Hypothyroidism):</strong> Deficiency of T3/T4 causing hypometabolism, cold intolerance, weight gain, bradycardia, and non-pitting edema.
-            </p>
-            <div class="bg-rose-950/30 border border-rose-900/50 p-2.5 rounded text-[11px] text-rose-300">
-              🚨 <strong>Thyroid Storm Crisis:</strong> Acute severe hyperthyroidism presenting with extreme hyperthermia ($&gt;103^\circ\text{F}$), severe tachycardia, and delirium.
-            </div>
-          </div>
-
-          <!-- 5. Adrenal Disorders -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">5. Adrenal Gland Disorders</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Cushing’s Syndrome:</strong> Excessive glucocorticoids (cortisol). Features: Moon face, buffalo hump, central obesity, purple striae, hyperglycemia.
-              <br><strong class="text-emerald-400">Addison’s Disease:</strong> Adrenocortical insufficiency (low cortisol/aldosterone). Features: Hyperpigmentation, hypotension, hyponatremia, hyperkalemia.
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300">
-              ⚡ <strong>Pheochromocytoma:</strong> Catecholamine-secreting adrenal tumor presenting with the triad: Headache, Diaphoresis, and Severe Paroxysmal Hypertension.
+            <div class="bg-rose-950/30 p-2.5 rounded-lg border border-rose-900/50 text-[11px] text-rose-300 mt-2">
+              🚨 <strong>CRITICAL VIVA RULE:</strong> If acute Compartment Syndrome is suspected, <strong>DO NOT elevate the limb</strong> (decreases arterial blood flow) and <strong>DO NOT apply ice</strong> (causes vasoconstriction). Prepare patient for emergency <strong>Fasciotomy</strong>.
             </div>
           </div>
         </div>
-      </section>
+      </article>
 
-      <!-- ================= UNIT III: NEUROLOGICAL NURSING ================= -->
-      <section class="viva-card cat-neuro space-y-4">
-        <div class="flex items-center justify-between border-b border-emerald-500/40 pb-2">
-          <h2 class="text-xl font-extrabold text-emerald-400 uppercase tracking-wide">Unit III: Neurological Nursing</h2>
-          <span class="text-xs bg-emerald-950/80 text-emerald-300 px-3 py-1 rounded-full border border-emerald-700/50">12 Hours • 3 Credits</span>
+      <!-- UNIT II: ENDOCRINE -->
+      <article class="viva-card cat-endo bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit II • Endocrine Disorders
+          </span>
+          <span class="text-[11px] text-amber-400 bg-amber-950/40 px-2.5 py-0.5 rounded border border-amber-800/40 font-semibold">🔥 High-Yield</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 1. Increased ICP & Cushing's Triad -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <div class="flex justify-between items-start">
-              <h3 class="font-bold text-white text-sm">1. Intracranial Pressure (ICP) & Head Injury</h3>
-              <span class="text-[10px] bg-rose-950 text-rose-300 px-2 py-0.5 rounded font-bold">🚨 Emergency Core</span>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Normal ICP is <strong>5 to 15 mmHg</strong>. Sustained ICP &gt;20 mmHg is pathologic.
-            </p>
-            <div class="bg-rose-950/40 border border-rose-900/60 p-2.5 rounded text-[11px] text-rose-200 space-y-1 font-mono">
-              <span class="font-bold block font-sans text-rose-300">⚠️ Cushing's Triad (Late Sign of Brain Herniation):</span>
-              <p>1. Systolic Hypertension with Widened Pulse Pressure</p>
-              <p>2. Bradycardia (Slow, Bounding Heart Rate)</p>
-              <p>3. Irregular/Bradypneic Respirations</p>
-            </div>
-          </div>
-
-          <!-- 2. SCI & CVA -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">2. Spinal Cord Injury (SCI) & Stroke (CVA)</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Autonomic Dysreflexia:</strong> Life-threatening emergency in SCI at/above T6 triggered by noxious stimuli (e.g., distended bladder). Features severe hypertension and bradycardia.
-              <br><strong class="text-emerald-400">CVA (Stroke):</strong> Sudden focal neurological deficit caused by Ischemic (87%) or Hemorrhagic vascular occlusion/rupture.
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300">
-              ⚡ <strong>Ischemic Stroke Thrombolytic Window:</strong> IV tPA (Alteplase) administered within 3 to 4.5 hours of symptom onset.
-            </div>
-          </div>
-
-          <!-- 3 & 4. Meningitis, Encephalitis & Abscess -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">3 & 4. Meningitis & Encephalitis</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Meningitis:</strong> Acute inflammation of the meninges surrounding the brain and spinal cord.
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300 space-y-1">
-              <span class="text-emerald-300 font-bold block">🩺 Diagnostic Meningeal Signs:</span>
-              <p>• <strong>Kernig's Sign:</strong> Inability to fully extend the knee when thigh is flexed at 90 degrees due to pain.</p>
-              <p>• <strong>Brudzinski's Sign:</strong> Involuntary flexion of the hips/knees when the neck is passively flexed.</p>
-            </div>
-          </div>
-
-          <!-- 5 & 6. Seizures & Myasthenia Gravis -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">5 & 6. Seizures & Myasthenia Gravis (MG)</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Status Epilepticus:</strong> Seizure activity lasting &gt;5 minutes or recurrent seizures without full recovery of consciousness (Emergency drug: IV Lorazepam/Diazepam).
-              <br><strong class="text-emerald-400">Myasthenia Gravis:</strong> Autoimmune attack on acetylcholine receptors at neuromuscular junction causing fluctuating muscle weakness and ptosis.
-            </p>
-          </div>
-
-          <!-- 7, 8 & 9. GBS, Trigeminal & Migraine -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">7, 8 & 9. Guillain-Barré (GBS) & Trigeminal Neuralgia</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">GBS:</strong> Acute post-infectious autoimmune demyelination causing <strong>ascending, symmetrical motor weakness</strong>.
-              <br><strong class="text-emerald-400">Trigeminal Neuralgia (Tic Douloureux):</strong> Severe, sharp, shooting facial pain along CN V branches.
-            </p>
-            <div class="bg-rose-950/30 border border-rose-900/50 p-2 rounded text-[11px] text-rose-300">
-              🚨 <strong>GBS Danger:</strong> Respiratory paralysis when weakness reaches the diaphragm (phrenic nerve). Monitor Forced Vital Capacity!
-            </div>
-          </div>
-
-          <!-- 10, 11 & 12. Parkinson's, Alzheimer's & Altered LOC -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">10, 11 & 12. Parkinson’s, Alzheimer’s & Glasgow Coma Scale</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Parkinson’s Disease:</strong> Loss of dopamine-producing neurons in substantia nigra. Classic Tetrad: Resting tremor (pill-rolling), Rigidity (cogwheel), Akinesia/Bradykinesia, Postural instability.
-              <br><strong class="text-emerald-400">Glasgow Coma Scale (GCS):</strong> Evaluates Eye (4), Verbal (5), Motor (8) responses. Range: 3 to 15. Score $\le 8$ indicates coma ("Coma at 8, intubate").
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= UNIT IV: CARDIOVASCULAR DISORDERS ================= -->
-      <section class="viva-card cat-cvs space-y-4">
-        <div class="flex items-center justify-between border-b border-emerald-500/40 pb-2">
-          <h2 class="text-xl font-extrabold text-emerald-400 uppercase tracking-wide">Unit IV: Cardiovascular Disorders</h2>
-          <span class="text-xs bg-emerald-950/80 text-emerald-300 px-3 py-1 rounded-full border border-emerald-700/50">10 Hours • 2 Credits</span>
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">2. Diabetic Ketoacidosis (DKA) vs. Tetany Assessment</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">DKA Definition:</strong> An acute, life-threatening complication of Diabetes Mellitus (primarily Type 1) characterized by the triad of <strong>Hyperglycemia</strong> (&gt;250 mg/dL), <strong>Metabolic Acidosis</strong> (pH &lt;7.30, serum bicarbonate &lt;18 mEq/L), and <strong>Ketonemia/Ketonuria</strong> due to insulin lack.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 1 & 2. Atherosclerosis, Aneurysm, DVT -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">1 & 2. Aneurysm, DVT & Virchow's Triad</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Aneurysm:</strong> Localized permanent dilation of an arterial wall (&gt;50% increase in diameter).
-              <br><strong class="text-emerald-400">Deep Vein Thrombosis (DVT):</strong> Thrombus formation in deep veins, usually lower extremities.
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300">
-              🩸 <strong>Virchow's Triad (DVT Risk):</strong> 1. Venous Stasis, 2. Endothelial Injury, 3. Hypercoagulability.
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-amber-400 font-bold block text-sm">🫁 DKA Clinical Features & Breathing:</span>
+            <ul class="space-y-1.5 text-slate-300 text-[11px]">
+              <li>• <strong>Kussmaul Respirations:</strong> Deep, rapid, air-hungering breathing pattern to blow off CO2 and compensate for metabolic acidosis.</li>
+              <li>• <strong>Fruity/Acetone Breath:</strong> Due to volatile ketone excretion via lungs.</li>
+              <li>• <strong>Initial Nursing Priority:</strong> Rehydration with Normal Saline (0.9% NaCl) before starting Regular Insulin drip.</li>
+            </ul>
           </div>
 
-          <!-- 3. Hypertension -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">3. Hypertension & Hypertensive Crisis</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Persistent elevation of systemic arterial blood pressure ($\ge 130/80\text{ mmHg}$).
-              <br><strong class="text-emerald-400">Hypertensive Emergency:</strong> BP &gt;180/120 mmHg WITH acute target organ damage (e.g., encephalopathy, acute MI).
-            </p>
-          </div>
-
-          <!-- 4, 5 & 6. Inflammatory Heart Diseases -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">4, 5 & 6. Pericarditis, Myocarditis & Endocarditis</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Pericarditis:</strong> Inflammation of pericardium presenting with chest pain relieved by sitting forward and a <em>Pericardial Friction Rub</em>.
-              <br><strong class="text-emerald-400">Infective Endocarditis:</strong> Infection of endocardium/valves. Features: Janeway lesions (painless macular spots), Osler's nodes (painful nodules), Roth spots.
-            </p>
-          </div>
-
-          <!-- 7 & 8. Heart Block, Pacemaker & MI -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <div class="flex justify-between items-start">
-              <h3 class="font-bold text-white text-sm">7 & 8. Myocardial Infarction (MI) & Cardiac Markers</h3>
-              <span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded font-bold">🔥 High Yield</span>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">MI:</strong> Irreversible myocardial necrosis caused by severe ischemia.
-            </p>
-            <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded text-[11px] text-slate-300 space-y-1">
-              <span class="text-emerald-300 font-bold block">🧪 Cardiac Biomarkers:</span>
-              <p>• <strong>Troponin I & T:</strong> Gold standard; specific, rises in 3–4 hrs, stays elevated 7–14 days.</p>
-              <p>• <strong>MONA Protocol:</strong> Morphine, Oxygen, Nitroglycerin, Aspirin.</p>
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block text-sm">🦴 Hypocalcemia Assessment Signs:</span>
+            <div class="space-y-2 text-[11px] text-slate-300">
+              <p><strong>1. Trousseau's Sign:</strong> Carpopedal spasm (flexion of wrist and metacarpophalangeal joints) induced by inflating BP cuff 20 mmHg above systolic BP for 3 minutes.</p>
+              <p><strong>2. Chvostek's Sign:</strong> Twitching of facial muscles elicited by tapping the facial nerve anterior to the ear lobe.</p>
             </div>
           </div>
         </div>
-      </section>
+      </article>
 
-      <!-- ================= UNIT V: PULMONARY NURSING ================= -->
-      <section class="viva-card cat-resp space-y-4">
-        <div class="flex items-center justify-between border-b border-emerald-500/40 pb-2">
-          <h2 class="text-xl font-extrabold text-emerald-400 uppercase tracking-wide">Unit V: Pulmonary Nursing</h2>
-          <span class="text-xs bg-emerald-950/80 text-emerald-300 px-3 py-1 rounded-full border border-emerald-700/50">10 Hours • 2 Credits</span>
+      <!-- UNIT III: NEUROLOGY -->
+      <article class="viva-card cat-neuro bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit III • Neurological Nursing
+          </span>
+          <span class="text-[11px] text-amber-400 bg-amber-950/40 px-2.5 py-0.5 rounded border border-amber-800/40 font-semibold">🔥 Top Examiner Favorite</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 1-5. Upper Airway, Influenza & Lung Abscess -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">1–5. Upper Respiratory Infections & Lung Abscess</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Sinusitis/Pharyngitis/Tonsillitis:</strong> Inflammation of paranasal sinuses, pharynx, or palatine tonsils.
-              <br><strong class="text-emerald-400">Lung Abscess:</strong> Necrotizing lung infection characterized by a localized pus-filled cavity, often caused by aspiration of oral secretions.
-            </p>
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">3. Increased ICP, Cushing's Triad & Guillain-Barré Syndrome</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">Intracranial Pressure (ICP):</strong> Normal range is <strong>5 to 15 mmHg</strong>. Sustained pressure &gt;20 mmHg requires prompt intervention to prevent brain herniation.
+          </p>
+        </div>
+
+        <div class="bg-rose-950/30 border border-rose-900/60 p-4 rounded-xl space-y-2 text-xs">
+          <span class="text-rose-300 font-bold text-sm block">⚠️ Cushing's Triad (Late Sign of Brain Herniation):</span>
+          <p class="text-slate-300 text-[11px]">Contrast this with shock (where HR goes up and BP drops). Cushing's Triad presents with:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 font-mono text-[11px] text-rose-200 mt-2">
+            <div class="bg-slate-950/80 p-2 rounded border border-rose-900/50">1. Systolic Hypertension (Widened Pulse Pressure)</div>
+            <div class="bg-slate-950/80 p-2 rounded border border-rose-900/50">2. Bradycardia (Slow, Bounding Heart Rate)</div>
+            <div class="bg-slate-950/80 p-2 rounded border border-rose-900/50">3. Bradypnea / Irregular Breathing</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
+          <span class="text-emerald-400 font-bold text-sm block">🧠 Guillain-Barré Syndrome (GBS) Core Key:</span>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            An acute post-infectious autoimmune polyneuropathy characterized by <strong>progressive, ascending symmetrical motor weakness</strong> and loss of deep tendon reflexes. 
+            <br><em class="text-emerald-300 font-medium">Viva Question: What is the main cause of death?</em> Respiratory failure when weakness ascends to the diaphragm (phrenic nerve involvement). Monitor Vital Capacity closely!
+          </p>
+        </div>
+      </article>
+
+      <!-- UNIT IV: CARDIOVASCULAR -->
+      <article class="viva-card cat-cvs bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit IV • Cardiovascular Nursing
+          </span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">4. Myocardial Infarction Biomarkers & Virchow's Triad</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">Myocardial Infarction (MI):</strong> Irreversible necrosis of cardiac muscle caused by prolonged severe ischemia. 
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block text-sm">🧪 Cardiac Biomarkers:</span>
+            <ul class="space-y-1 text-slate-300 text-[11px]">
+              <li>• <strong>Troponin I & T:</strong> Most specific and sensitive cardiac gold standard. Rises in 3–4 hrs, stays elevated for 7–14 days.</li>
+              <li>• <strong>CK-MB:</strong> Useful for detecting re-infarction (returns to baseline in 48–72 hours).</li>
+            </ul>
           </div>
 
-          <!-- 6 & 7. Pneumonia & COPD -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">6 & 7. Pneumonia & COPD</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Pneumonia:</strong> Acute infection of lung parenchyma causing alveolar consolidation (CAP vs. HAP).
-              <br><strong class="text-emerald-400">COPD:</strong> Progressive airflow limitation combining Chronic Bronchitis ("Blue Bloaters", productive cough $\ge 3$ mos for 2 consecutive yrs) and Emphysema ("Pink Puffers", alveolar destruction).
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-amber-400 font-bold block text-sm">🩸 Virchow's Triad (DVT Pathogenesis):</span>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+              1. <strong>Venous Stasis</strong> (immobility, heart failure)<br>
+              2. <strong>Endothelial Injury</strong> (trauma, surgery, IV lines)<br>
+              3. <strong>Hypercoagulability</strong> (malignancy, dehydration, estrogen)
             </p>
           </div>
+        </div>
+      </article>
 
-          <!-- 8, 9, 10 & 11. ARF, ARDS, Chest Trauma & Lung Cancer -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2 md:col-span-2">
-            <h3 class="font-bold text-white text-sm">8–11. Acute Respiratory Distress Syndrome (ARDS) & Chest Trauma</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">ARDS:</strong> Non-cardiogenic pulmonary edema secondary to alveolar-capillary membrane damage.
-              <br><strong class="text-emerald-400">Flail Chest:</strong> Fracture of 3 or more contiguous ribs in 2 or more places causing <em>paradoxical chest movement</em> (sucking in during inspiration, bulging during expiration).
+      <!-- UNIT V: PULMONARY -->
+      <article class="viva-card cat-resp bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit V • Pulmonary Nursing
+          </span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">5. ARDS & Refractory Hypoxemia</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">ARDS Definition:</strong> A form of acute, diffuse inflammatory lung injury that leads to increased pulmonary vascular permeability, decreased lung compliance, and widespread alveolar collapse.
+          </p>
+        </div>
+
+        <div class="bg-emerald-950/30 border border-emerald-800/60 p-4 rounded-xl space-y-2 text-xs">
+          <span class="text-emerald-300 font-bold text-sm block">💡 Hallmark Viva Concept: Refractory Hypoxemia</span>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            <strong>Refractory Hypoxemia</strong> is severe arterial hypoxemia ($PaO_2 / FiO_2 \le 300\text{ mmHg}$) that <em>fails to improve even when high concentrations of supplemental 100% oxygen are delivered</em> due to intrapulmonary right-to-left shunting.
+          </p>
+        </div>
+      </article>
+
+      <!-- UNIT VI: ENT & EYE -->
+      <article class="viva-card cat-ent bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit VI • ENT & Ophthalmic Nursing
+          </span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">6. Meniere's Disease vs. Retinal Detachment</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block text-sm">👂 Meniere's Triad (Inner Ear):</span>
+            <ul class="space-y-1 text-slate-300 text-[11px]">
+              <li>1. Episodic Vertigo (Severe spinning sensation)</li>
+              <li>2. Fluctuating Sensorineural Hearing Loss</li>
+              <li>3. Low-pitched Tinnitus & Aural Fullness</li>
+            </ul>
+          </div>
+
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-amber-400 font-bold block text-sm">👁️ Retinal Detachment Sign:</span>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+              Separation of neurosensory retina from pigment epithelium. Classic symptom: <strong>Painless visual field loss described as a "dark shade or curtain being pulled over vision"</strong> accompanied by sudden photopsia (flashes of light) and floaters.
             </p>
-            <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded text-[11px] text-slate-300">
-              💡 <strong>ARDS Hallmark:</strong> <strong>Refractory Hypoxemia</strong> — arterial hypoxemia that does NOT improve even with 100% supplemental oxygen administration.
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT VII: BURNS -->
+      <article class="viva-card cat-burns bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit VII • Burns & Fluid Resuscitation
+          </span>
+          <span class="text-[11px] text-amber-400 bg-amber-950/40 px-2.5 py-0.5 rounded border border-amber-800/40 font-semibold">🔥 Guaranteed Question</span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">7. Parkland Formula & Wallace Rule of Nines</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Used for emergency fluid resuscitation during the first 24 hours post-burn in patients with &gt;20% TBSA burns. Fluid of choice: <strong>Lactated Ringer's (LR)</strong> solution.
+          </p>
+        </div>
+
+        <div class="bg-emerald-950/40 border border-emerald-700/50 p-4 rounded-xl space-y-3">
+          <span class="text-emerald-300 font-bold text-sm block">📐 Parkland Formula Equation:</span>
+          <div class="bg-slate-950 p-3 rounded-lg border border-emerald-900 font-mono text-xs text-emerald-200">
+            Total 24h Fluid (mL) = 4 mL × Body Weight (kg) × % TBSA Burned
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+            <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+              <span class="text-amber-400 font-bold block">⏱️ First 8 Hours:</span>
+              <p class="text-slate-300 text-[11px] mt-1">Administer <strong>50% (half)</strong> of total calculated 24-hour volume (calculated from time of injury, NOT hospital admission).</p>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+              <span class="text-emerald-400 font-bold block">⏱️ Remaining 16 Hours:</span>
+              <p class="text-slate-300 text-[11px] mt-1">Administer remaining <strong>50%</strong> of total volume across the next 16 hours.</p>
             </div>
           </div>
         </div>
-      </section>
-
-      <!-- ================= UNIT VI: EYE AND ENT NURSING ================= -->
-      <section class="viva-card cat-ent space-y-4">
-        <div class="flex items-center justify-between border-b border-emerald-500/40 pb-2">
-          <h2 class="text-xl font-extrabold text-emerald-400 uppercase tracking-wide">Unit VI: Eye & ENT Nursing</h2>
-          <span class="text-xs bg-emerald-950/80 text-emerald-300 px-3 py-1 rounded-full border border-emerald-700/50">4 Hours • 1 Credit</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 1 & 2. Mastoiditis & Meniere's -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">1 & 2. Mastoiditis & Meniere's Disease</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Mastoiditis:</strong> Infection of mastoid air cells, usually a complication of untreated acute otitis media.
-              <br><strong class="text-emerald-400">Meniere's Disease:</strong> Inner ear disorder due to endolymphatic hydrops.
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300">
-              👂 <strong>Meniere's Triad:</strong> 1. Episodic Vertigo, 2. Sensorineural Hearing Loss, 3. Tinnitus & Aural Fullness.
-            </div>
-          </div>
-
-          <!-- 3, 4 & 5. Cataract & Retinal Detachment -->
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-4 space-y-2">
-            <h3 class="font-bold text-white text-sm">3, 4 & 5. Cataract & Retinal Detachment</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Cataract:</strong> Opacification/clouding of the natural crystalline lens causing painless, progressive blurred vision and glare.
-              <br><strong class="text-emerald-400">Retinal Detachment:</strong> Separation of neurosensory retina from retinal pigment epithelium.
-            </p>
-            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 text-[11px] text-slate-300">
-              👁️ <strong>Retinal Detachment Sign:</strong> Painless vision loss described as a <strong>"dark curtain being pulled over the visual field"</strong>, preceded by light flashes and floaters.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= UNIT VII: BURNS ================= -->
-      <section class="viva-card cat-burns space-y-4">
-        <div class="flex items-center justify-between border-b border-emerald-500/40 pb-2">
-          <h2 class="text-xl font-extrabold text-emerald-400 uppercase tracking-wide">Unit VII: Burns & Fluid Resuscitation</h2>
-          <span class="text-xs bg-emerald-950/80 text-emerald-300 px-3 py-1 rounded-full border border-emerald-700/50">Core Unit</span>
-        </div>
-
-        <div class="bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-5 space-y-4">
-          <div class="space-y-2">
-            <h3 class="font-bold text-white text-base">1. Definition & Classification of Burns</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-emerald-400">Burn Injury:</strong> Tissue damage resulting from thermal, chemical, electrical, or radiation energy.
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs pt-1">
-              <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
-                <span class="text-amber-400 font-bold block">1st Degree (Superficial):</span>
-                <p class="text-[11px] text-slate-400 mt-0.5">Epidermis only; red, painful, dry, no blisters (e.g., sunburn).</p>
-              </div>
-              <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
-                <span class="text-amber-400 font-bold block">2nd Degree (Partial Thickness):</span>
-                <p class="text-[11px] text-slate-400 mt-0.5">Epidermis + Dermis; fluid-filled blisters, extremely painful, weeping.</p>
-              </div>
-              <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
-                <span class="text-amber-400 font-bold block">3rd Degree (Full Thickness):</span>
-                <p class="text-[11px] text-slate-400 mt-0.5">Destroys all skin layers + subcutaneous; leathery, eschar, painless (nerve destruction).</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-emerald-950/40 border border-emerald-700/50 p-4 rounded-xl space-y-3">
-            <span class="text-emerald-300 font-bold text-sm block">📐 Parkland Fluid Resuscitation Formula:</span>
-            <div class="bg-slate-950 p-3 rounded-lg border border-emerald-900 font-mono text-xs text-emerald-200">
-              Total 24h Fluid (mL) = 4 mL × Body Weight (kg) × % TBSA Burned
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-              <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800">
-                <span class="text-amber-400 font-bold block">⏱️ First 8 Hours:</span>
-                <p class="text-slate-300 text-[11px]">Give <strong>50%</strong> of total volume (calculated from time of injury).</p>
-              </div>
-              <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800">
-                <span class="text-emerald-400 font-bold block">⏱️ Next 16 Hours:</span>
-                <p class="text-slate-300 text-[11px]">Give remaining <strong>50%</strong> of total volume.</p>
-              </div>
-            </div>
-            <p class="text-[11px] text-slate-400 italic">Fluid of choice: <strong>Lactated Ringer's (LR)</strong> solution. Best indicator of adequate resuscitation: Urine output $0.5\text{ to }1.0\text{ mL/kg/hr}$.</p>
-          </div>
-        </div>
-      </section>
+      </article>
 
     </div>
 
     <!-- FOOTER CREDIT -->
     <footer class="pt-10 text-center border-t border-slate-800/60 text-slate-500 text-xs space-y-1">
-      <p class="font-medium text-slate-400">Adult Health Nursing II (AHN-II) — Complete Viva Master Guide</p>
-      <p class="text-[11px] text-slate-500">Curated by Mudassir Hussain Khan • Class Representative • BSN</p>
+      <p class="font-medium text-slate-400">Adult Health Nursing II (AHN-II) — Academic Viva Core</p>
+      <p class="text-[11px] text-slate-500">Curated by Mudassir Khan • Class Representative • BSN</p>
     </footer>
 
   </main>
@@ -545,7 +385,7 @@
       navigator.clipboard.writeText(window.location.href);
       const btnText = document.getElementById('shareBtnText');
       btnText.innerText = 'Copied!';
-      setTimeout(() => { btnText.innerText = 'Share Link'; }, 2000);
+      setTimeout(() => { btnText.innerText = 'Share Page'; }, 2000);
     }
   </script>
 </body>
