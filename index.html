@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AHN-II Clinical & OSPE Portal | Mudassir Hussain Khan</title>
+  <title>AHN-II Clinical & OSPE Portal | Mudassir Khan</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
@@ -53,7 +53,7 @@
               <span class="hidden sm:inline-block bg-teal-500/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-teal-500/30">OSPE & Viva Ready</span>
             </div>
             <p class="text-[11px] text-slate-400 font-medium truncate max-w-[200px] sm:max-w-none">
-              Lead Author & Curator: <span class="text-teal-400 font-bold">Mudassir Hussain Khan</span>
+              Lead Author & Curator: <span class="text-teal-400 font-bold">Mudassir Khan</span>
             </p>
           </div>
         </div>
@@ -289,7 +289,7 @@
   <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-8">
     <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
       <p class="text-slate-200 font-semibold text-sm">Adult Health Nursing-II (AHN-II) Clinical & OSPE Interactive Portal</p>
-      <p class="text-slate-400">Curated & Developed by: <strong class="text-teal-400">Mudassir Hussain Khan</strong> • BS Nursing Class Representative</p>
+      <p class="text-slate-400">Curated & Developed by: <strong class="text-teal-400">Mudassir Khan</strong> • BS Nursing Class Representative</p>
       <p class="text-slate-500 text-[11px]">Designed for Desktop & Mobile • Single File Web App</p>
     </div>
   </footer>
@@ -1172,21 +1172,19 @@
 <div class="ahn-viva-section font-sans text-slate-800">
 
  
-<div class="menu-notice">
-  📌 <strong>Note:</strong> Tap the menu icon (<strong>☰</strong>) on the side to view all procedures.
+<!-- Mobile Menu Helper Banner -->
+<div id="mobileNotice" class="md:hidden fixed bottom-4 left-4 right-4 bg-slate-900 text-white p-3 rounded-xl shadow-2xl z-50 flex items-center justify-between border border-teal-500/40">
+  <div class="flex items-center gap-2.5">
+    <div class="bg-teal-500/20 p-2 rounded-lg text-teal-400">
+      <i data-lucide="menu" class="w-5 h-5"></i>
+    </div>
+    <p class="text-xs font-medium leading-tight">
+      Tap the <strong class="text-teal-400">3-line menu icon (☰)</strong> at the top left to see all 20 procedures!
+    </p>
+  </div>
+  <button onclick="document.getElementById('mobileNotice').remove()" class="text-slate-400 hover:text-white p-1">
+    <i data-lucide="x" class="w-4 h-4"></i>
+  </button>
 </div>
-
-<style>
-  .menu-notice {
-    background-color: #f0f7ff;
-    color: #1e3a8a;
-    border-left: 4px solid #2563eb;
-    padding: 12px 16px;
-    border-radius: 6px;
-    font-family: sans-serif;
-    font-size: 15px;
-    margin: 10px 0;
-  }
-</style>
 </body>
 </html>
