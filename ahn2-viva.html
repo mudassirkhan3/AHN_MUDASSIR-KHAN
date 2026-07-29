@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHN-II Viva Essentials & High-Yield Definitions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800 pb-12">
+
+  <!-- TOP HEADER WITH BACK BUTTON -->
+  <header class="bg-teal-900 text-white p-4 sticky top-0 z-50 shadow-md">
+    <div class="max-w-3xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-1.5 text-xs font-semibold text-teal-300 hover:text-white transition-colors">
+        <span>← Back to Main Portal</span>
+      </a>
+      <h1 class="text-sm font-bold tracking-wide">AHN-II Viva Prep</h1>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto p-4 space-y-4">
+
+    <!-- SEARCH BAR -->
+    <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 sticky top-14 z-40">
+      <input 
+        type="text" 
+        id="vivaSearch" 
+        onkeyup="filterContent()" 
+        placeholder="🔍 Search topics (e.g., DKA, GBS, Compartment, Parkland)..." 
+        class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-teal-600"
+      >
+    </div>
+
+    <!-- HIGH-YIELD VIVA SUMMARY TABLE -->
+    <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div class="bg-teal-800 text-white p-3 font-bold text-xs flex justify-between items-center">
+        <span>⚡ Quick Viva High-Yield Table (7 Units)</span>
+        <span class="text-[10px] bg-teal-700 px-2 py-0.5 rounded text-teal-200">Viva & Exam Points</span>
+      </div>
+      <table class="w-full text-left text-slate-700 text-[11px] border-collapse">
+        <thead class="bg-slate-100 text-teal-900 font-bold border-b border-slate-200">
+          <tr>
+            <th class="p-2.5 border-r border-slate-200">Unit</th>
+            <th class="p-2.5 border-r border-slate-200">Key Condition</th>
+            <th class="p-2.5 border-r border-slate-200">Classic Sign / Triad</th>
+            <th class="p-2.5">Priority Intervention / Test</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr class="hover:bg-slate-50">
+            <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">I. Ortho</td>
+            <td class="p-2.5 border-r border-slate-200 font-semibold">Compartment Syndrome</td>
+            <td class="p-2.5 border-r border-slate-200 text-rose-700 font-medium">6 Ps (Pain out of proportion, Paresthesia...)</td>
+            <td class="p-2.5 text-teal-900 font-medium">Emergency Fasciotomy (Do NOT elevate)</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">II. Endocrine</td>
+            <td class="p-2.5 border-r border-slate-200 font-semibold">Diabetic Ketoacidosis (DKA)</td>
+            <td class="p-2.5 border-r border-slate-200 text-rose-700 font-medium">Kussmaul breathing & Fruity odor</td>
+            <td class="p-2.5 text-teal-900 font-medium">IV 0.9% NS first, then Regular IV Insulin</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">III. Neuro</td>
+            <td class="p-2.5 border-r border-slate-200 font-semibold">Increased ICP</td>
+            <td class="p-2.5 border-r border-slate-200 text-rose-700 font-medium">Cushing's Triad (Widened PP, Bradycardia, Bradypnea)</td>
+            <td class="p-2.5 text-teal-900 font-medium">Elevate Head of Bed 30°, Mannitol IV</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">IV. Cardiac</td>
+            <td class="p-2.5 border-r border-slate-200 font-semibold">Myocardial Infarction</td>
+            <td class="p-2.5 border-r border-slate-200 text-rose-700 font-medium">Elevated Troponin I & T, ST elevation</td>
+            <td class="p-2.5 text-teal-900 font-medium">MONA Protocol (Oxygen, Aspirin, Nitros)</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">V. Pulmonary</td>
+            <td class="p-2.5 border-r border-slate-200 font-semibold">ARDS</td>
+            <td class="p-2.5 border-r border-slate-200 text-rose-700 font-medium">Refractory Hypoxemia (PaO2/FiO2 ≤ 300)</td>
+            <td class="p-2.5 text-teal-900 font-medium">Mechanical Ventilation with PEEP</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">VI. ENT/Eye</td>
+            <td class="p-2.5 border-r border-slate-200 font-semibold">Retinal Detachment</td>
+            <td class="p-2.5 border-r border-slate-200 text-rose-700 font-medium">Dark curtain falling over vision, flashes</td>
+            <td class="p-2.5 text-teal-900 font-medium">Strict bed rest, eye patch, surgical repair</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">VII. Burns</td>
+            <td class="p-2.5 border-r border-slate-200 font-semibold">Parkland Formula</td>
+            <td class="p-2.5 border-r border-slate-200 text-rose-700 font-medium">4 mL × kg × %TBSA</td>
+            <td class="p-2.5 text-teal-900 font-medium"> Give 50% in 1st 8h, 50% in next 16h</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ACCORDION CONTENT FOR ALL 7 UNITS -->
+    <div id="vivaList" class="space-y-3 text-xs">
+
+      <!-- UNIT I -->
+      <details class="unit-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm" open>
+        <summary class="font-bold text-teal-800 cursor-pointer text-sm">🦴 Unit I: Orthopedic Nursing</summary>
+        <div class="mt-2 space-y-2 text-slate-700 border-t pt-2">
+          <p><strong>Soft Tissue Injury:</strong> Damage to muscles, ligaments, and tendons. Managed using the <strong>RICE</strong> protocol (Rest, Ice, Compression, Elevation).</p>
+          <p><strong>Osteomyelitis:</strong> Severe infection of the bone bone marrow, most commonly caused by <em>Staphylococcus aureus</em>.</p>
+          <p><strong>Rheumatoid Arthritis vs Osteoarthritis:</strong> RA is a systemic autoimmune inflammation of the synovial membrane; OA is a non-inflammatory wear-and-tear of articular cartilage.</p>
+          <p><strong>Paget's Disease (Osteitis Deformans):</strong> Disorder of localized bone remodeling characterized by excessive bone resorption followed by disorganized, weak bone formation.</p>
+          <p><strong>Compartment Syndrome:</strong> Elevated pressure within a myofascial compartment compromising circulation. Signified by the <strong>6 Ps</strong>: Pain, Paresthesia, Pallor, Paralysis, Pulselessness, Poikilothermia.</p>
+        </div>
+      </details>
+
+      <!-- UNIT II -->
+      <details class="unit-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+        <summary class="font-bold text-teal-800 cursor-pointer text-sm">🩸 Unit II: Endocrine Nursing</summary>
+        <div class="mt-2 space-y-2 text-slate-700 border-t pt-2">
+          <p><strong>Diabetic Ketoacidosis (DKA):</strong> Life-threatening complication of Type 1 DM characterized by Hyperglycemia (&gt;250 mg/dL), Metabolic Acidosis (pH &lt;7.30), and Ketonuria. Hallmark sign: <em>Kussmaul breathing</em> (deep, rapid breathing with fruity odor).</p>
+          <p><strong>Hypocalcemia Signs (Post-Thyroidectomy):</strong> 
+            <br>• <em>Trousseau's Sign:</em> Carpopedal spasm induced by inflating a BP cuff above systolic pressure.
+            <br>• <em>Chvostek's Sign:</em> Twitching of facial muscles in response to tapping over the facial nerve.
+          </p>
+          <p><strong>Addisonian Crisis:</strong> Acute adrenal insufficiency caused by deficiency of cortisol/aldosterone. Characterized by severe hypotension, hyponatremia, and hyperkalemia.</p>
+          <p><strong>Dawn Phenomenon vs Somogyi Effect:</strong> Dawn = Early morning hyperglycemia due to natural cortisol release; Somogyi = Rebound morning hyperglycemia triggered by nocturnal (2 AM) hypoglycemia.</p>
+        </div>
+      </details>
+
+      <!-- UNIT III -->
+      <details class="unit-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+        <summary class="font-bold text-teal-800 cursor-pointer text-sm">🧠 Unit III: Neurological Nursing</summary>
+        <div class="mt-2 space-y-2 text-slate-700 border-t pt-2">
+          <p><strong>Normal ICP & Cushing's Triad:</strong> Normal intracranial pressure is <strong>5 to 15 mmHg</strong>. Increased ICP leads to Cushing's Triad: 1. Systolic HTN with widened pulse pressure, 2. Bradycardia, 3. Bradypnea/Irregular respirations.</p>
+          <p><strong>Meningitis Diagnostic Signs:</strong> 
+            <br>• <em>Kernig's Sign:</em> Resistance or pain when extending the knee with the hip flexed at 90°.
+            <br>• <em>Brudzinski's Sign:</em> Involuntary flexion of hips and knees when the neck is passively flexed.
+          </p>
+          <p><strong>Guillain-Barré Syndrome (GBS):</strong> Autoimmune destruction of myelin sheaths on peripheral nerves leading to <em>ascending symmetrical motor weakness/paralysis</em>.</p>
+          <p><strong>Myasthenia Gravis (MG):</strong> Autoimmune disorder destroying acetylcholine receptors at the neuromuscular junction causing fatigable muscle weakness. Diagnosed with the <em>Tensilon (Edrophonium) test</em>.</p>
+        </div>
+      </details>
+
+      <!-- UNIT IV -->
+      <details class="unit-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+        <summary class="font-bold text-teal-800 cursor-pointer text-sm">🫀 Unit IV: Cardiovascular Disorders</summary>
+        <div class="mt-2 space-y-2 text-slate-700 border-t pt-2">
+          <p><strong>Myocardial Infarction (MI):</strong> Irreversible necrosis of heart muscle secondary to prolonged ischemia. Gold-standard diagnostic biomarkers: <strong>Troponin I & T</strong> (elevate within 3-4 hours).</p>
+          <p><strong>Virchow's Triad (DVT Risk):</strong> 1. Venous stasis, 2. Endothelial damage, 3. Hypercoagulability.</p>
+          <p><strong>Infective Endocarditis Stigmata:</strong> Osler's nodes (painful nodules on fingers/toes), Janeway lesions (painless flat erythematous macules on palms/soles), and Roth's spots (retinal hemorrhages).</p>
+          <p><strong>MONA Emergency Protocol:</strong> Morphine, Oxygen, Nitroglycerin, Aspirin.</p>
+        </div>
+      </details>
+
+      <!-- UNIT V -->
+      <details class="unit-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+        <summary class="font-bold text-teal-800 cursor-pointer text-sm">🫁 Unit V: Pulmonary Nursing</summary>
+        <div class="mt-2 space-y-2 text-slate-700 border-t pt-2">
+          <p><strong>Acute Respiratory Distress Syndrome (ARDS):</strong> Non-cardiogenic pulmonary edema characterized by severe dyspnea and <em>Refractory Hypoxemia</em> (low PaO2 despite 100% O2 administration; PaO2/FiO2 ratio &le; 300 mmHg).</p>
+          <p><strong>COPD Components:</strong> 
+            <br>• <em>Chronic Bronchitis ("Blue Bloater"):</em> Productive cough for &ge;3 months in 2 consecutive years.
+            <br>• <em>Emphysema ("Pink Puffer"):</em> Destruction of alveolar walls leading to air trapping and barrel chest.
+          </p>
+          <p><strong>Pneumonia Classic Physical Finding:</strong> Increased tactile fremitus, dullness to percussion over consolidation, and rust-colored sputum (Streptococcus pneumoniae).</p>
+        </div>
+      </details>
+
+      <!-- UNIT VI -->
+      <details class="unit-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+        <summary class="font-bold text-teal-800 cursor-pointer text-sm">👁️ Unit VI: Eye & ENT Nursing</summary>
+        <div class="mt-2 space-y-2 text-slate-700 border-t pt-2">
+          <p><strong>Meniere's Disease Triad:</strong> 1. Episodic Vertigo, 2. Sensorineural Hearing Loss, 3. Tinnitus (along with a feeling of fullness in the inner ear).</p>
+          <p><strong>Cataract vs Retinal Detachment:</strong> 
+            <br>• <em>Cataract:</em> Painless, gradual clouding of the crystalline lens.
+            <br>• <em>Retinal Detachment:</em> Sudden, painless vision loss described as a "dark shadow or curtain coming down" over the visual field with light flashes (photopsia) and floaters.
+          </p>
+        </div>
+      </details>
+
+      <!-- UNIT VII -->
+      <details class="unit-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+        <summary class="font-bold text-teal-800 cursor-pointer text-sm">🔥 Unit VII: Burns Management</summary>
+        <div class="mt-2 space-y-2 text-slate-700 border-t pt-2">
+          <p><strong>Parkland Formula (Fluid Resuscitation):</strong></p>
+          <div class="bg-teal-50 border border-teal-200 p-2 rounded text-teal-900 font-mono font-bold text-[11px] my-1">
+            Total Lactated Ringer's (24 Hours) = 4 mL × Weight (kg) × % TBSA Burned
+          </div>
+          <p><em>Administration Rule:</em> Administer <strong>50%</strong> of total volume in the first 8 hours (calculated from time of injury), and the remaining <strong>50%</strong> over the next 16 hours.</p>
+          <p><strong>Rule of Nines (Adults):</strong> Head & Neck = 9%, Each Arm = 9%, Anterior Trunk = 18%, Posterior Trunk = 18%, Each Leg = 18%, Perineum = 1%.</p>
+          <p><strong>Burn Depth Classification:</strong> 1st Degree (Superficial - painful, dry), 2nd Degree (Partial Thickness - blisters, extremely painful), 3rd Degree (Full Thickness - leathery eschar, painless due to destroyed nerve endings).</p>
+        </div>
+      </details>
+
+    </div>
+  </main>
+
+  <!-- JAVASCRIPT FOR LIVE SEARCH FILTER -->
+  <script>
+    function filterContent() {
+      const input = document.getElementById('vivaSearch').value.toLowerCase();
+      const cards = document.getElementsByClassName('unit-card');
+
+      for (let i = 0; i < cards.length; i++) {
+        const text = cards[i].innerText.toLowerCase();
+        if (text.includes(input)) {
+          cards[i].style.display = "";
+          cards[i].open = true; // Automatically expand matching units
+        } else {
+          cards[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
