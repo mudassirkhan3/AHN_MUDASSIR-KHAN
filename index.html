@@ -1,657 +1,469 @@
-<!DOCTYPE html>
+same as it is but cut vector diagraom from this code and replace accuuate pictures of relevent procudre only othing  except this  only    <!DOCTYPE html>
 <html lang="en" class="h-full bg-slate-100">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AHN-II Clinical & OSPE Portal | Mudassir Hussain Khan</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    @keyframes pulse-slow {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.85; transform: scale(1.02); }
-    }
-    @keyframes ecg-scan {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-    .animate-ecg {
-      animation: ecg-scan 2.5s linear infinite;
-    }
-    /* Hide scrollbars for crisp UI */
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AHN-II Clinical & OSPE Portal | Mudassir Hussain Khan</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    @keyframes ecg-scan {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .animate-ecg {
+      animation: ecg-scan 2.5s linear infinite;
+    }
+    /* Hide scrollbars for crisp UI */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
 </head>
 <body class="h-full text-slate-800 font-sans flex flex-col antialiased selection:bg-teal-500 selection:text-white">
 
-  <!-- TOP HEADER / NAVBAR -->
-  <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 gap-2">
-        
-        <!-- Left: Mobile Menu Toggle & Brand Title -->
-        <div class="flex items-center space-x-3">
-          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-lg bg-slate-800 text-teal-400 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
-            <i data-lucide="menu" class="w-6 h-6"></i>
-          </button>
-          
-          <div class="bg-gradient-to-tr from-teal-600 to-emerald-500 p-2 rounded-xl text-white shadow-md flex-shrink-0">
-            <i data-lucide="activity" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h1 class="font-extrabold text-base sm:text-lg leading-tight tracking-tight text-white">AHN-II Clinical Suite</h1>
-              <span class="hidden sm:inline-block bg-teal-500/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-teal-500/30">OSPE & Viva Ready</span>
-            </div>
-            <p class="text-[11px] text-slate-400 font-medium truncate max-w-[200px] sm:max-w-none">
-              Lead Author & Curator: <span class="text-teal-400 font-bold">Mudassir Hussain Khan</span>
-            </p>
-          </div>
-        </div>
+  <!-- TOP HEADER / NAVBAR -->
+  <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-2">
+        
+        <!-- Left: Mobile Menu Toggle & Brand Title -->
+        <div class="flex items-center space-x-3">
+          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-lg bg-slate-800 text-teal-400 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+          
+          <div class="bg-gradient-to-tr from-teal-600 to-emerald-500 p-2 rounded-xl text-white shadow-md flex-shrink-0">
+            <i data-lucide="activity" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="font-extrabold text-base sm:text-lg leading-tight tracking-tight text-white">AHN-II Clinical Suite</h1>
+              <span class="hidden sm:inline-block bg-teal-500/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-teal-500/30">OSPE & Viva Ready</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-medium truncate max-w-[200px] sm:max-w-none">
+              Lead Author & Curator: <span class="text-teal-400 font-bold">Mudassir Hussain Khan</span>
+            </p>
+          </div>
+        </div>
 
-        <!-- Center: Search Input (Desktop) -->
-        <div class="relative w-64 sm:w-80 hidden md:block">
-          <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search procedures, OSPE points..." 
-            class="w-full pl-9 pr-4 py-1.5 text-xs sm:text-sm rounded-full bg-slate-800 text-slate-100 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder-slate-400 transition-all">
-          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
-        </div>
+        <!-- Center: Search Input (Desktop) -->
+        <div class="relative w-64 sm:w-80 hidden md:block">
+          <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search procedures, OSPE points..." 
+            class="w-full pl-9 pr-4 py-1.5 text-xs sm:text-sm rounded-full bg-slate-800 text-slate-100 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder-slate-400 transition-all">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+        </div>
 
-        <!-- Right: Course Meta & Student Badge -->
-        <div class="flex items-center space-x-2">
-          <div class="hidden lg:flex items-center space-x-2 text-xs bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/80 text-slate-300">
-            <i data-lucide="graduation-cap" class="w-4 h-4 text-teal-400"></i>
-            <span>BS Nursing • <strong>4th Semester</strong></span>
-          </div>
-          <span class="text-[11px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Viva Exam Mode
-          </span>
-        </div>
+        <!-- Right: Course Meta & Student Badge -->
+        <div class="flex items-center space-x-2">
+          <div class="hidden lg:flex items-center space-x-2 text-xs bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/80 text-slate-300">
+            <i data-lucide="graduation-cap" class="w-4 h-4 text-teal-400"></i>
+            <span>BS Nursing • <strong>4th Semester</strong></span>
+          </div>
+          <span class="text-[11px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Viva Exam Mode
+          </span>
+        </div>
 
-      </div>
+      </div>
 
-      <!-- CATEGORY NAVIGATION TABS -->
-      <nav class="flex space-x-1 overflow-x-auto py-2 border-t border-slate-800/80 text-xs no-scrollbar">
-        <button onclick="filterCategory('all')" id="tab-all" class="cat-btn px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-all bg-teal-600 text-white shadow-sm">
-          All Topics (6)
-        </button>
-        <button onclick="filterCategory('airway')" id="tab-airway" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-          Airway & Respiratory
-        </button>
-        <button onclick="filterCategory('taps')" id="tab-taps" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-          Invasive Taps & Drainage
-        </button>
-      </nav>
-    </div>
-  </header>
+      <!-- CATEGORY NAVIGATION TABS -->
+      <nav class="flex space-x-1 overflow-x-auto py-2 border-t border-slate-800/80 text-xs no-scrollbar">
+        <button onclick="filterCategory('all')" id="tab-all" class="cat-btn px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-all bg-teal-600 text-white shadow-sm">
+          All Topics (20)
+        </button>
+        <button onclick="filterCategory('airway')" id="tab-airway" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Airway & Respiratory
+        </button>
+        <button onclick="filterCategory('taps')" id="tab-taps" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Invasive Taps & Drainage
+        </button>
+        <button onclick="filterCategory('radiology')" id="tab-radiology" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Radiology & Diagnostics
+        </button>
+        <button onclick="filterCategory('ortho')" id="tab-ortho" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Orthopedics & Immobilization
+        </button>
+        <button onclick="filterCategory('sensory')" id="tab-sensory" class="cat-btn px-3 py-1.5 rounded-lg font-medium whitespace-nowrap text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+          Sensory, Cardiac & Specialized
+        </button>
+      </nav>
+    </div>
+  </header>
 
-  <!-- MOBILE SEARCH BAR -->
-  <div class="p-2.5 bg-slate-200/80 border-b border-slate-300 md:hidden">
-    <div class="relative w-full">
-      <input type="text" id="mobileSearchInput" oninput="handleSearch(this.value)" placeholder="Search clinical procedures..." 
-        class="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-white text-slate-800 border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm">
-      <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
-    </div>
-  </div>
+  <!-- MOBILE SEARCH BAR -->
+  <div class="p-2.5 bg-slate-200/80 border-b border-slate-300 md:hidden">
+    <div class="relative w-full">
+      <input type="text" id="mobileSearchInput" oninput="handleSearch(this.value)" placeholder="Search 20 clinical procedures..." 
+        class="w-full pl-9 pr-4 py-2 text-xs rounded-lg bg-white text-slate-800 border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm">
+      <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+    </div>
+  </div>
 
-  <!-- MAIN LAYOUT -->
-  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
+  <!-- MAIN LAYOUT -->
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
 
-    <!-- OVERLAY BACKDROP FOR MOBILE DRAWER -->
-    <div id="drawerBackdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity"></div>
+    <!-- OVERLAY BACKDROP FOR MOBILE DRAWER -->
+    <div id="drawerBackdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity"></div>
 
-    <!-- LEFT SIDEBAR: PROCEDURE LIST DRAWER -->
-    <aside id="sidebarDrawer" class="fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto w-80 lg:w-auto lg:col-span-4 bg-white lg:bg-transparent shadow-2xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col h-full lg:h-[calc(100vh-140px)] lg:sticky lg:top-20">
-      
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 flex flex-col h-full overflow-hidden">
-        <div class="p-3.5 border-b border-slate-100 flex justify-between items-center bg-slate-50/80">
-          <div class="flex items-center gap-2">
-            <i data-lucide="book-marked" class="w-4 h-4 text-teal-600"></i>
-            <h2 class="font-bold text-slate-800 text-xs tracking-wider uppercase">Procedure Index</h2>
-          </div>
-          <div class="flex items-center gap-2">
-            <span id="procedureCount" class="text-[11px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-full">6 Topics</span>
-            <button onclick="toggleMobileSidebar()" class="lg:hidden text-slate-400 hover:text-slate-600 p-1">
-              <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-          </div>
-        </div>
+    <!-- LEFT SIDEBAR: PROCEDURE LIST DRAWER -->
+    <aside id="sidebarDrawer" class="fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto w-80 lg:w-auto lg:col-span-4 bg-white lg:bg-transparent shadow-2xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col h-full lg:h-[calc(100vh-140px)] lg:sticky lg:top-20">
+      
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 flex flex-col h-full overflow-hidden">
+        <div class="p-3.5 border-b border-slate-100 flex justify-between items-center bg-slate-50/80">
+          <div class="flex items-center gap-2">
+            <i data-lucide="book-marked" class="w-4 h-4 text-teal-600"></i>
+            <h2 class="font-bold text-slate-800 text-xs tracking-wider uppercase">Procedure Index</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="procedureCount" class="text-[11px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-full">20 Topics</span>
+            <button onclick="toggleMobileSidebar()" class="lg:hidden text-slate-400 hover:text-slate-600 p-1">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
 
-        <!-- LIST CONTAINER -->
-        <div id="procedureList" class="divide-y divide-slate-100 overflow-y-auto flex-grow p-1">
-          <!-- Dynamically populated -->
-        </div>
-      </div>
-    </aside>
+        <!-- LIST CONTAINER -->
+        <div id="procedureList" class="divide-y divide-slate-100 overflow-y-auto flex-grow p-1">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </aside>
 
-    <!-- RIGHT CONTENT AREA -->
-    <main class="lg:col-span-8 space-y-5">
-      
-      <!-- PROCEDURE HEADER CARD -->
-      <div class="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-slate-200/80 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
-        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-          <div>
-            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-              <span id="procCategory" class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 rounded-md border border-teal-200">
-                Category
-              </span>
-              <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-semibold border border-slate-200">BSN 4th Semester</span>
-            </div>
-            <h1 id="procTitle" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">Select a Procedure</h1>
-            <p id="procSub" class="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">Choose any clinical topic from the list to review step-by-step techniques and OSPE viva questions.</p>
-          </div>
-          <div class="flex-shrink-0">
-            <span id="procOspe" class="bg-amber-50 text-amber-800 border border-amber-200 text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 shadow-sm">
-              <i data-lucide="award" class="w-4 h-4 text-amber-600"></i> High-Yield OSPE Station
-            </span>
-          </div>
-        </div>
-      </div>
+    <!-- RIGHT CONTENT AREA -->
+    <main class="lg:col-span-8 space-y-5">
+      
+      <!-- PROCEDURE HEADER CARD -->
+      <div class="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-slate-200/80 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span id="procCategory" class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 rounded-md border border-teal-200">
+                Category
+              </span>
+              <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-semibold border border-slate-200">BSN 4th Semester</span>
+            </div>
+            <h1 id="procTitle" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">Select a Procedure</h1>
+            <p id="procSub" class="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">Choose any clinical topic from the list to review step-by-step techniques and OSPE viva questions.</p>
+          </div>
+          <div class="flex-shrink-0">
+            <span id="procOspe" class="bg-amber-50 text-amber-800 border border-amber-200 text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 shadow-sm">
+              <i data-lucide="award" class="w-4 h-4 text-amber-600"></i> High-Yield OSPE Station
+            </span>
+          </div>
+        </div>
+      </div>
 
-      <!-- ACCURATE PROCEDURE PICTURE DISPLAY -->
-      <div class="bg-slate-900 rounded-xl shadow-md border border-slate-800 overflow-hidden">
-        <div class="px-4 py-2.5 bg-slate-950 border-b border-slate-800 flex justify-between items-center text-slate-300 text-xs">
-          <span class="flex items-center gap-2 font-mono text-[11px]">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span class="text-slate-200 font-semibold">Clinical Medical Photograph</span>
-          </span>
-        </div>
-        
-        <!-- Image Container -->
-        <div id="visualizerCanvas" class="w-full h-64 sm:h-80 bg-slate-950 flex items-center justify-center relative select-none">
-          <img id="procImage" src="" alt="Clinical Procedure Illustration" class="w-full h-full object-cover">
-        </div>
+      <!-- ANIMATED VISUAL DIAGRAM CANVAS -->
+      <div class="bg-slate-900 rounded-xl shadow-md border border-slate-800 overflow-hidden">
+        <div class="px-4 py-2.5 bg-slate-950 border-b border-slate-800 flex justify-between items-center text-slate-300 text-xs">
+          <span class="flex items-center gap-2 font-mono text-[11px]">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-slate-200 font-semibold">Anatomical Vector Diagram</span>
+          </span>
+          <button onclick="resetAnimation()" class="hover:text-white flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors">
+            <i data-lucide="rotate-ccw" class="w-3 h-3 text-teal-400"></i> Replay Motion
+          </button>
+        </div>
+        
+        <!-- SVG Visualizer Container -->
+        <div id="visualizerCanvas" class="w-full h-60 sm:h-72 bg-slate-950 flex items-center justify-center relative p-4 text-slate-400 select-none">
+          <!-- Rendered dynamically -->
+        </div>
 
-        <div class="px-4 py-2 bg-slate-900/90 text-[11px] text-slate-400 border-t border-slate-800/80 flex items-center justify-between">
-          <span id="visualCaption" class="truncate max-w-[80%]">Accurate clinical procedure picture representation.</span>
-          <span class="text-slate-500 font-mono text-[10px]">HN-II Standard</span>
-        </div>
-      </div>
+        <div class="px-4 py-2 bg-slate-900/90 text-[11px] text-slate-400 border-t border-slate-800/80 flex items-center justify-between">
+          <span id="visualCaption" class="truncate max-w-[80%]">Anatomical and equipment vector representation.</span>
+          <span class="text-slate-500 font-mono text-[10px]">HN-II Standard</span>
+        </div>
+      </div>
 
-      <!-- CLINICAL STUDY TABS -->
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 overflow-hidden">
-        
-        <!-- TAB BUTTONS -->
-        <div class="flex border-b border-slate-200 bg-slate-50 text-xs sm:text-sm overflow-x-auto no-scrollbar">
-          <button onclick="switchDetailTab('prep')" id="dtab-prep" class="detail-tab flex-1 py-3 px-3 font-bold text-teal-600 border-b-2 border-teal-600 transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
-            <i data-lucide="clipboard-list" class="w-4 h-4"></i> Prep & Position
-          </button>
-          <button onclick="switchDetailTab('steps')" id="dtab-steps" class="detail-tab flex-1 py-3 px-3 font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Step-by-Step
-          </button>
-          <button onclick="switchDetailTab('safety')" id="dtab-safety" class="detail-tab flex-1 py-3 px-3 font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
-            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Safety Alerts
-          </button>
-          <button onclick="switchDetailTab('viva')" id="dtab-viva" class="detail-tab flex-1 py-3 px-3 font-semibold text-amber-600 hover:text-amber-700 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap bg-amber-50/50">
-            <i data-lucide="help-circle" class="w-4 h-4"></i> Viva Questions
-          </button>
-        </div>
+      <!-- CLINICAL STUDY TABS -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 overflow-hidden">
+        
+        <!-- TAB BUTTONS -->
+        <div class="flex border-b border-slate-200 bg-slate-50 text-xs sm:text-sm overflow-x-auto no-scrollbar">
+          <button onclick="switchDetailTab('prep')" id="dtab-prep" class="detail-tab flex-1 py-3 px-3 font-bold text-teal-600 border-b-2 border-teal-600 transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="clipboard-list" class="w-4 h-4"></i> Prep & Position
+          </button>
+          <button onclick="switchDetailTab('steps')" id="dtab-steps" class="detail-tab flex-1 py-3 px-3 font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Step-by-Step
+          </button>
+          <button onclick="switchDetailTab('safety')" id="dtab-safety" class="detail-tab flex-1 py-3 px-3 font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Safety Alerts
+          </button>
+          <button onclick="switchDetailTab('viva')" id="dtab-viva" class="detail-tab flex-1 py-3 px-3 font-semibold text-amber-600 hover:text-amber-700 border-b-2 border-transparent transition-colors flex justify-center items-center gap-1.5 whitespace-nowrap bg-amber-50/50">
+            <i data-lucide="help-circle" class="w-4 h-4"></i> Viva Questions
+          </button>
+        </div>
 
-        <!-- TAB CONTENT PANELS -->
-        <div class="p-4 sm:p-6">
-          
-          <!-- PANEL 1: PREPARATION & POSITIONING -->
-          <div id="panel-prep" class="detail-panel space-y-4">
-            <div>
-              <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Primary Objective & Clinical Rationale</h3>
-              <p id="procObjective" class="text-slate-700 text-xs sm:text-sm leading-relaxed">Select a topic to display specific learning outcomes.</p>
-            </div>
-            <hr class="border-slate-100">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200/60">
-                <h4 class="text-xs font-bold text-slate-800 uppercase mb-2 flex items-center gap-1.5">
-                  <i data-lucide="user-check" class="w-4 h-4 text-teal-600"></i> Patient Positioning
-                </h4>
-                <p id="procPositioning" class="text-xs text-slate-600 leading-relaxed">Position instructions will be rendered here.</p>
-              </div>
-              <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200/60">
-                <h4 class="text-xs font-bold text-slate-800 uppercase mb-2 flex items-center gap-1.5">
-                  <i data-lucide="package" class="w-4 h-4 text-teal-600"></i> Equipment Checklist
-                </h4>
-                <ul id="procEquipment" class="text-xs text-slate-600 space-y-1 list-disc pl-4">
-                  <li>Equipment list will populate here.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <!-- TAB CONTENT PANELS -->
+        <div class="p-4 sm:p-6">
+          
+          <!-- PANEL 1: PREPARATION & POSITIONING -->
+          <div id="panel-prep" class="detail-panel space-y-4">
+            <div>
+              <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Primary Objective & Clinical Rationale</h3>
+              <p id="procObjective" class="text-slate-700 text-xs sm:text-sm leading-relaxed">Select a topic to display specific learning outcomes.</p>
+            </div>
+            <hr class="border-slate-100">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200/60">
+                <h4 class="text-xs font-bold text-slate-800 uppercase mb-2 flex items-center gap-1.5">
+                  <i data-lucide="user-check" class="w-4 h-4 text-teal-600"></i> Patient Positioning
+                </h4>
+                <p id="procPositioning" class="text-xs text-slate-600 leading-relaxed">Position instructions will be rendered here.</p>
+              </div>
+              <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200/60">
+                <h4 class="text-xs font-bold text-slate-800 uppercase mb-2 flex items-center gap-1.5">
+                  <i data-lucide="package" class="w-4 h-4 text-teal-600"></i> Equipment Checklist
+                </h4>
+                <ul id="procEquipment" class="text-xs text-slate-600 space-y-1 list-disc pl-4">
+                  <li>Equipment list will populate here.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-          <!-- PANEL 2: STEP BY STEP TECHNIQUE -->
-          <div id="panel-steps" class="detail-panel hidden space-y-3">
-            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Sequential Procedure Checklist</h3>
-            <div id="procStepsContainer" class="space-y-2.5">
-              <!-- Steps populated dynamically -->
-            </div>
-          </div>
+          <!-- PANEL 2: STEP BY STEP TECHNIQUE -->
+          <div id="panel-steps" class="detail-panel hidden space-y-3">
+            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Sequential Procedure Checklist</h3>
+            <div id="procStepsContainer" class="space-y-2.5">
+              <!-- Steps populated dynamically -->
+            </div>
+          </div>
 
-          <!-- PANEL 3: SAFETY ALERTS & COMPLICATIONS -->
-          <div id="panel-safety" class="detail-panel hidden space-y-4">
-            <div class="bg-amber-50/80 border-l-4 border-amber-500 p-3.5 rounded-r-lg">
-              <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1 flex items-center gap-2">
-                <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600"></i> Critical Safety Rules (OSPE Points)
-              </h4>
-              <p id="procSafetyAlerts" class="text-xs text-amber-800 leading-relaxed font-medium">Critical safety rules to avoid OSPE point deductions.</p>
-            </div>
-            
-            <div>
-              <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Complications & Emergency Interventions</h3>
-              <div id="procComplications" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <!-- Complications populated dynamically -->
-              </div>
-            </div>
-          </div>
+          <!-- PANEL 3: SAFETY ALERTS & COMPLICATIONS -->
+          <div id="panel-safety" class="detail-panel hidden space-y-4">
+            <div class="bg-amber-50/80 border-l-4 border-amber-500 p-3.5 rounded-r-lg">
+              <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600"></i> Critical Safety Rules (OSPE Points)
+              </h4>
+              <p id="procSafetyAlerts" class="text-xs text-amber-800 leading-relaxed font-medium">Critical safety rules to avoid OSPE point deductions.</p>
+            </div>
+            
+            <div>
+              <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Complications & Emergency Interventions</h3>
+              <div id="procComplications" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <!-- Complications populated dynamically -->
+              </div>
+            </div>
+          </div>
 
-          <!-- PANEL 4: OSPE VIVA EXAM PRACTICE -->
-          <div id="panel-viva" class="detail-panel hidden space-y-4">
-            <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 p-3.5 rounded-lg border border-amber-200/80 flex items-center justify-between">
-              <div>
-                <h4 class="text-xs font-bold text-amber-900 uppercase">OSPE Viva Prep Module</h4>
-                <p class="text-[11px] text-amber-700">Click on any question card to reveal the expert response for viva examinations.</p>
-              </div>
-              <span class="text-xs bg-amber-600 text-white px-2.5 py-1 rounded-md font-bold shadow-sm">Viva Exam</span>
-            </div>
+          <!-- PANEL 4: OSPE VIVA EXAM PRACTICE -->
+          <div id="panel-viva" class="detail-panel hidden space-y-4">
+            <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 p-3.5 rounded-lg border border-amber-200/80 flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-amber-900 uppercase">OSPE Viva Prep Module</h4>
+                <p class="text-[11px] text-amber-700">Click on any question card to reveal the expert response for viva examinations.</p>
+              </div>
+              <span class="text-xs bg-amber-600 text-white px-2.5 py-1 rounded-md font-bold shadow-sm">Viva Exam</span>
+            </div>
 
-            <div id="procVivaContainer" class="space-y-3">
-              <!-- Viva questions populated dynamically -->
-            </div>
-          </div>
+            <div id="procVivaContainer" class="space-y-3">
+              <!-- Viva questions populated dynamically -->
+            </div>
+          </div>
 
-        </div>
+        </div>
 
-      </div>
+      </div>
 
-    </main>
+    </main>
 
-  </div>
+  </div>
 
-  <!-- FOOTER -->
-  <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-8">
-    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-      <p class="text-slate-200 font-semibold text-sm">Adult Health Nursing-II (AHN-II) Clinical & OSPE Interactive Portal</p>
-      <p class="text-slate-400">Curated & Developed by: <strong class="text-teal-400">Mudassir Hussain Khan</strong> • BS Nursing Class Representative</p>
-      <p class="text-slate-500 text-[11px]">Designed for Desktop & Mobile • Single File Web App</p>
-    </div>
-  </footer>
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-8">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="text-slate-200 font-semibold text-sm">Adult Health Nursing-II (AHN-II) Clinical & OSPE Interactive Portal</p>
+      <p class="text-slate-400">Curated & Developed by: <strong class="text-teal-400">Mudassir Hussain Khan</strong> • BS Nursing Class Representative</p>
+      <p class="text-slate-500 text-[11px]">Designed for Desktop & Mobile • Single File Web App</p>
+    </div>
+  </footer>
 
-  <!-- SCRIPT DATA & APP LOGIC -->
-  <script>
-    // DATABASE OF CLINICAL PROCEDURES WITH DIRECT RELEVANT PROCEDURE PICTURES
-    const proceduresData = [
-      {
-        id: 1,
-        title: "Tracheostomy Care",
-        category: "airway",
-        catName: "Airway & Respiratory",
-        objective: "Demonstrate proficiency in providing tracheostomy care, inner cannula cleaning, stoma dressing, and securing ties while maintaining sterile technique and airway patency.",
-        positioning: "Semi-Fowler's to High-Fowler's position (30° - 90°) to promote maximal lung expansion and reduce work of breathing.",
-        equipment: ["Tracheostomy care kit", "Sterile inner cannula / saline solution", "Pre-cut tracheostomy split sponge", "Sterile cotton applicators", "Velcro tracheostomy strap / ties", "Suction apparatus & PPE"],
-        steps: [
-          "Assess respiratory rate, SpO2, stoma skin integrity, and presence of pulmonary secretions.",
-          "Perform hand hygiene, don sterile PPE (mask with face shield, sterile gloves).",
-          "Unlock and remove disposable or reusable inner cannula with non-dominant hand.",
-          "Clean reusable inner cannula with hydrogen peroxide/saline, rinse thoroughly with sterile saline, and lock back into position.",
-          "Clean stoma site using sterile saline swabs in single outward strokes from stoma site outward.",
-          "Apply fresh pre-cut tracheostomy split dressing underneath the faceplate.",
-          "Secure new tracheostomy ties before removing old ties, allowing 1 to 2 fingers width space."
-        ],
-        safetyAlerts: "NEVER cut standard 4x4 gauze sponges around stoma as frayed cotton fibers can be aspirated! Always keep a replacement tracheostomy tube of same size and one size smaller at bedside for emergency re-intubation.",
-        complications: [
-          { name: "Accidental Decannulation", action: "Call for emergency help, extend neck, attempt reinsertion using obturator or use bag-valve-mask ventilations." },
-          { name: "Stoma Site Infection", action: "Maintain strict aseptic technique during dressing changes; report purulent discharge or spreading erythema." }
-        ],
-        viva: [
-          { q: "Why is a precut slit gauze used instead of cutting a standard gauze sponge?", a: "Cutting standard gauze leaves loose cotton threads that can enter the stoma and cause tracheal irritation, foreign body reaction, or airway obstruction." },
-          { q: "What crucial emergency items must always be present at a tracheostomy patient's bedside?", a: "An emergency tracheostomy tray, two spare tubes (one same size, one size smaller), obturator, resuscitation bag-valve mask, and functional suction unit." },
-          { q: "How tight should new tracheostomy ties be secured?", a: "They should be tight enough to prevent dislodgement, allowing exactly 1 to 2 fingers to fit snugly between the tie and the patient's neck." }
-        ],
-        imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        id: 2,
-        title: "Tracheal Suctioning",
-        category: "airway",
-        catName: "Airway & Respiratory",
-        objective: "Perform suctioning safely to clear tracheobronchial secretions, maintain airway patency, and avoid hypoxia or mucosal trauma.",
-        positioning: "Semi-Fowler's position for conscious patients; side-lying position for unconscious patients.",
-        equipment: ["Suction catheter kit (12-14 Fr)", "Suction source (100-120 mmHg for adults)", "Sterile gloves & lubricant", "100% Oxygen source"],
-        steps: [
-          "Hyperoxygenate patient with 100% O2 for 30 to 60 seconds prior to catheter insertion.",
-          "Don sterile gloves. Maintain dominant hand sterile and non-dominant hand clean.",
-          "Insert suction catheter gently without applying suction until resistance is felt or patient coughs, then pull back 1 cm.",
-          "Apply continuous/intermittent suction while gently rotating catheter upon withdrawal (maximum 10-15 seconds per pass).",
-          "Reoxygenate patient and allow 1 to 2 minutes rest between suction passes.",
-          "Reassess lung sounds, heart rate, and oxygen saturation."
-        ],
-        safetyAlerts: "Suctioning duration must NEVER exceed 10 to 15 seconds per pass. Continuous suctioning during insertion causes acute airway trauma and severe hypoxemia!",
-        complications: [
-          { name: "Vagal Bradycardia & Hypoxia", action: "Stop suctioning immediately, remove catheter, and supply 100% oxygen." },
-          { name: "Airway Mucosal Trauma", action: "Limit suction pressure to 100-120 mmHg in adults and never force insertion." }
-        ],
-        viva: [
-          { q: "What is the maximum duration for a single suctioning pass in adults?", a: "10 to 15 seconds. Exceeding this causes sudden hypoxia, dysrhythmias, and vagal stimulation." },
-          { q: "Why do we hyperoxygenate the patient before and after suctioning?", a: "To prevent suction-induced arterial hypoxemia and cardiac dysrhythmias during the procedure." },
-          { q: "What suction pressure range is recommended for adult patients?", a: "100 to 120 mmHg (never exceed 150 mmHg to avoid mucosal invagination)." }
-        ],
-        imageUrl: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        id: 3,
-        title: "Lumbar Puncture (LP) Assistance",
-        category: "taps",
-        catName: "Invasive Taps & Drainage",
-        objective: "Assist the clinician in spinal fluid collection, maintaining rigid lateral spinal positioning, and monitoring post-LP recovery.",
-        positioning: "Lateral recumbent 'fetal position' (flexed knees to chest, chin touching chest) or sitting upright leaning forward over bedside table.",
-        equipment: ["Sterile LP spinal tray", "Spinal needle with stylet (20-22G)", "Local anesthetic (Lidocaine 1%)", "4 CSF collection tubes", "Manometer & stopcock"],
-        steps: [
-          "Verify consent and baseline neurological status; ensure no signs of raised ICP.",
-          "Position patient at edge of bed in maximum spinal flexion (L3-L4 or L4-L5 space).",
-          "Hold patient securely during needle placement to prevent sudden movement.",
-          "Assist physician with opening pressure measurement via manometer.",
-          "Collect CSF sequentially into numbered specimen tubes 1 through 4.",
-          "Apply sterile occlusive dressing over puncture site post-procedure.",
-          "Instruct patient to maintain flat supine position for 4-6 hours post-procedure."
-        ],
-        safetyAlerts: "Perform LP with extreme caution if intracranial pressure (ICP) is elevated due to risk of fatal brainstem herniation!",
-        complications: [
-          { name: "Post-Dural Puncture Headache", action: "Keep patient strictly flat supine, encourage oral fluids, and administer prescribed analgesics." },
-          { name: "CSF Leakage at Site", action: "Monitor dressing for clear fluid drainage; notify provider if persistent." }
-        ],
-        viva: [
-          { q: "At what anatomical interspace is a lumbar puncture performed and why?", a: "L3-L4 or L4-L5 interspace. The spinal cord terminates at L1-L2, minimizing spinal cord injury risk." },
-          { q: "What position prevents post-lumbar puncture headache?", a: "Flat supine position for 4 to 6 hours to reduce CSF leakage from the dural puncture site." },
-          { q: "Why is tube #1 not usually sent for microbiological culture?", a: "Tube #1 is most likely to contain skin contaminants or blood from a traumatic tap." }
-        ],
-        imageUrl: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        id: 4,
-        title: "Thoracentesis Assistance",
-        category: "taps",
-        catName: "Invasive Taps & Drainage",
-        objective: "Assist with aspiration of pleural cavity fluid, maintaining sterile technique, monitoring lung re-expansion, and preventing pneumothorax.",
-        positioning: "Upright sitting position on edge of bed, leaning forward with arms resting on an overbed table.",
-        equipment: ["Thoracentesis kit", "Local anesthetic", "Large-gauge thoracentesis needle/catheter", "Evacuated drainage bottles", "Sterile occlusive dressing"],
-        steps: [
-          "Confirm chest X-ray or ultrasound location of pleural effusion.",
-          "Position patient leaning forward over table; instruct patient NOT to cough or move abruptly.",
-          "Assist physician with skin prep, sterile draping, and local anesthetic infiltration.",
-          "Connect drainage catheter to vacuum bottles and monitor fluid rate.",
-          "Do NOT remove more than 1,000 to 1,500 mL of fluid in a single session.",
-          "Apply airtight occlusive dressing upon needle removal.",
-          "Obtain post-procedure chest X-ray to confirm lung expansion and rule out pneumothorax."
-        ],
-        safetyAlerts: "Removing more than 1,500 mL of fluid in one session can cause sudden re-expansion pulmonary edema and severe hypovolemia!",
-        complications: [
-          { name: "Pneumothorax", action: "Monitor for acute dyspnea, tachypnea, or diminished breath sounds; prepare for chest tube insertion." },
-          { name: "Re-expansion Pulmonary Edema", action: "Cap drainage at 1,000-1,500 mL max; monitor for cough with pink frothy sputum." }
-        ],
-        viva: [
-          { q: "Why is pleural fluid removal capped at 1,000 to 1,500 mL at a time?", a: "To prevent re-expansion pulmonary edema and severe circulatory hypotension." },
-          { q: "What complications are signaled by sudden onset dyspnea after thoracentesis?", a: "Pneumothorax or hemothorax caused by accidental lung parenchyma or intercostal vessel puncture." },
-          { q: "How should the patient be positioned if pneumothorax is suspected?", a: "High Fowler's position to assist breathing while preparing for diagnostic X-ray and intervention." }
-        ],
-        imageUrl: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        id: 5,
-        title: "Paracentesis Assistance",
-        category: "taps",
-        catName: "Invasive Taps & Drainage",
-        objective: "Assist with peritoneal cavity fluid removal, monitor fluid dynamics, and prevent post-paracentesis circulatory collapse.",
-        positioning: "Upright sitting position in Fowler's or High Fowler's position in bed or chair.",
-        equipment: ["Paracentesis tray", "Trocar / drainage needle", "Collection vacuum bottles", "IV Albumin (for large volume)", "Sterile bandage"],
-        steps: [
-          "Instruct patient to VOID urine prior to procedure to prevent accidental bladder perforation!",
-          "Obtain baseline weight, abdominal girth, blood pressure, and heart rate.",
-          "Position patient comfortably in high Fowler's position.",
-          "Assist clinician with trocar insertion in lower quadrant of abdomen.",
-          "Monitor clear amber peritoneal fluid drainage and document total volume.",
-          "Apply firm pressure dressing over puncture site post-procedure.",
-          "Re-measure weight, abdominal girth, and monitor blood pressure closely."
-        ],
-        safetyAlerts: "Bladder MUST be emptied before inserting trocar. Rapid removal of ascites fluid causes massive fluid shift and hypovolemic shock!",
-        complications: [
-          { name: "Post-Paracentesis Shock", action: "Administer prescribed IV Albumin (6-8g per liter removed over 5L) to maintain vascular volume." },
-          { name: "Bladder Perforation", action: "Ensure patient voids before procedure; monitor for bloody urine or severe abdominal pain." }
-        ],
-        viva: [
-          { q: "Why MUST the patient void before paracentesis?", a: "An enlarged bladder can be accidentally punctured by the trocar during insertion into the lower abdomen." },
-          { q: "Why is IV Albumin administered after large-volume paracentesis (>5L)?", a: "Albumin increases intravascular oncotic pressure, preventing hypovolemic shock and renal failure." },
-          { q: "What key post-procedure measurements evaluate paracentesis effectiveness?", a: "Body weight loss and abdominal girth reduction." }
-        ],
-        imageUrl: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        id: 6,
-        title: "Chest Tube Insertion Assistance",
-        category: "taps",
-        catName: "Invasive Taps & Drainage",
-        objective: "Assist with chest tube placement and connection to a closed chest drainage unit (CDU) to restore negative intrapleural pressure.",
-        positioning: "Supine or semi-Fowler's position with patient's arm on affected side raised overhead.",
-        equipment: ["Chest tube kit (20-32 Fr)", "Closed chest drainage unit (CDU)", "Sterile water", "Vaseline petrolatum gauze & occlusive tape", "Chest tube clamps"],
-        steps: [
-          "Fill water-seal chamber of CDU with sterile water up to the 2 cm line mark.",
-          "Position patient with affected arm elevated behind head to expose 4th-5th intercostal space.",
-          "Assist clinician with aseptic prep, local anesthesia, incision, and tube placement.",
-          "Connect chest tube immediately to CDU drainage tubing; observe for tidaling.",
-          "Wrap insertion site with Vaseline gauze, cover with occlusive dressing, and tape securely.",
-          "Tape all tube connections along the line to prevent accidental disconnects.",
-          "Obtain immediate post-procedure chest X-ray to confirm tube placement."
-        ],
-        safetyAlerts: "NEVER clamp a chest tube without a physician order! Clamping traps air inside pleural space causing fatal tension pneumothorax.",
-        complications: [
-          { name: "Tension Pneumothorax", action: "Check for kinked tubing; ensure water seal is functioning and tracheal alignment is centered." },
-          { name: "Accidental Disconnection", action: "Submerge open chest tube 1-2 inches in a sterile saline bottle to recreate water seal immediately." }
-        ],
-        viva: [
-          { q: "What does continuous vigorous bubbling in the water-seal chamber indicate?", a: "An air leak in the system or patient's pleural space (normal is intermittent bubbling with expiration)." },
-          { q: "What should you do if the chest tube accidentally pulls out from the chest wall?", a: "Immediately cover site with sterile occlusive Vaseline gauze taped on THREE sides to allow air escape." }
-        ],
-        imageUrl: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
-      }
-    ];
-
-    let currentSelectedId = 1;
-    let activeCategory = 'all';
-
-    // INITIALIZATION
-    document.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-      renderProcedureList();
-      selectProcedure(1);
-    });
-
-    // MOBILE SIDEBAR TOGGLE
-    function toggleMobileSidebar() {
-      const sidebar = document.getElementById('sidebarDrawer');
-      const backdrop = document.getElementById('drawerBackdrop');
-      const isClosed = sidebar.classList.contains('-translate-x-full');
-
-      if (isClosed) {
-        sidebar.classList.remove('-translate-x-full');
-        backdrop.classList.remove('hidden');
-      } else {
-        sidebar.classList.add('-translate-x-full');
-        backdrop.classList.add('hidden');
-      }
-    }
-
-    // FILTER CATEGORY
-    function filterCategory(cat) {
-      activeCategory = cat;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.classList.remove('bg-teal-600', 'text-white', 'shadow-sm');
-        btn.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-slate-800');
-      });
-
-      const activeBtn = document.getElementById(`tab-${cat}`);
-      if (activeBtn) {
-        activeBtn.classList.add('bg-teal-600', 'text-white', 'shadow-sm');
-        activeBtn.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-slate-800');
-      }
-
-      renderProcedureList();
-    }
-
-    // HANDLE SEARCH
-    function handleSearch(query) {
-      renderProcedureList(query.toLowerCase());
-    }
-
-    // RENDER SIDEBAR LIST
-    function renderProcedureList(filterText = '') {
-      const listContainer = document.getElementById('procedureList');
-      listContainer.innerHTML = '';
-
-      const filtered = proceduresData.filter(proc => {
-        const matchesCategory = (activeCategory === 'all' || proc.category === activeCategory);
-        const matchesSearch = proc.title.toLowerCase().includes(filterText) || 
-                              proc.catName.toLowerCase().includes(filterText) ||
-                              proc.objective.toLowerCase().includes(filterText);
-        return matchesCategory && matchesSearch;
-      });
-
-      document.getElementById('procedureCount').innerText = `${filtered.length} Topics`;
-
-      if (filtered.length === 0) {
-        listContainer.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No procedures found matching search terms.</div>`;
-        return;
-      }
-
-      filtered.forEach(proc => {
-        const isSelected = proc.id === currentSelectedId;
-        const item = document.createElement('button');
-        item.onclick = () => {
-          selectProcedure(proc.id);
-          if (window.innerWidth < 1024) toggleMobileSidebar();
-        };
-        item.className = `w-full text-left p-3 rounded-lg transition-all flex items-start gap-3 border mb-1 ${
-          isSelected 
-            ? 'bg-teal-50/90 border-teal-300 shadow-sm' 
-            : 'bg-white border-transparent hover:bg-slate-50 hover:border-slate-200'
-        }`;
-
-        item.innerHTML = `
-          <div class="mt-0.5 p-1.5 rounded-md ${isSelected ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-500'}">
-            <i data-lucide="file-text" class="w-4 h-4"></i>
-          </div>
-          <div class="flex-grow min-w-0">
-            <div class="flex items-center justify-between gap-1">
-              <h3 class="text-xs font-bold ${isSelected ? 'text-teal-900' : 'text-slate-800'} truncate">${proc.title}</h3>
-            </div>
-            <p class="text-[10px] ${isSelected ? 'text-teal-700' : 'text-slate-500'} truncate mt-0.5">${proc.catName}</p>
-          </div>
-        `;
-        listContainer.appendChild(item);
-      });
-
-      lucide.createIcons();
-    }
-
-    // SELECT PROCEDURE & DISPLAY DATA
-    function selectProcedure(id) {
-      currentSelectedId = id;
-      const proc = proceduresData.find(p => p.id === id);
-      if (!proc) return;
-
-      // Update Header
-      document.getElementById('procCategory').innerText = proc.catName;
-      document.getElementById('procTitle').innerText = proc.title;
-      document.getElementById('procSub').innerText = proc.objective;
-
-      // Update Picture
-      const img = document.getElementById('procImage');
-      img.src = proc.imageUrl;
-      img.alt = proc.title;
-      document.getElementById('visualCaption').innerText = `Clinical image representing ${proc.title}.`;
-
-      // Update Prep Panel
-      document.getElementById('procObjective').innerText = proc.objective;
-      document.getElementById('procPositioning').innerText = proc.positioning;
-      
-      const equipList = document.getElementById('procEquipment');
-      equipList.innerHTML = '';
-      proc.equipment.forEach(item => {
-        const li = document.createElement('li');
-        li.innerText = item;
-        equipList.appendChild(li);
-      });
-
-      // Update Steps Panel
-      const stepsContainer = document.getElementById('procStepsContainer');
-      stepsContainer.innerHTML = '';
-      proc.steps.forEach((step, idx) => {
-        const stepCard = document.createElement('div');
-        stepCard.className = 'flex items-start gap-3 p-3 rounded-lg bg-slate-50 border border-slate-200/80';
-        stepCard.innerHTML = `
-          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-teal-600 text-white font-bold text-xs flex items-center justify-center">${idx + 1}</span>
-          <p class="text-xs text-slate-700 leading-relaxed mt-0.5">${step}</p>
-        `;
-        stepsContainer.appendChild(stepCard);
-      });
-
-      // Update Safety Panel
-      document.getElementById('procSafetyAlerts').innerText = proc.safetyAlerts;
-      const compContainer = document.getElementById('procComplications');
-      compContainer.innerHTML = '';
-      proc.complications.forEach(c => {
-        const div = document.createElement('div');
-        div.className = 'p-3 rounded-lg bg-red-50/60 border border-red-200/80';
-        div.innerHTML = `
-          <h5 class="font-bold text-red-900 mb-1 flex items-center gap-1">
-            <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-red-600"></i> ${c.name}
-          </h5>
-          <p class="text-slate-600 text-[11px] leading-relaxed">${c.action}</p>
-        `;
-        compContainer.appendChild(div);
-      });
-
-      // Update Viva Panel
-      const vivaContainer = document.getElementById('procVivaContainer');
-      vivaContainer.innerHTML = '';
-      proc.viva.forEach((v, idx) => {
-        const details = document.createElement('details');
-        details.className = 'group bg-white rounded-lg border border-slate-200/80 overflow-hidden transition-all';
-        details.innerHTML = `
-          <summary class="p-3.5 text-xs font-bold text-slate-800 cursor-pointer flex justify-between items-center bg-slate-50/50 hover:bg-slate-100/80 select-none">
-            <span class="flex items-center gap-2">
-              <span class="text-amber-600 font-extrabold">Q${idx + 1}:</span> ${v.q}
-            </span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
-          </summary>
-          <div class="p-3.5 text-xs text-slate-700 bg-white border-t border-slate-100 leading-relaxed">
-            <strong class="text-teal-700">Answer:</strong> ${v.a}
-          </div>
-        `;
-        vivaContainer.appendChild(details);
-      });
-
-      renderProcedureList(document.getElementById('searchInput').value.toLowerCase());
-      lucide.createIcons();
-    }
-
-    // SWITCH TAB PANELS
-    function switchDetailTab(tabKey) {
-      document.querySelectorAll('.detail-panel').forEach(p => p.classList.add('hidden'));
-      document.querySelectorAll('.detail-tab').forEach(b => {
-        b.classList.remove('text-teal-600', 'border-teal-600');
-        b.classList.add('text-slate-500', 'border-transparent');
-      });
-
-      document.getElementById(`panel-${tabKey}`).classList.remove('hidden');
-      const activeTabBtn = document.getElementById(`dtab-${tabKey}`);
-      activeTabBtn.classList.add('text-teal-600', 'border-teal-600');
-      activeTabBtn.classList.remove('text-slate-500', 'border-transparent');
-    }
-  </script>
-</body>
-</html>
+  <!-- SCRIPT DATA & APP LOGIC -->
+  <script>
+    // COMPLETE DATABASE OF ALL 20 CLINICAL PROCEDURES WITH VIVA QUESTIONS
+    const proceduresData = [
+      {
+        id: 1,
+        title: "Tracheostomy Care",
+        category: "airway",
+        catName: "Airway & Respiratory",
+        objective: "Demonstrate proficiency in providing tracheostomy care, inner cannula cleaning, stoma dressing, and securing ties while maintaining sterile technique and airway patency.",
+        positioning: "Semi-Fowler's to High-Fowler's position (30° - 90°) to promote maximal lung expansion and reduce work of breathing.",
+        equipment: ["Tracheostomy care kit", "Sterile inner cannula / saline solution", "Pre-cut tracheostomy split sponge", "Sterile cotton applicators", "Velcro tracheostomy strap / ties", "Suction apparatus & PPE"],
+        steps: [
+          "Assess respiratory rate, SpO2, stoma skin integrity, and presence of pulmonary secretions.",
+          "Perform hand hygiene, don sterile PPE (mask with face shield, sterile gloves).",
+          "Unlock and remove disposable or reusable inner cannula with non-dominant hand.",
+          "Clean reusable inner cannula with hydrogen peroxide/saline, rinse thoroughly with sterile saline, and lock back into position.",
+          "Clean stoma site using sterile saline swabs in single outward strokes from stoma site outward.",
+          "Apply fresh pre-cut tracheostomy split dressing underneath the faceplate.",
+          "Secure new tracheostomy ties before removing old ties, allowing 1 to 2 fingers width space."
+        ],
+        safetyAlerts: "NEVER cut standard 4x4 gauze sponges around stoma as frayed cotton fibers can be aspirated! Always keep a replacement tracheostomy tube of same size and one size smaller at bedside for emergency re-intubation.",
+        complications: [
+          { name: "Accidental Decannulation", action: "Call for emergency help, extend neck, attempt reinsertion using obturator or use bag-valve-mask ventilations." },
+          { name: "Stoma Site Infection", action: "Maintain strict aseptic technique during dressing changes; report purulent discharge or spreading erythema." }
+        ],
+        viva: [
+          { q: "Why is a precut slit gauze used instead of cutting a standard gauze sponge?", a: "Cutting standard gauze leaves loose cotton threads that can enter the stoma and cause tracheal irritation, foreign body reaction, or airway obstruction." },
+          { q: "What crucial emergency items must always be present at a tracheostomy patient's bedside?", a: "An emergency tracheostomy tray, two spare tubes (one same size, one size smaller), obturator, resuscitation bag-valve mask, and functional suction unit." },
+          { q: "How tight should new tracheostomy ties be secured?", a: "They should be tight enough to prevent dislodgement, allowing exactly 1 to 2 fingers to fit snugly between the tie and the patient's neck." }
+        ],
+        svgType: "trachCare"
+      },
+      {
+        id: 2,
+        title: "Tracheal Suctioning",
+        category: "airway",
+        catName: "Airway & Respiratory",
+        objective: "Perform suctioning safely to clear tracheobronchial secretions, maintain airway patency, and avoid hypoxia or mucosal trauma.",
+        positioning: "Semi-Fowler's position for conscious patients; side-lying position for unconscious patients.",
+        equipment: ["Suction catheter kit (12-14 Fr)", "Suction source (100-120 mmHg for adults)", "Sterile gloves & lubricant", "100% Oxygen source"],
+        steps: [
+          "Hyperoxygenate patient with 100% O2 for 30 to 60 seconds prior to catheter insertion.",
+          "Don sterile gloves. Maintain dominant hand sterile and non-dominant hand clean.",
+          "Insert suction catheter gently without applying suction until resistance is felt or patient coughs, then pull back 1 cm.",
+          "Apply continuous/intermittent suction while gently rotating catheter upon withdrawal (maximum 10-15 seconds per pass).",
+          "Reoxygenate patient and allow 1 to 2 minutes rest between suction passes.",
+          "Reassess lung sounds, heart rate, and oxygen saturation."
+        ],
+        safetyAlerts: "Suctioning duration must NEVER exceed 10 to 15 seconds per pass. Continuous suctioning during insertion causes acute airway trauma and severe hypoxemia!",
+        complications: [
+          { name: "Vagal Bradycardia & Hypoxia", action: "Stop suctioning immediately, remove catheter, and supply 100% oxygen." },
+          { name: "Airway Mucosal Trauma", action: "Limit suction pressure to 100-120 mmHg in adults and never force insertion." }
+        ],
+        viva: [
+          { q: "What is the maximum duration for a single suctioning pass in adults?", a: "10 to 15 seconds. Exceeding this causes sudden hypoxia, dysrhythmias, and vagal stimulation." },
+          { q: "Why do we hyperoxygenate the patient before and after suctioning?", a: "To prevent suction-induced arterial hypoxemia and cardiac dysrhythmias during the procedure." },
+          { q: "What suction pressure range is recommended for adult patients?", a: "100 to 120 mmHg (never exceed 150 mmHg to avoid mucosal invagination)." }
+        ],
+        svgType: "trachSuction"
+      },
+      {
+        id: 3,
+        title: "Lumbar Puncture (LP) Assistance",
+        category: "taps",
+        catName: "Invasive Taps & Drainage",
+        objective: "Assist the clinician in spinal fluid collection, maintaining rigid lateral spinal positioning, and monitoring post-LP recovery.",
+        positioning: "Lateral recumbent 'fetal position' (flexed knees to chest, chin touching chest) or sitting upright leaning forward over bedside table.",
+        equipment: ["Sterile LP spinal tray", "Spinal needle with stylet (20-22G)", "Local anesthetic (Lidocaine 1%)", "4 CSF collection tubes", "Manometer & stopcock"],
+        steps: [
+          "Verify consent and baseline neurological status; ensure no signs of raised ICP.",
+          "Position patient at edge of bed in maximum spinal flexion (L3-L4 or L4-L5 space).",
+          "Hold patient securely during needle placement to prevent sudden movement.",
+          "Assist physician with opening pressure measurement via manometer.",
+          "Collect CSF sequentially into numbered specimen tubes 1 through 4.",
+          "Apply sterile occlusive dressing over puncture site post-procedure.",
+          "Instruct patient to maintain flat supine position for 4-6 hours post-procedure."
+        ],
+        safetyAlerts: "Perform LP with extreme caution if intracranial pressure (ICP) is elevated due to risk of fatal brainstem herniation!",
+        complications: [
+          { name: "Post-Dural Puncture Headache", action: "Keep patient strictly flat supine, encourage oral fluids, and administer prescribed analgesics." },
+          { name: "CSF Leakage at Site", action: "Monitor dressing for clear fluid drainage; notify provider if persistent." }
+        ],
+        viva: [
+          { q: "At what anatomical interspace is a lumbar puncture performed and why?", a: "L3-L4 or L4-L5 interspace. The spinal cord terminates at L1-L2, minimizing spinal cord injury risk." },
+          { q: "What position prevents post-lumbar puncture headache?", a: "Flat supine position for 4 to 6 hours to reduce CSF leakage from the dural puncture site." },
+          { q: "Why is tube #1 not usually sent for microbiological culture?", a: "Tube #1 is most likely to contain skin contaminants or blood from a traumatic tap." }
+        ],
+        svgType: "lumbarPuncture"
+      },
+      {
+        id: 4,
+        title: "Thoracentesis Assistance",
+        category: "taps",
+        catName: "Invasive Taps & Drainage",
+        objective: "Assist with aspiration of pleural cavity fluid, maintaining sterile technique, monitoring lung re-expansion, and preventing pneumothorax.",
+        positioning: "Upright sitting position on edge of bed, leaning forward with arms resting on an overbed table.",
+        equipment: ["Thoracentesis kit", "Local anesthetic", "Large-gauge thoracentesis needle/catheter", "Evacuated drainage bottles", "Sterile occlusive dressing"],
+        steps: [
+          "Confirm chest X-ray or ultrasound location of pleural effusion.",
+          "Position patient leaning forward over table; instruct patient NOT to cough or move abruptly.",
+          "Assist physician with skin prep, sterile draping, and local anesthetic infiltration.",
+          "Connect drainage catheter to vacuum bottles and monitor fluid rate.",
+          "Do NOT remove more than 1,000 to 1,500 mL of fluid in a single session.",
+          "Apply airtight occlusive dressing upon needle removal.",
+          "Obtain post-procedure chest X-ray to confirm lung expansion and rule out pneumothorax."
+        ],
+        safetyAlerts: "Removing more than 1,500 mL of fluid in one session can cause sudden re-expansion pulmonary edema and severe hypovolemia!",
+        complications: [
+          { name: "Pneumothorax", action: "Monitor for acute dyspnea, tachypnea, or diminished breath sounds; prepare for chest tube insertion." },
+          { name: "Re-expansion Pulmonary Edema", action: "Cap drainage at 1,000-1,500 mL max; monitor for cough with pink frothy sputum." }
+        ],
+        viva: [
+          { q: "Why is pleural fluid removal capped at 1,000 to 1,500 mL at a time?", a: "To prevent re-expansion pulmonary edema and severe circulatory hypotension." },
+          { q: "What complications are signaled by sudden onset dyspnea after thoracentesis?", a: "Pneumothorax or hemothorax caused by accidental lung parenchyma or intercostal vessel puncture." },
+          { q: "How should the patient be positioned if pneumothorax is suspected?", a: "High Fowler's position to assist breathing while preparing for diagnostic X-ray and intervention." }
+        ],
+        svgType: "thoracentesis"
+      },
+      {
+        id: 5,
+        title: "Paracentesis Assistance",
+        category: "taps",
+        catName: "Invasive Taps & Drainage",
+        objective: "Assist with peritoneal cavity fluid removal, monitor fluid dynamics, and prevent post-paracentesis circulatory collapse.",
+        positioning: "Upright sitting position in Fowler's or High Fowler's position in bed or chair.",
+        equipment: ["Paracentesis tray", "Trocar / drainage needle", "Collection vacuum bottles", "IV Albumin (for large volume)", "Sterile bandage"],
+        steps: [
+          "Instruct patient to VOID urine prior to procedure to prevent accidental bladder perforation!",
+          "Obtain baseline weight, abdominal girth, blood pressure, and heart rate.",
+          "Position patient comfortably in high Fowler's position.",
+          "Assist clinician with trocar insertion in lower quadrant of abdomen.",
+          "Monitor clear amber peritoneal fluid drainage and document total volume.",
+          "Apply firm pressure dressing over puncture site post-procedure.",
+          "Re-measure weight, abdominal girth, and monitor blood pressure closely."
+        ],
+        safetyAlerts: "Bladder MUST be emptied before inserting trocar. Rapid removal of ascites fluid causes massive fluid shift and hypovolemic shock!",
+        complications: [
+          { name: "Post-Paracentesis Shock", action: "Administer prescribed IV Albumin (6-8g per liter removed over 5L) to maintain vascular volume." },
+          { name: "Bladder Perforation", action: "Ensure patient voids before procedure; monitor for bloody urine or severe abdominal pain." }
+        ],
+        viva: [
+          { q: "Why MUST the patient void before paracentesis?", a: "An enlarged bladder can be accidentally punctured by the trocar during insertion into the lower abdomen." },
+          { q: "Why is IV Albumin administered after large-volume paracentesis (>5L)?", a: "Albumin increases intravascular oncotic pressure, preventing hypovolemic shock and renal failure." },
+          { q: "What key post-procedure measurements evaluate paracentesis effectiveness?", a: "Body weight loss and abdominal girth reduction." }
+        ],
+        svgType: "paracentesis"
+      },
+      {
+        id: 6,
+        title: "Chest Tube Insertion Assistance",
+        category: "taps",
+        catName: "Invasive Taps & Drainage",
+        objective: "Assist with chest tube placement and connection to a closed chest drainage unit (CDU) to restore negative intrapleural pressure.",
+        positioning: "Supine or semi-Fowler's position with patient's arm on affected side raised overhead.",
+        equipment: ["Chest tube kit (20-32 Fr)", "Closed chest drainage unit (CDU)", "Sterile water", "Vaseline petrolatum gauze & occlusive tape", "Chest tube clamps"],
+        steps: [
+          "Fill water-seal chamber of CDU with sterile water up to the 2 cm line mark.",
+          "Position patient with affected arm elevated behind head to expose 4th-5th intercostal space.",
+          "Assist clinician with aseptic prep, local anesthesia, incision, and tube placement.",
+          "Connect chest tube immediately to CDU drainage tubing; observe for tidaling.",
+          "Wrap insertion site with Vaseline gauze, cover with occlusive dressing, and tape securely.",
+          "Tape all tube connections along the line to prevent accidental disconnects.",
+          "Obtain immediate post-procedure chest X-ray to confirm tube placement."
+        ],
+        safetyAlerts: "NEVER clamp a chest tube without a physician order! Clamping traps air inside pleural space causing fatal tension pneumothorax.",
+        complications: [
+          { name: "Tension Pneumothorax", action: "Check for kinked tubing; ensure water seal is functioning and tracheal alignment is centered." },
+          { name: "Accidental Disconnection", action: "Submerge open chest tube 1-2 inches in a sterile saline bottle to recreate water seal immediately." }
+        ],
+        viva: [
+          { q: "What does continuous vigorous bubbling in the water-seal chamber indicate?", a: "An air leak in the system or patient's pleural space (normal is intermittent bubbling with expiration)." },
+          { q: "What should you do if the chest tube accidentally pulls out from the chest wall?", a: "Immediately cover site with sterile occlusive Vaseline gauze taped on THREE s
