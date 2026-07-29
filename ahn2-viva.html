@@ -10,7 +10,398 @@
     body { font-family: 'Inter', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen pb-16">
+<body class="bg-slate-950 text-slate-100 min-h-screen pb-16"><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHN-II High-Yield Viva & Definitions | Mudassir Hussain Khan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+    }
+    .emerald-glow {
+      box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen pb-20 selection:bg-emerald-500 selection:text-slate-950">
+
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-50 glass-card border-b border-emerald-900/40 px-4 py-3">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-semibold text-xs transition-colors group">
+        <span class="group-hover:-translate-x-1 transition-transform">←</span>
+        <span>Main Portal</span>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <button onclick="copyShareLink()" class="flex items-center gap-1.5 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 hover:text-emerald-200 text-[11px] px-3 py-1.5 rounded-lg border border-emerald-700/50 transition-all shadow-sm">
+          <span>🔗</span>
+          <span id="shareBtnText" class="font-medium">Share Page</span>
+        </button>
+
+        <div class="text-right hidden sm:block border-l border-slate-800 pl-3">
+          <h1 class="text-xs font-bold text-slate-100 uppercase tracking-wider">AHN-II Viva Core</h1>
+          <p class="text-[10px] text-emerald-400 font-medium">Mudassir Hussain Khan • CR</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 pt-6 space-y-6">
+
+    <!-- HERO BANNER -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-emerald-950/60 via-slate-900 to-[#090d16] p-6 sm:p-8 rounded-2xl border border-emerald-500/30 emerald-glow">
+      <div class="absolute -top-12 -right-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl"></div>
+      <div class="relative z-10 space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full text-[10px] font-bold uppercase tracking-widest">
+            Clinical Viva & OSPE Guide
+          </span>
+          <span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[10px] font-bold">
+            BS Nursing (BSN)
+          </span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          Adult Health Nursing II High-Yield Review
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+          Detailed clinical definitions, pathophysiological rationales, high-frequency examiner questions, and emergency nursing priorities across all 7 units.
+        </p>
+      </div>
+    </div>
+
+    <!-- SEARCH & CATEGORY FILTER -->
+    <div class="space-y-3 sticky top-16 z-40 bg-[#090d16]/90 backdrop-blur-md py-3 border-b border-slate-800/80">
+      <div class="relative">
+        <input 
+          type="text" 
+          id="vivaSearch" 
+          onkeyup="filterContent()" 
+          placeholder="🔍 Search definitions, signs, or procedures (e.g., Parkland, DKA, Cushing, GBS, RICE)..." 
+          class="w-full p-3.5 pl-4 bg-slate-900/90 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-xl"
+        >
+      </div>
+
+      <!-- CATEGORY PILLS -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
+        <button onclick="filterCategory('all')" class="cat-btn px-3 py-1.5 bg-emerald-500 text-slate-950 font-bold rounded-lg transition-all shrink-0">All Units</button>
+        <button onclick="filterCategory('ortho')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit I: Ortho</button>
+        <button onclick="filterCategory('endo')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit II: Endocrine</button>
+        <button onclick="filterCategory('neuro')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit III: Neuro</button>
+        <button onclick="filterCategory('cvs')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit IV: CVS</button>
+        <button onclick="filterCategory('resp')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit V: Resp</button>
+        <button onclick="filterCategory('ent')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit VI: ENT/Eye</button>
+        <button onclick="filterCategory('burns')" class="cat-btn px-3 py-1.5 bg-slate-900 text-slate-300 hover:text-emerald-400 border border-slate-800 rounded-lg transition-all shrink-0">Unit VII: Burns</button>
+      </div>
+    </div>
+
+    <!-- CARDS CONTAINER -->
+    <div id="vivaContainer" class="space-y-6">
+
+      <!-- UNIT I: ORTHOPEDIC -->
+      <article class="viva-card cat-ortho bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit I • Orthopedics & Trauma
+          </span>
+          <span class="text-[11px] text-amber-400 bg-amber-950/40 px-2.5 py-0.5 rounded border border-amber-800/40 font-semibold">🔥 Top Examiner Favorite</span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">1. Compartment Syndrome & Fasciotomy</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">Definition:</strong> A life-threatening extremity condition where increased tissue pressure within a non-yielding osteofascial compartment compromises capillary perfusion, leading to muscle tissue hypoxia and tissue necrosis.
+          </p>
+        </div>
+
+        <!-- CLINICAL BREAKDOWN -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-rose-400 font-bold block text-sm">⚡ The 6 Ps (Must Recite in Viva):</span>
+            <ul class="space-y-1 text-slate-300 text-[11px]">
+              <li>1. <strong>Pain:</strong> Severe, deep, out of proportion to injury, unrelieved by opioids.</li>
+              <li>2. <strong>Paresthesia:</strong> Pins and needles (earliest sensory deficit).</li>
+              <li>3. <strong>Pallor:</strong> Pale skin tone due to ischemia.</li>
+              <li>4. <strong>Paralysis:</strong> Inability to move digits (late sign).</li>
+              <li>5. <strong>Pulselessness:</strong> Absent distal pulse (very late sign).</li>
+              <li>6. <strong>Poikilothermia:</strong> Affected limb feels cool/cold.</li>
+            </ul>
+          </div>
+
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block text-sm">🩺 Management & RICE Protocol:</span>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+              <strong>Soft Tissue Injury (Sprains/Strains):</strong> Use <strong>RICE</strong> (Rest, Ice, Compression, Elevation).
+            </p>
+            <div class="bg-rose-950/30 p-2.5 rounded-lg border border-rose-900/50 text-[11px] text-rose-300 mt-2">
+              🚨 <strong>CRITICAL VIVA RULE:</strong> If acute Compartment Syndrome is suspected, <strong>DO NOT elevate the limb</strong> (decreases arterial blood flow) and <strong>DO NOT apply ice</strong> (causes vasoconstriction). Prepare patient for emergency <strong>Fasciotomy</strong>.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT II: ENDOCRINE -->
+      <article class="viva-card cat-endo bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit II • Endocrine Disorders
+          </span>
+          <span class="text-[11px] text-amber-400 bg-amber-950/40 px-2.5 py-0.5 rounded border border-amber-800/40 font-semibold">🔥 High-Yield</span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">2. Diabetic Ketoacidosis (DKA) vs. Tetany Assessment</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">DKA Definition:</strong> An acute, life-threatening complication of Diabetes Mellitus (primarily Type 1) characterized by the triad of <strong>Hyperglycemia</strong> (&gt;250 mg/dL), <strong>Metabolic Acidosis</strong> (pH &lt;7.30, serum bicarbonate &lt;18 mEq/L), and <strong>Ketonemia/Ketonuria</strong> due to insulin lack.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-amber-400 font-bold block text-sm">🫁 DKA Clinical Features & Breathing:</span>
+            <ul class="space-y-1.5 text-slate-300 text-[11px]">
+              <li>• <strong>Kussmaul Respirations:</strong> Deep, rapid, air-hungering breathing pattern to blow off CO2 and compensate for metabolic acidosis.</li>
+              <li>• <strong>Fruity/Acetone Breath:</strong> Due to volatile ketone excretion via lungs.</li>
+              <li>• <strong>Initial Nursing Priority:</strong> Rehydration with Normal Saline (0.9% NaCl) before starting Regular Insulin drip.</li>
+            </ul>
+          </div>
+
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block text-sm">🦴 Hypocalcemia Assessment Signs:</span>
+            <div class="space-y-2 text-[11px] text-slate-300">
+              <p><strong>1. Trousseau's Sign:</strong> Carpopedal spasm (flexion of wrist and metacarpophalangeal joints) induced by inflating BP cuff 20 mmHg above systolic BP for 3 minutes.</p>
+              <p><strong>2. Chvostek's Sign:</strong> Twitching of facial muscles elicited by tapping the facial nerve anterior to the ear lobe.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT III: NEUROLOGY -->
+      <article class="viva-card cat-neuro bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit III • Neurological Nursing
+          </span>
+          <span class="text-[11px] text-amber-400 bg-amber-950/40 px-2.5 py-0.5 rounded border border-amber-800/40 font-semibold">🔥 Top Examiner Favorite</span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">3. Increased ICP, Cushing's Triad & Guillain-Barré Syndrome</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">Intracranial Pressure (ICP):</strong> Normal range is <strong>5 to 15 mmHg</strong>. Sustained pressure &gt;20 mmHg requires prompt intervention to prevent brain herniation.
+          </p>
+        </div>
+
+        <div class="bg-rose-950/30 border border-rose-900/60 p-4 rounded-xl space-y-2 text-xs">
+          <span class="text-rose-300 font-bold text-sm block">⚠️ Cushing's Triad (Late Sign of Brain Herniation):</span>
+          <p class="text-slate-300 text-[11px]">Contrast this with shock (where HR goes up and BP drops). Cushing's Triad presents with:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 font-mono text-[11px] text-rose-200 mt-2">
+            <div class="bg-slate-950/80 p-2 rounded border border-rose-900/50">1. Systolic Hypertension (Widened Pulse Pressure)</div>
+            <div class="bg-slate-950/80 p-2 rounded border border-rose-900/50">2. Bradycardia (Slow, Bounding Heart Rate)</div>
+            <div class="bg-slate-950/80 p-2 rounded border border-rose-900/50">3. Bradypnea / Irregular Breathing</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
+          <span class="text-emerald-400 font-bold text-sm block">🧠 Guillain-Barré Syndrome (GBS) Core Key:</span>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            An acute post-infectious autoimmune polyneuropathy characterized by <strong>progressive, ascending symmetrical motor weakness</strong> and loss of deep tendon reflexes. 
+            <br><em class="text-emerald-300 font-medium">Viva Question: What is the main cause of death?</em> Respiratory failure when weakness ascends to the diaphragm (phrenic nerve involvement). Monitor Vital Capacity closely!
+          </p>
+        </div>
+      </article>
+
+      <!-- UNIT IV: CARDIOVASCULAR -->
+      <article class="viva-card cat-cvs bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit IV • Cardiovascular Nursing
+          </span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">4. Myocardial Infarction Biomarkers & Virchow's Triad</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">Myocardial Infarction (MI):</strong> Irreversible necrosis of cardiac muscle caused by prolonged severe ischemia. 
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block text-sm">🧪 Cardiac Biomarkers:</span>
+            <ul class="space-y-1 text-slate-300 text-[11px]">
+              <li>• <strong>Troponin I & T:</strong> Most specific and sensitive cardiac gold standard. Rises in 3–4 hrs, stays elevated for 7–14 days.</li>
+              <li>• <strong>CK-MB:</strong> Useful for detecting re-infarction (returns to baseline in 48–72 hours).</li>
+            </ul>
+          </div>
+
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-amber-400 font-bold block text-sm">🩸 Virchow's Triad (DVT Pathogenesis):</span>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+              1. <strong>Venous Stasis</strong> (immobility, heart failure)<br>
+              2. <strong>Endothelial Injury</strong> (trauma, surgery, IV lines)<br>
+              3. <strong>Hypercoagulability</strong> (malignancy, dehydration, estrogen)
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT V: PULMONARY -->
+      <article class="viva-card cat-resp bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit V • Pulmonary Nursing
+          </span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">5. ARDS & Refractory Hypoxemia</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">ARDS Definition:</strong> A form of acute, diffuse inflammatory lung injury that leads to increased pulmonary vascular permeability, decreased lung compliance, and widespread alveolar collapse.
+          </p>
+        </div>
+
+        <div class="bg-emerald-950/30 border border-emerald-800/60 p-4 rounded-xl space-y-2 text-xs">
+          <span class="text-emerald-300 font-bold text-sm block">💡 Hallmark Viva Concept: Refractory Hypoxemia</span>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            <strong>Refractory Hypoxemia</strong> is severe arterial hypoxemia ($PaO_2 / FiO_2 \le 300\text{ mmHg}$) that <em>fails to improve even when high concentrations of supplemental 100% oxygen are delivered</em> due to intrapulmonary right-to-left shunting.
+          </p>
+        </div>
+      </article>
+
+      <!-- UNIT VI: ENT & EYE -->
+      <article class="viva-card cat-ent bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit VI • ENT & Ophthalmic Nursing
+          </span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">6. Meniere's Disease vs. Retinal Detachment</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block text-sm">👂 Meniere's Triad (Inner Ear):</span>
+            <ul class="space-y-1 text-slate-300 text-[11px]">
+              <li>1. Episodic Vertigo (Severe spinning sensation)</li>
+              <li>2. Fluctuating Sensorineural Hearing Loss</li>
+              <li>3. Low-pitched Tinnitus & Aural Fullness</li>
+            </ul>
+          </div>
+
+          <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-amber-400 font-bold block text-sm">👁️ Retinal Detachment Sign:</span>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+              Separation of neurosensory retina from pigment epithelium. Classic symptom: <strong>Painless visual field loss described as a "dark shade or curtain being pulled over vision"</strong> accompanied by sudden photopsia (flashes of light) and floaters.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT VII: BURNS -->
+      <article class="viva-card cat-burns bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 shadow-xl transition-all space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <span class="text-xs font-bold tracking-wider text-emerald-400 uppercase bg-emerald-950/60 px-3 py-1 rounded-md border border-emerald-800/50">
+            Unit VII • Burns & Fluid Resuscitation
+          </span>
+          <span class="text-[11px] text-amber-400 bg-amber-950/40 px-2.5 py-0.5 rounded border border-amber-800/40 font-semibold">🔥 Guaranteed Question</span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg font-bold text-white">7. Parkland Formula & Wallace Rule of Nines</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Used for emergency fluid resuscitation during the first 24 hours post-burn in patients with &gt;20% TBSA burns. Fluid of choice: <strong>Lactated Ringer's (LR)</strong> solution.
+          </p>
+        </div>
+
+        <div class="bg-emerald-950/40 border border-emerald-700/50 p-4 rounded-xl space-y-3">
+          <span class="text-emerald-300 font-bold text-sm block">📐 Parkland Formula Equation:</span>
+          <div class="bg-slate-950 p-3 rounded-lg border border-emerald-900 font-mono text-xs text-emerald-200">
+            Total 24h Fluid (mL) = 4 mL × Body Weight (kg) × % TBSA Burned
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+            <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+              <span class="text-amber-400 font-bold block">⏱️ First 8 Hours:</span>
+              <p class="text-slate-300 text-[11px] mt-1">Administer <strong>50% (half)</strong> of total calculated 24-hour volume (calculated from time of injury, NOT hospital admission).</p>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+              <span class="text-emerald-400 font-bold block">⏱️ Remaining 16 Hours:</span>
+              <p class="text-slate-300 text-[11px] mt-1">Administer remaining <strong>50%</strong> of total volume across the next 16 hours.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- FOOTER CREDIT -->
+    <footer class="pt-10 text-center border-t border-slate-800/60 text-slate-500 text-xs space-y-1">
+      <p class="font-medium text-slate-400">Adult Health Nursing II (AHN-II) — Academic Viva Core</p>
+      <p class="text-[11px] text-slate-500">Curated by Mudassir Hussain Khan • Class Representative • BSN</p>
+    </footer>
+
+  </main>
+
+  <!-- JAVASCRIPT FOR SEARCH & CATEGORY FILTER & COPY LINK -->
+  <script>
+    // Live Search Filter
+    function filterContent() {
+      const input = document.getElementById('vivaSearch').value.toLowerCase();
+      const cards = document.getElementsByClassName('viva-card');
+
+      for (let i = 0; i < cards.length; i++) {
+        const text = cards[i].innerText.toLowerCase();
+        if (text.includes(input)) {
+          cards[i].style.display = "block";
+        } else {
+          cards[i].style.display = "none";
+        }
+      }
+    }
+
+    // Category Tab Filter
+    function filterCategory(cat) {
+      const cards = document.getElementsByClassName('viva-card');
+      const buttons = document.getElementsByClassName('cat-btn');
+
+      // Style active button
+      for (let btn of buttons) {
+        btn.classList.remove('bg-emerald-500', 'text-slate-950', 'font-bold');
+        btn.classList.add('bg-slate-900', 'text-slate-300');
+      }
+      event.target.classList.remove('bg-slate-900', 'text-slate-300');
+      event.target.classList.add('bg-emerald-500', 'text-slate-950', 'font-bold');
+
+      // Filter cards
+      for (let card of cards) {
+        if (cat === 'all' || card.classList.contains('cat-' + cat)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      }
+    }
+
+    // Copy Share Link Function
+    function copyShareLink() {
+      navigator.clipboard.writeText(window.location.href);
+      const btnText = document.getElementById('shareBtnText');
+      btnText.innerText = 'Copied!';
+      setTimeout(() => { btnText.innerText = 'Share Page'; }, 2000);
+    }
+  </script>
+</body>
+</html>
 
   <!-- TOP HEADER -->
   <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
